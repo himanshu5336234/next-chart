@@ -1,4 +1,4 @@
-"useclient"
+
 import React, { useEffect, useRef } from "react";
 
 import dataFeed from "./dataFeed";
@@ -7,10 +7,12 @@ export const TradingViewChart = ({ ID, res }: { ID: number; res: string }) => {
   const chartContainerRef = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window === 'undefined') return
     const resolution =  60
     const TradingViewWidget = new (window as any).TradingView.widget({
+      locale: (window as any).navigator.language.split("-")[0] || "en-IN",
       ...widgetContainer,
+
       container: chartContainerRef.current,
       interval: res ?? resolution,
       datafeed: dataFeed,
@@ -30,7 +32,7 @@ export const TradingViewChart = ({ ID, res }: { ID: number; res: string }) => {
         });
         TradingViewWidget.chart();
       });
-    }
+    
   }, [ ID, res]);
 
   return (

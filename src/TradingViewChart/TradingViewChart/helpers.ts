@@ -23,7 +23,7 @@ export function parseFullSymbol(fullSymbol: string) {
   };
 }
 export const widgetContainer = {
-  locale:"en-IN",
+
   auto_save_delay: 1,
   load_last_chart: true,
   autosize: true,
