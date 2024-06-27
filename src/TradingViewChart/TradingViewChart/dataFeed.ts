@@ -1,10 +1,10 @@
 
 import axios from "axios";
 import { configurationData } from "./helpers";
-import chartWS from "./streaming";
+// import chartWS from "./streaming";
 const binanceBaseUrl = "https://fapi.binance.com";
 const lastBarsCache = new Map();
-const tvIntervals = {
+const tvIntervals:any = {
   "1s": "1s",
   1: "1m",
   3: "3m",
