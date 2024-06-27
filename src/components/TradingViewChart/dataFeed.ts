@@ -8,62 +8,62 @@ const lastBarsCache = new Map();
 const allSymbols: any = [];
 //  JSON.parse((window as any).localStorage.getItem("tradablesymbolList"));
 let lastStartTime: any;
-const getBinanceKlines = (
+const getBinanceKlines = async (
   symbol: string,
-  interval: any,
-  startTime: any,
-  endTime: any,
-  limit: number
+  interval: string,
+  startTime?: number,
+  endTime?: number,
+  limit: number = 1500
 ) => {
   if (lastStartTime && startTime === lastStartTime) {
     return [];
   }
   lastStartTime = startTime;
+
+  const cacheKey = `${symbol}_${interval}_${startTime}_${endTime}_${limit}`;
+  if (lastBarsCache.has(cacheKey)) {
+    return lastBarsCache.get(cacheKey);
+  }
+
   const url = `${binanceBaseUrl}/fapi/v1/continuousKlines?pair=${symbol}&contractType=PERPETUAL&interval=${interval}${
     startTime ? `&startTime=${startTime}` : ""
   }${endTime ? `&endTime=${endTime}` : ""}${limit ? `&limit=${limit}` : ""}`;
-  return axios
-    .get(url)
-    .then((res: { data: any }) => {
-      return res.data;
-    })
-    .then((json: any) => {
-      return json;
-    });
+
+  try {
+    const response = await axios.get(url);
+    const data = response.data;
+    lastBarsCache.set(cacheKey, data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching Binance klines", error);
+    return [];
+  }
 };
+
 function pricescale(symbol: string) {
   // const symbolPrecisionData = allSymbols.find((data: { symbol: string }) => data.symbol.toLowerCase() === symbol.toLowerCase());
   // symbolPrecisionData.pricePrecision;
   return Math.pow(10, Number(0.0));
 }
-
 async function getKlines(
-  from: any,
-  to: any,
+  from: number,
+  to: number,
   symbolInfo: { name: string },
-  interval: any
+  interval: string
 ) {
   let totalKlines: any[] = [];
   const kLinesLimit = 1500;
+
   try {
-    let data = await getBinanceKlines(
-      symbolInfo.name,
-      interval,
-      from,
-      to,
-      kLinesLimit
-    );
+    let data = await getBinanceKlines(symbolInfo.name, interval, from, to, kLinesLimit);
     totalKlines = [...totalKlines, ...data];
+
     while (data.length === kLinesLimit) {
-      data = await getBinanceKlines(
-        symbolInfo.name,
-        interval,
-        from,
-        to,
-        kLinesLimit
-      );
+      from = data[data.length - 1][0] + 1; // Update `from` to avoid fetching the same data
+      data = await getBinanceKlines(symbolInfo.name, interval, from, to, kLinesLimit);
       totalKlines = [...totalKlines, ...data];
     }
+
     const historyCBArray = totalKlines.map((kline) => ({
       time: kline[0],
       open: Number(kline[1]),
@@ -72,11 +72,14 @@ async function getKlines(
       close: Number(kline[4]),
       volume: Number(kline[5]),
     }));
+
     return historyCBArray;
   } catch (err) {
+    console.error("Error in getting klines", err);
     throw new Error("Error in getting klines");
   }
 }
+
 const { subscribeOnStream, unsubscribeFromStream, tvIntervals } = chartWS();
 
 const dataFeed = {
@@ -214,6 +217,7 @@ const dataFeed = {
   },
 
   unsubscribeBars: (subscriberUID: string) => {
+    console.log(subscriberUID,"subscriberUID")
     unsubscribeFromStream(subscriberUID);
   },
 };

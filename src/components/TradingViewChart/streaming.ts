@@ -1,6 +1,7 @@
 import WebSocketClient from "@/helpers/WebSocketModule";
 import { BASE_URL } from "@/services/api-service/Base/index";
-const tvIntervals: any = {
+
+const tvIntervals = {
   "1s": "1s",
   1: "1m",
   3: "3m",
@@ -23,18 +24,9 @@ const tvIntervals: any = {
 };
 
 function helperOnMessage(
-  msg: string,
-  paramStr: string,
-  onRealtimeCallback: (arg0: {
-    time: any;
-    close: number;
-    open: number;
-    high: number;
-    low: number;
-    volume: number;
-    closeTime: any;
-    openTime: any;
-  }) => void
+  msg,
+  paramStr,
+  onRealtimeCallback
 ) {
   const sData = JSON.parse(msg);
   try {
@@ -51,7 +43,6 @@ function helperOnMessage(
         closeTime: T,
         openTime: t,
       };
-      // console.log(lastSocketData, "sDatasDatasData");
       onRealtimeCallback(lastSocketData);
     }
   } catch (e) {
@@ -59,7 +50,7 @@ function helperOnMessage(
   }
 }
 
-const generateSubscriptionParamFromUID = function (subscriberUID: string) {
+const generateSubscriptionParamFromUID = function (subscriberUID) {
   const id = subscriberUID.split("_#_");
   localStorage.setItem(
     "user_pc_resolution_chart_density",
@@ -68,75 +59,84 @@ const generateSubscriptionParamFromUID = function (subscriberUID: string) {
   const paramStr = `${id[0].toLowerCase()}@kline_${tvIntervals[id[2]]}`;
   return paramStr;
 };
+
 const chartWS = () => {
-  const streams: any = {};
+  const streams = {};
+  let connectingLive = false;
+  let webSocketService:any;
+
+  const initializeWebSocket = () => {
+    if (!webSocketService) {
+      const binanceWsBaseUrl = BASE_URL()?.binanceWsBase;
+      webSocketService = WebSocketClient.getInstance(binanceWsBaseUrl);
+      webSocketService.addListener("open", () => {
+        connectingLive = true;
+        Object.values(streams).forEach(({ paramStr }) => {
+          const obj = {
+            method: "SUBSCRIBE",
+            params: [paramStr],
+            id: 2,
+          };
+          webSocketService.sendMessage(JSON.stringify(obj));
+        });
+      });
+      webSocketService.addListener("WebSocketMessage", (message) => {
+        Object.values(streams).forEach(({ paramStr, listener }) => {
+          helperOnMessage(message, paramStr, listener);
+        });
+      });
+    }
+  };
 
   return {
     tvIntervals,
 
     subscribeOnStream: function (
-      _symbolInfo: any,
-      _resolution: any,
-      onRealtimeCallback: (arg0: {
-        time: any;
-        close: number;
-        open: number;
-        high: number;
-        low: number;
-        volume: number;
-        closeTime: any;
-        openTime: any;
-      }) => void,
-      subscribeUID: string,
-      _onResetCacheNeededCallback: any,
-      _lastDailyBar: any
+      _symbolInfo,
+      _resolution,
+      onRealtimeCallback,
+      subscribeUID,
+      _onResetCacheNeededCallback,
+      _lastDailyBar
     ) {
       try {
+        initializeWebSocket();
         const paramStr = generateSubscriptionParamFromUID(subscribeUID);
         const obj = {
           method: "SUBSCRIBE",
           params: [paramStr],
           id: 2,
         };
-        const binanceWsBaseUrl = BASE_URL()?.binanceWsBase;
-        const webSocketService = WebSocketClient.getInstance(binanceWsBaseUrl);
-        webSocketService.addListener("open", () => {
-          WebSocketClient.getInstance(binanceWsBaseUrl).sendMessage(
-            JSON.stringify(obj)
-          );
-        });
-        webSocketService.addListener("WebSocketMessage", (message: string) => {
-          if (message) {
-            helperOnMessage(message, paramStr, onRealtimeCallback);
-          }
-        });
+
+        if (connectingLive) {
+          webSocketService.sendMessage(JSON.stringify(obj));
+        }
 
         streams[subscribeUID] = {
           paramStr,
           listener: onRealtimeCallback,
         };
       } catch (e) {
-        console.error(e, "cslkdfmvlsfknvklfsvlkdsnvldksnv");
+        console.error(e, "Error in subscribeOnStream");
       }
     },
 
-    unsubscribeFromStream: function (subscriberUID: string) {
+    unsubscribeFromStream: function (subscriberUID) {
       try {
-        const binanceWsBaseUrl = BASE_URL()?.binanceWsBase;
-
-        const subscriptionParams =
-          generateSubscriptionParamFromUID(subscriberUID);
+        const paramStr = generateSubscriptionParamFromUID(subscriberUID);
         const obj = {
           method: "UNSUBSCRIBE",
-          params: [subscriptionParams],
+          params: [paramStr],
           id: 1,
         };
-        WebSocketClient.getInstance(binanceWsBaseUrl).sendMessage(
-          JSON.stringify(obj)
-        );
-        // delete streams[subscriberUID];
+
+        if (connectingLive) {
+          webSocketService.sendMessage(JSON.stringify(obj));
+        }
+
+        delete streams[subscriberUID];
       } catch (e) {
-        console.error(e);
+        console.error(e, "Error in unsubscribeFromStream");
       }
     },
   };
