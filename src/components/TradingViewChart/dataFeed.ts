@@ -13,7 +13,7 @@ const getBinanceKlines = async (
   interval: string,
   startTime?: number,
   endTime?: number,
-  limit: number = 1500
+  limit?: number 
 ) => {
   if (lastStartTime && startTime === lastStartTime) {
     return [];

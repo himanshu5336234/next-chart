@@ -1,7 +1,7 @@
 import WebSocketClient from "@/helpers/WebSocketModule";
 import { BASE_URL } from "@/services/api-service/Base/index";
 
-const tvIntervals = {
+const tvIntervals:any = {
   "1s": "1s",
   1: "1m",
   3: "3m",
@@ -24,9 +24,9 @@ const tvIntervals = {
 };
 
 function helperOnMessage(
-  msg,
-  paramStr,
-  onRealtimeCallback
+  msg: string,
+  paramStr: any,
+  onRealtimeCallback: (arg0: { time: any; close: number; open: number; high: number; low: number; volume: number; closeTime: any; openTime: any; }) => void
 ) {
   const sData = JSON.parse(msg);
   try {
@@ -50,7 +50,7 @@ function helperOnMessage(
   }
 }
 
-const generateSubscriptionParamFromUID = function (subscriberUID) {
+const generateSubscriptionParamFromUID = function (subscriberUID: string) {
   const id = subscriberUID.split("_#_");
   localStorage.setItem(
     "user_pc_resolution_chart_density",
@@ -61,7 +61,7 @@ const generateSubscriptionParamFromUID = function (subscriberUID) {
 };
 
 const chartWS = () => {
-  const streams = {};
+  const streams:any = {};
   let connectingLive = false;
   let webSocketService:any;
 
@@ -71,7 +71,7 @@ const chartWS = () => {
       webSocketService = WebSocketClient.getInstance(binanceWsBaseUrl);
       webSocketService.addListener("open", () => {
         connectingLive = true;
-        Object.values(streams).forEach(({ paramStr }) => {
+        Object.values(streams).forEach(({ paramStr }:any) => {
           const obj = {
             method: "SUBSCRIBE",
             params: [paramStr],
@@ -80,8 +80,8 @@ const chartWS = () => {
           webSocketService.sendMessage(JSON.stringify(obj));
         });
       });
-      webSocketService.addListener("WebSocketMessage", (message) => {
-        Object.values(streams).forEach(({ paramStr, listener }) => {
+      webSocketService.addListener("WebSocketMessage", (message: string) => {
+        Object.values(streams).forEach(({ paramStr, listener }:any) => {
           helperOnMessage(message, paramStr, listener);
         });
       });
@@ -92,12 +92,12 @@ const chartWS = () => {
     tvIntervals,
 
     subscribeOnStream: function (
-      _symbolInfo,
-      _resolution,
-      onRealtimeCallback,
-      subscribeUID,
-      _onResetCacheNeededCallback,
-      _lastDailyBar
+      _symbolInfo: any,
+      _resolution: any,
+      onRealtimeCallback: any,
+      subscribeUID: string,
+      _onResetCacheNeededCallback: any,
+      _lastDailyBar: any
     ) {
       try {
         initializeWebSocket();
@@ -121,7 +121,7 @@ const chartWS = () => {
       }
     },
 
-    unsubscribeFromStream: function (subscriberUID) {
+    unsubscribeFromStream: function (subscriberUID: string) {
       try {
         const paramStr = generateSubscriptionParamFromUID(subscriberUID);
         const obj = {

@@ -1,4 +1,3 @@
-
 const initialState = {
   orderBook:{
     symbol: "",
@@ -23,11 +22,9 @@ export default function (state = initialState, action: { type: string; payload: 
     case "SET_DEPTH_UPDATE":
       return { ...state, depth: payload };
     case "SET_BINANCE_DATA":
-      const binanceDataCopy: any = state.binanceData;
-      binanceDataCopy[payload.symbol] = payload.data;
       return {
         ...state,
-        binanceData: binanceDataCopy,
+        binanceData: {...state.binanceData, [payload.symbol]: payload.data},
       };
 
     case "SET_BINANCE_MARKET_DATA":

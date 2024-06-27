@@ -3,7 +3,8 @@ import {
   DocumentHeadTags,
   documentGetInitialProps,
 } from "@mui/material-nextjs/v13-pagesRouter";
-export default function Document(props) {
+import { JSX } from "react";
+export default function Document(props:any) {
   return (
     <Html lang="en">
       <Head>

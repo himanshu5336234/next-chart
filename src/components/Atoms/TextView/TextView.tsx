@@ -11,7 +11,7 @@ interface TextViewProp {
   variant?: any;
   color?: string;
   onClick?: () => void;
-  style?: {};
+  style?: any;
   children?: ReactNode;
   textAlign?: "inherit" | "left" | "center" | "right" | "justify";
 }

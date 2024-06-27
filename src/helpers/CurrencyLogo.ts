@@ -1,6 +1,6 @@
 const FORMAT_REGEX = /{-?[0-9]+}/g;
-export function Format(str, ...args) {
-  return str.replace(FORMAT_REGEX, (item) => {
+export function Format(str: string, ...args: (string | undefined)[]) {
+  return str.replace(FORMAT_REGEX, (item):any => {
     const intVal = parseInt(item.substring(1, item.length - 1), 10);
     let replace;
     if (intVal >= 0) {
