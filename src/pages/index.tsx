@@ -1,11 +1,96 @@
 import Head from "next/head";
-
-import { Inter } from "next/font/google";
 import { TradingViewChart } from "@/TradingViewChart/TradingViewChart/TradingViewChart";
-import { Button } from "@mui/material"
-const inter = Inter({ subsets: ["latin"] });
+import { Box } from "@mui/material";
+import CustomButton from "@/components/Atoms/CustomButton/CustomButton";
+import { useEffect, useState } from "react";
+import WebSocketClient from "@/helpers/WebSocketModule";
+import { BASE_URL } from "@/services/api-service/Base/index";
 
+const selectedOption = "BTCUSDT"
 export default function Home() {
+  const [websocketMarketClientIsOpen, setwebsocketMarketClientIsOpen] = useState(false)
+  const handleOpen = () => {
+    setwebsocketMarketClientIsOpen(true)
+  };
+
+  const sendMessage = (binanceWsBaseUrl: string, message: string) => {
+    WebSocketClient.getInstance(binanceWsBaseUrl).sendMessage(message);
+  };
+
+  const handleMessageEvent = (message: string) => {
+    if (message) {
+      const { data } = JSON.parse(message);
+      if (data) {
+        const bData: any = {};
+        switch (data.e) {
+          case "markPriceUpdate":
+            bData[`${data.s.toLowerCase()}@markPrice`] = data.p;
+            break;
+          case "24hrTicker":
+            bData[`${data.s.toLowerCase()}@per`] = data.P;
+            bData[`${data.s.toLowerCase()}@ticker`] = data.c;
+            bData[`${data.s.toLowerCase()}@low`] = data.l;
+            bData[`${data.s.toLowerCase()}@high`] = data.h;
+            bData[`${data.s.toLowerCase()}@volumn`] = data.q;
+            break;
+          // case "depthUpdate": {
+          //   if (data?.a.length > 0) dispatch({ type: "SET_ASKS", payload: data });
+          //   if (data?.b.length > 0) dispatch({ type: "SET_BIDS", payload: data });
+          //   break;
+          // }
+          default:
+            break;
+        }
+        // if (Object.keys(bData).length > 0) {
+        //   dispatch({ type: "SET_BINANCE_MARKET_DATA", payload: bData });
+        // }
+      }
+    }
+  };
+
+  const getSubscriptionPayload = (selectedOption: string, method: string) => {
+    const demo: any = {
+      method: method,
+      params: [],
+      id: 1,
+    };
+    const params: string[] = [];
+    params.push(`${selectedOption.toLowerCase()}@ticker`);
+    params.push(`${selectedOption.toLowerCase()}@markPrice@1s`);
+    params.push(`${selectedOption.toLowerCase()}@depth10`);
+    demo.params = params;
+    return demo;
+  };
+
+
+  useEffect(() => {
+    let webSocketService: any;
+    const binanceWsBaseUrl = BASE_URL()?.binanceWsBase;
+
+    if (binanceWsBaseUrl) {
+      webSocketService = WebSocketClient.getInstance(binanceWsBaseUrl);
+      webSocketService.addListener("open", handleOpen);
+      webSocketService.addListener("WebSocketMessage", handleMessageEvent);
+    }
+
+    if (selectedOption && selectedOption.length > 0 && websocketMarketClientIsOpen && binanceWsBaseUrl) {
+      const sub = getSubscriptionPayload(selectedOption, "SUBSCRIBE");
+      if (sub.params.length > 0) {
+        sendMessage(binanceWsBaseUrl, JSON.stringify(sub));
+      }
+    }
+
+    return () => {
+      if (binanceWsBaseUrl && selectedOption && websocketMarketClientIsOpen && selectedOption.length > 0) {
+        const unsub = getSubscriptionPayload(selectedOption, "UNSUBSCRIBE");
+        if (unsub.params.length > 0) {
+          sendMessage(binanceWsBaseUrl, JSON.stringify(unsub));
+          webSocketService.removeAllListeners();
+        }
+      }
+    };
+  }, [selectedOption, websocketMarketClientIsOpen])
+
   return (
     <>
       <Head>
@@ -15,8 +100,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
         <script type="text/javascript" src="charting_library/charting_library.js" defer></script>
       </Head>
-      <div style={{ height: "80vh" }}><TradingViewChart ID={0} res={""} /></div>
-      <Button>,njbhvgcf</Button>
+      <Box style={{ height: "80vh" }}><TradingViewChart ID={0} res={""} />
+        <CustomButton>vsfvk</CustomButton></Box>
     </>
   );
 }

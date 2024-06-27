@@ -87,7 +87,9 @@ background-color: transparent;
 ::-webkit-scrollbar-thumb {
   border-radius: 40px;
 }
-
+body{
+  margin: 0;
+}
 /* Handle on hover */
 ::selection {
   color: black;

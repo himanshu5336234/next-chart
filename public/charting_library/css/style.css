@@ -1,30 +1,45 @@
-
 @font-face {
-  font-family: "Neurial-Light";
-  src: url('/font/NeurialGrotesk-Light.woff') format("woff");
+  font-family: "text-Regular";
 
+  src: url('/fonts/Inter-Regular.woff') format("woff");
 }
 @font-face {
-  font-family: "Neurial-Regular";
+  font-family: "text-Medium";
 
-  src: url('/font/NeurialGrotesk-Regular.woff') format("woff");
-}
-@font-face {
-  font-family: "Neurial-Medium";
-
-  src: url('/font/NeurialGrotesk-Regular.woff') format("woff");
-  font-weight: 500;
+  src: url('/fonts/Inter-Medium.woff') format("woff");
+  font-weight: 400;
 }
 @font-face {
 
-  font-family: "Neurial-SemiBold";
-  src: url('/font/NeurialGrotesk-Bold.woff') format("woff");
+  font-family: "text-SemiBold";
+  src: url('/fonts/Inter-SemiBold.woff') format("woff");
 }
 @font-face {
-  font-family: "Neurial-Bold";
-
-  src: url('/font/NeurialGrotesk-Extrabold.woff') format("woff");
+  font-family: "text-Bold";
+  src: url('/fonts/Inter-Bold.woff') format("woff");
 }
+
+@font-face {
+  font-family: "number-Regular";
+
+  src: url('/fonts/Lato-Light.woff') format("woff");
+}
+@font-face {
+  font-family: "number-Medium";
+
+  src: url('/fonts/Lato-Regular.woff') format("woff");
+
+}
+@font-face {
+
+  font-family: "number-SemiBold";
+  src: url('/fonts/Lato-Bold.woff') format("woff");
+}
+@font-face {
+  font-family: "number-Bold";
+  src: url('/fonts/Lato-Black.woff') format("woff");
+}
+
 .theme-dark:root {
     --tv-color-platform-background: #1B1B1F;
     --tv-color-pane-background: #1B1B1F;
@@ -41,7 +56,7 @@ html.theme-dark .customButton-OOd_B2x2 ,.toolbar-uWw2aReP{
   font-feature-settings:"normal";
 }
 body{
-  font-family: "Neurial-Regular";
+  font-family: "text-Medium";
   letter-spacing: 0.7px;
   font-feature-settings:"normal";
 }
