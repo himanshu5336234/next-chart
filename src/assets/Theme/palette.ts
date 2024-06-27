@@ -1,7 +1,6 @@
-import { colors } from "./palleteConstants"
+import { colors } from "./palleteConstants";
 
 export const LightPalette = {
-  mode: 'light',
   primary: {
     main: colors.primary,
     light: colors.primaryTint1,
@@ -43,15 +42,14 @@ export const LightPalette = {
     900: colors.greyLightMode9,
     1000: colors.black,
   },
-}
+};
 
 // Dark theme
 
 export const darkPalette = {
-  mode: 'dark',
   primary: {
     main: colors.primary,
-  
+
     light: colors.primaryTint1,
     dark: colors.primaryShade4,
     contrastText: colors.black,
@@ -77,15 +75,14 @@ export const darkPalette = {
     modal: colors.greyDarkMode2,
   },
   border: {
-    primary: colors.greyDarkMode3
+    primary: colors.greyDarkMode3,
   },
   text: {
     primary: colors.white,
     secondary: colors.greyDarkMode3,
     tertiary: colors.greyDarkMode7,
-    
   },
-  
+
   grey: {
     100: colors.greyDarkMode1,
     200: colors.greyDarkMode2,
@@ -98,4 +95,4 @@ export const darkPalette = {
     900: colors.greyDarkMode9,
     1000: colors.black,
   },
-}
+};

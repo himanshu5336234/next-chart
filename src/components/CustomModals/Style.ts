@@ -12,8 +12,8 @@ export const CONTIANER = {
   transform: "translate(-50%, -50%)",
   backgroundColor: "background.modal",
   "&:focus-visible": {
-    outline: "none"
-  }
+    outline: "none",
+  },
 };
 export const BUTTONWRAPPER = {
   display: "flex",
@@ -23,7 +23,7 @@ export const BUTTONWRAPPER = {
   px: 1,
   mt: 0,
   justifyContent: "flex-end",
-  gap: "15px"
+  gap: "15px",
 };
 
 export const BUTTONWRAPPERCENTRE = {
@@ -34,18 +34,18 @@ export const BUTTONWRAPPERCENTRE = {
   px: 1,
   mt: 0,
   justifyContent: "center",
-  marginTop: "5rem"
+  marginTop: "5rem",
 };
 
 export const PRIMARYBUTTON = {
-  maxWidth: "132px"
+  maxWidth: "132px",
 };
 export const SECONDARYBUTTON = {
-  maxWidth: "132px"
+  maxWidth: "132px",
 };
 export const SPACE_BETWEEN = {
   display: "flex",
-  justifyContent: "space-between"
+  justifyContent: "space-between",
 };
 export const MODAL_WRAPPER = {
   display: "flex",
@@ -53,7 +53,7 @@ export const MODAL_WRAPPER = {
   alignItems: "center",
   gap: "16px",
   justifyContent: "center",
-  p: 3
+  p: 3,
 };
 export const REPORT_ICON = { color: "#F46151", fontSize: "60px" };
 export const DONE_ICON = { color: "black", fontSize: "40px" };
@@ -62,30 +62,30 @@ export const TITLE_CENTER = { fontSize: "28px", textAlign: "center" };
 export const DONE_ICON_WRAPPER = {
   backgroundColor: "#27BD67",
   width: "62px",
-  height: "62px"
+  height: "62px",
 };
 export const LOADER_WRAPPER = {
   maxWidth: "600px",
   mx: "auto",
-  background: "#1F1F24"
+  background: "#1F1F24",
 };
 export const LOADER_BOX = {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  justifyContent: "space-evenly"
+  justifyContent: "space-evenly",
 };
 export const BOX_SQUARE = {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  justifyContent: "space-evenly"
+  justifyContent: "space-evenly",
 };
 export const SMALL_TEXT_CENTER = { textAlign: "center", fontSize: "12px" };
 export const DESCRIPTION_TEXT = {
   textAlign: "center",
   fontSize: "16px",
-  color: "text.mild"
+  color: "text.mild",
 };
 export const CENTER_TEXT = { textAlign: "center" };
 export const STATUS_MODAL_WRAPPER_TYPE_1 = {
@@ -94,11 +94,11 @@ export const STATUS_MODAL_WRAPPER_TYPE_1 = {
   alignItems: "center",
   gap: 3,
   justifyContent: "center",
-  py: 2
+  py: 2,
 };
 export const toggleButtonStyles = {
   fontSize: "12px",
   height: "32px",
   alignItems: "center",
-  width: "93px"
+  width: "93px",
 };

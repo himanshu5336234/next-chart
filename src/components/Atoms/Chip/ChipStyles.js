@@ -9,5 +9,5 @@ export const ChipStyle = {
   py: 0.5,
   px: 1,
   borderRadius: "4px",
-  textAlign: "center"
-}
+  textAlign: "center",
+};

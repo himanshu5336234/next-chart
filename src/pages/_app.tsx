@@ -1,4 +1,4 @@
-import "../styles/globals.css"
+import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { AppCacheProvider } from "@mui/material-nextjs/v13-pagesRouter";
 import { ThemeProvider } from "@mui/material/styles";
@@ -8,8 +8,8 @@ export default function App(props: AppProps) {
   return (
     <>
       <AppCacheProvider {...props}>
-      <ThemeProvider theme={darkTheme}>
-        <Component {...pageProps} />
+        <ThemeProvider theme={darkTheme}>
+          <Component {...pageProps} />
         </ThemeProvider>
       </AppCacheProvider>
     </>

@@ -14,11 +14,19 @@ const getDurationRange = (duration: string) => {
       break;
     case "month":
     case "1 Month":
-      from = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate()).getTime(); // Subtracting 1 month in milliseconds
+      from = new Date(
+        now.getFullYear(),
+        now.getMonth() - 1,
+        now.getDate()
+      ).getTime(); // Subtracting 1 month in milliseconds
       break;
     case "three-months":
     case "3 Month":
-      from = new Date(now.getFullYear(), now.getMonth() - 3, now.getDate()).getTime(); // Subtracting 3 months in milliseconds
+      from = new Date(
+        now.getFullYear(),
+        now.getMonth() - 3,
+        now.getDate()
+      ).getTime(); // Subtracting 3 months in milliseconds
       break;
     case "all":
     case "All":

@@ -1,6 +1,8 @@
-
 import { numberWithCommas } from "./commaHelper";
-export const convertToPrecisionValueInContractAssetUnit = (value: string, Precision: number) => {
+export const convertToPrecisionValueInContractAssetUnit = (
+  value: string,
+  Precision: number
+) => {
   let numStr = value?.toString();
   if (numStr.startsWith(".")) {
     numStr = `0${numStr}`; // Add a leading zero
@@ -18,7 +20,11 @@ export const convertToPrecisionValueInContractAssetUnit = (value: string, Precis
   }
 };
 export const setDecimalPrecision = (value: string, precision: number) => {
-  const res = convertToPrecisionValueInContractAssetUnit(value, Number(precision));
-  return value !== ("undefined" && "-") ? numberWithCommas(Number(res).toFixed(precision)) : "--";
+  const res = convertToPrecisionValueInContractAssetUnit(
+    value,
+    Number(precision)
+  );
+  return value !== ("undefined" && "-")
+    ? numberWithCommas(Number(res).toFixed(precision))
+    : "--";
 };
-

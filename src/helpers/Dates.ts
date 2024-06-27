@@ -1,12 +1,20 @@
-export const epochToDateConvertor = (date: number) => new Date(Number(date)).toLocaleString();
+export const epochToDateConvertor = (date: number) =>
+  new Date(Number(date)).toLocaleString();
 
-export const UTCToDateConvertor = (date: number) => new Date(date).toLocaleString();
+export const UTCToDateConvertor = (date: number) =>
+  new Date(date).toLocaleString();
 
-export const dateStringConvertor = (date: number) => String(date).replace(/\//g, ".");
+export const dateStringConvertor = (date: number) =>
+  String(date).replace(/\//g, ".");
 
-export const dateToEpochConvertor = (dates: number) => Math.floor(new Date(dates).getTime() / 1000);
+export const dateToEpochConvertor = (dates: number) =>
+  Math.floor(new Date(dates).getTime() / 1000);
 
-export function isTimeDifferenceMoreThanThreshold(timestamp1: number, timestamp2: number, threshold = 1) {
+export function isTimeDifferenceMoreThanThreshold(
+  timestamp1: number,
+  timestamp2: number,
+  threshold = 1
+) {
   const diffInMillis = Math.abs(timestamp1 - timestamp2);
   const oneMinuteInMillis = threshold * 60 * 1000;
 

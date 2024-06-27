@@ -26,7 +26,7 @@ const Msg = ({ type, title, close, heading }) => {
         display: "flex",
         alignItems: "flex-start",
         justifyContent: "space-between",
-        width: "100%"
+        width: "100%",
       }}
     >
       <Box
@@ -34,20 +34,32 @@ const Msg = ({ type, title, close, heading }) => {
           display: "flex",
           alignItems: "center",
           gap: 2,
-          width: "100%"
+          width: "100%",
         }}
       >
         {getImage()}
         <Box>
-          <Typography component={"p"} variant="Medium_20" color={"text.primary"}>
+          <Typography
+            component={"p"}
+            variant="Medium_20"
+            color={"text.primary"}
+          >
             {heading}
           </Typography>
-          <Typography component={"p"} mt={1} variant="Medium_12" color={"text.primary"}>
+          <Typography
+            component={"p"}
+            mt={1}
+            variant="Medium_12"
+            color={"text.primary"}
+          >
             {title}
           </Typography>
         </Box>
       </Box>
-      <CloseIcon sx={{ width: "17px", color: "white", cursor: "pointer" }} onClick={close} />
+      <CloseIcon
+        sx={{ width: "17px", color: "white", cursor: "pointer" }}
+        onClick={close}
+      />
     </Box>
   );
 };
@@ -61,28 +73,49 @@ const CustomSnackbarNew = ({
   handleIsSnackbarOpen,
   snackbarActionDefault,
   snackbarSubTitle,
-  alertTimer
+  alertTimer,
 }) => {
   useEffect(() => {
     if (snackbarTitle) {
       switch (snackbarType) {
         case "success":
-          toast(<Msg type={"SUCCESS"} title={snackbarTitle} heading={"Updated Successfully"} />, {
-            className: "toast-success",
-            onClose: snackbarActionDefault
-          });
+          toast(
+            <Msg
+              type={"SUCCESS"}
+              title={snackbarTitle}
+              heading={"Updated Successfully"}
+            />,
+            {
+              className: "toast-success",
+              onClose: snackbarActionDefault,
+            }
+          );
           break;
         case "warning":
-          toast(<Msg type={"WARNING"} title={snackbarTitle} heading={"Update Pending"} />, {
-            className: "toast-warning",
-            onClose: snackbarActionDefault
-          });
+          toast(
+            <Msg
+              type={"WARNING"}
+              title={snackbarTitle}
+              heading={"Update Pending"}
+            />,
+            {
+              className: "toast-warning",
+              onClose: snackbarActionDefault,
+            }
+          );
           break;
         default:
-          toast(<Msg type={"ERROR"} title={snackbarTitle} heading={"Update Failed!"} />, {
-            className: "toast-error",
-            onClose: snackbarActionDefault
-          });
+          toast(
+            <Msg
+              type={"ERROR"}
+              title={snackbarTitle}
+              heading={"Update Failed!"}
+            />,
+            {
+              className: "toast-error",
+              onClose: snackbarActionDefault,
+            }
+          );
       }
     }
   }, [snackbarTitle]);
@@ -108,12 +141,17 @@ CustomSnackbarNew.propTypes = {
   snackbarActionName: PropTypes.string,
   snackbarActionHandler: PropTypes.func,
   snackbarContext: PropTypes.object,
-  snackbarType: PropTypes.oneOf(["success", "information", "warning", "failure"]).isRequired,
+  snackbarType: PropTypes.oneOf([
+    "success",
+    "information",
+    "warning",
+    "failure",
+  ]).isRequired,
   isSnackbarOpen: PropTypes.bool.isRequired,
   handleIsSnackbarOpen: PropTypes.func.isRequired,
   snackbarActionDefault: PropTypes.func.isRequired,
   snackbarSubTitle: PropTypes.string,
-  alertTimer: PropTypes.number
+  alertTimer: PropTypes.number,
 };
 CustomSnackbarNew.defaultProps = {
   snackbarTitle: "Error! Please Try again",
@@ -122,13 +160,13 @@ CustomSnackbarNew.defaultProps = {
   snackbarType: "failure",
   snackbarActionHandler: () => null,
   isSnackbarOpen: false,
-  alertTimer: 2000
+  alertTimer: 2000,
 };
 
 Msg.propTypes = {
   title: PropTypes.string,
   type: PropTypes.string,
   close: PropTypes.func,
-  heading: PropTypes.string
+  heading: PropTypes.string,
 };
 export default CustomSnackbarNew;

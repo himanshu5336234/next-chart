@@ -12,9 +12,22 @@ const OrderBookTable = ({ asksOrBids }: { asksOrBids: string }) => {
   const symbol = useSelector((state: any) => state.selectSymbol.selectedSymbol);
   const OrderBookl = useSelector((state: any) => state.OrderBook);
 
-  const { convertToPrecisionValueInContractAssetUnit, setDecimalPrecision, symbolPricePrecision, symbolQuantityPrecision } = SymbolPrecisionHelper({ symbol });
+  const {
+    convertToPrecisionValueInContractAssetUnit,
+    setDecimalPrecision,
+    symbolPricePrecision,
+    symbolQuantityPrecision,
+  } = SymbolPrecisionHelper({ symbol });
   return (
-    <Box sx={{ height: "calc(100% - 70px)", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+    <Box
+      sx={{
+        height: "calc(100% - 70px)",
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       {OrderBookl.loading && <Loader circular={true} />}
       {!OrderBookl.loading && (
         <Box height={"100%"} width={"100%"} overflow={"hidden"} ref={ref}>
@@ -22,7 +35,9 @@ const OrderBookTable = ({ asksOrBids }: { asksOrBids: string }) => {
             <OrderBookRowWrapper
               orders={OrderBookl}
               height={asksOrBids === "ALL" ? ref2 / 2 - 17.5 : ref2 - 35}
-              convertToPrecisionValueInContractAssetUnit={convertToPrecisionValueInContractAssetUnit}
+              convertToPrecisionValueInContractAssetUnit={
+                convertToPrecisionValueInContractAssetUnit
+              }
               orderType={"asksSnapShot"}
               symbolPricePrecision={symbolPricePrecision}
               symbolQuantityPrecision={symbolQuantityPrecision}
@@ -32,16 +47,25 @@ const OrderBookTable = ({ asksOrBids }: { asksOrBids: string }) => {
           <Box
             sx={{
               height: "35px",
-              textAlign: "left"
+              textAlign: "left",
             }}
           >
-            <LastTradedPrice id={"orderbook-ltp"} arrow symbolPricePrecision={symbolPricePrecision} variant="SemiBold_18" convertToPrecisionValueForPrice={setDecimalPrecision} symbol={symbol} />
+            <LastTradedPrice
+              id={"orderbook-ltp"}
+              arrow
+              symbolPricePrecision={symbolPricePrecision}
+              variant="SemiBold_18"
+              convertToPrecisionValueForPrice={setDecimalPrecision}
+              symbol={symbol}
+            />
           </Box>
           {(asksOrBids === "ALL" || asksOrBids === "BIDS") && (
             <OrderBookRowWrapper
               orders={OrderBookl}
               height={asksOrBids === "ALL" ? ref2 / 2 - 17.5 : ref2 - 35}
-              convertToPrecisionValueInContractAssetUnit={convertToPrecisionValueInContractAssetUnit}
+              convertToPrecisionValueInContractAssetUnit={
+                convertToPrecisionValueInContractAssetUnit
+              }
               orderType={"bidsSnapShot"}
               symbolPricePrecision={symbolPricePrecision}
               symbolQuantityPrecision={symbolQuantityPrecision}

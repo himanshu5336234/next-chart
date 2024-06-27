@@ -38,10 +38,9 @@ function helperOnMessage(
 ) {
   const sData = JSON.parse(msg);
   try {
-
     if (sData.stream === paramStr && sData.data.k) {
       const { o, h, l, v, c, T, t } = sData.data.k;
-   
+
       const lastSocketData = {
         time: t,
         close: Number(c),
@@ -52,7 +51,7 @@ function helperOnMessage(
         closeTime: T,
         openTime: t,
       };
-      console.log(lastSocketData,"sDatasDatasData");
+      // console.log(lastSocketData, "sDatasDatasData");
       onRealtimeCallback(lastSocketData);
     }
   } catch (e) {

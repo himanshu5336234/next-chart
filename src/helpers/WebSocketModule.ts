@@ -84,7 +84,10 @@ class WebSocketClient {
     if (this.socket && this.socket.readyState === WebSocket.OPEN) {
       this.socket.send(message);
     } else {
-      console.log("WebSocket is not open. ReadyState:", this.socket?.readyState);
+      console.log(
+        "WebSocket is not open. ReadyState:",
+        this.socket?.readyState
+      );
     }
   }
 

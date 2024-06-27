@@ -4,7 +4,13 @@ import Both from "@/assets/images/orderBook/Both.svg";
 import Asks from "@/assets/images/orderBook/Asks.svg";
 import Bids from "@/assets/images/orderBook/Bids.svg";
 
-const AskOrbids = ({ asksOrBids, handleTabsChange }: { asksOrBids: string; handleTabsChange: Function }) => {
+const AskOrbids = ({
+  asksOrBids,
+  handleTabsChange,
+}: {
+  asksOrBids: string;
+  handleTabsChange: Function;
+}) => {
   return (
     <Box
       sx={{
@@ -12,13 +18,43 @@ const AskOrbids = ({ asksOrBids, handleTabsChange }: { asksOrBids: string; handl
         display: "flex",
         height: "20px",
         justifyContent: "space-between",
-        m: 1
+        m: 1,
       }}
     >
       <Box sx={{ display: "flex", gap: 2 }}>
-        <Box onClick={() => handleTabsChange("ALL")} sx={{ height: "10px", cursor: "pointer", filter: `${asksOrBids !== "ALL" ? "opacity(0.4)" : ""}` }} component={"img"} src={Both} alt="All" />
-        <Box onClick={() => handleTabsChange("ASKS")} sx={{ height: "10px", cursor: "pointer", filter: `${asksOrBids !== "ASKS" ? "opacity(0.4)" : ""}` }} component={"img"} src={Asks} alt="Asks" />
-        <Box onClick={() => handleTabsChange("BIDS")} sx={{ height: "10px", cursor: "pointer", filter: `${asksOrBids !== "BIDS" ? "opacity(0.4)" : ""}` }} component={"img"} src={Bids} alt="Bids" />
+        <Box
+          onClick={() => handleTabsChange("ALL")}
+          sx={{
+            height: "10px",
+            cursor: "pointer",
+            filter: `${asksOrBids !== "ALL" ? "opacity(0.4)" : ""}`,
+          }}
+          component={"img"}
+          src={Both}
+          alt="All"
+        />
+        <Box
+          onClick={() => handleTabsChange("ASKS")}
+          sx={{
+            height: "10px",
+            cursor: "pointer",
+            filter: `${asksOrBids !== "ASKS" ? "opacity(0.4)" : ""}`,
+          }}
+          component={"img"}
+          src={Asks}
+          alt="Asks"
+        />
+        <Box
+          onClick={() => handleTabsChange("BIDS")}
+          sx={{
+            height: "10px",
+            cursor: "pointer",
+            filter: `${asksOrBids !== "BIDS" ? "opacity(0.4)" : ""}`,
+          }}
+          component={"img"}
+          src={Bids}
+          alt="Bids"
+        />
       </Box>
       <Box>
         {" "}

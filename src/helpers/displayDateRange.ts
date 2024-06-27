@@ -6,6 +6,8 @@ export const displayDateRange = (dateRange: { from: any; to: any }) => {
   } else if (dateRange.from === dateRange.to) {
     return epochToDateShortFormat(dateRange.from);
   } else {
-    return `${epochToDateShortFormat(dateRange.from)} to ${epochToDateShortFormat(dateRange.to)}`;
+    return `${epochToDateShortFormat(
+      dateRange.from
+    )} to ${epochToDateShortFormat(dateRange.to)}`;
   }
 };

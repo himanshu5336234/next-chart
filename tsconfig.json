@@ -1,21 +1,71 @@
+// {
+//   "compilerOptions": {
+//     "lib": ["dom", "dom.iterable", "esnext"],
+//     "allowJs": true,
+//     "skipLibCheck": true,
+//     "strict": true,
+//     "noEmit": true,
+//     "esModuleInterop": true,
+//     "module": "esnext",
+//     "moduleResolution": "bundler",
+//     "resolveJsonModule": true,
+//     "isolatedModules": true,
+//     "jsx": "preserve",
+//     "incremental": true,
+//     "paths": {
+//       "@/*": ["./src/*"]
+//     }
+//   },
+
+//   "exclude": ["node_modules"]
+// }
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    
+    "baseUrl": ".",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "experimentalDecorators": true,
+    "typeRoots": [
+      "./types",
+      "./node_modules/@types"
+    ],
+    "target": "es5",
+    "paths": {
+      "@": [
+        "src"
+      ],
+      "@/*": [
+        "src/*"
+      ],
+    },
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx",   "src/**/*",],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx",],
+  // tions/Tradingjourney/TradingJourneyContent.jsx", "app/components/Sections/Whydensity/WhyDensityContent.jsx", "sanity-cms/schemas/blog.ts", "app/api", "sanity-cms/lib/client.ts", "sanity-cms/db/processblogs.mjs", "app/api/sanity-algolia.ts"  ]
 }

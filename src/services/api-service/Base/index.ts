@@ -3,7 +3,7 @@ export const REQUEST_TYPE = {
   POST: "post",
   PUT: "put",
   DELETE: "delete",
-  PATCH: "patch"
+  PATCH: "patch",
 };
 
 export const envVariable = () => {
@@ -12,7 +12,7 @@ export const envVariable = () => {
 export const deploymentEnv = {
   PROD: "production",
   STAGING: "staging",
-  DEV: "development"
+  DEV: "development",
 };
 
 export const BASE_URL = () => {
@@ -23,16 +23,16 @@ export const BASE_URL = () => {
     case deploymentEnv.PROD:
     case deploymentEnv.STAGING:
       densityBaseUrl = "https://api-coin.density.exchange";
-      binanceWsBase ="wss://fstream.binance.com/stream"
+      binanceWsBase = "wss://fstream.binance.com/stream";
       break;
     case deploymentEnv.DEV:
     default:
       densityBaseUrl = "https://api-coin.density.exchange";
-      binanceWsBase ="wss://fstream.binance.com/stream"
+      binanceWsBase = "wss://fstream.binance.com/stream";
       break;
   }
   return {
     densityBaseUrl,
-    binanceWsBase
+    binanceWsBase,
   };
 };

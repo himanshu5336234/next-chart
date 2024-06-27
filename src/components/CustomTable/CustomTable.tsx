@@ -1,5 +1,18 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Collapse, IconButton, Box, CircularProgress, Typography } from "@mui/material";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Collapse,
+  IconButton,
+  Box,
+  CircularProgress,
+  Typography,
+} from "@mui/material";
 import NoTableDataIcon from "@/assets/images/NoTableDataIcon.svg";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 import TextView from "../Atoms/TextView/TextView";
@@ -25,7 +38,13 @@ interface CustomTableProps {
 interface FiltersType {
   [key: string]: any;
 }
-const CustomTable = ({ fetchData, columns, expandable = false, height = "30vh", filters }: CustomTableProps) => {
+const CustomTable = ({
+  fetchData,
+  columns,
+  expandable = false,
+  height = "30vh",
+  filters,
+}: CustomTableProps) => {
   const [data, setData] = useState<RowDataType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
@@ -46,7 +65,7 @@ const CustomTable = ({ fetchData, columns, expandable = false, height = "30vh", 
   const lastElementRef = useCallback((node: HTMLTableRowElement | null) => {
     if (observer.current) observer.current.disconnect();
     observer.current = new IntersectionObserver((entries) => {
-      // TODO: check if all data already rendered i.e HasMore() and set page 
+      // TODO: check if all data already rendered i.e HasMore() and set page
       if (entries[0].isIntersecting) {
         setPage((prevPage) => prevPage + 1);
       }
@@ -70,7 +89,7 @@ const CustomTable = ({ fetchData, columns, expandable = false, height = "30vh", 
         borderTopRightRadius: "8px",
         borderColor: "border.primary",
         borderWidth: "1px",
-        borderStyle: "solid"
+        borderStyle: "solid",
       }}
     >
       <Table
@@ -78,22 +97,22 @@ const CustomTable = ({ fetchData, columns, expandable = false, height = "30vh", 
         sx={{
           "& .MuiTableCell-head": {
             backgroundColor: "grey.200",
-            color: "text.tertiary"
+            color: "text.tertiary",
           },
           "& .MuiTableCell-root": {
             borderBottomWidth: "1px",
             borderBottomStyle: "solid",
             borderBottomColor: "border.primary",
             padding: "12px 16px",
-            color: "text.white"
+            color: "text.white",
           },
           "& .MuiIconButton-root": {
-            color: "grey.700"
+            color: "grey.700",
           },
           "& .MuiCollapse-root": {
             backgroundColor: "grey.200",
-            padding: "24px 32px"
-          }
+            padding: "24px 32px",
+          },
         }}
       >
         <TableHead>
@@ -109,20 +128,39 @@ const CustomTable = ({ fetchData, columns, expandable = false, height = "30vh", 
             <React.Fragment key={row.id}>
               <TableRow ref={index === data.length - 1 ? lastElementRef : null}>
                 {columns.map((column) => (
-                  <TableCell key={column.field}>{column.renderCell ? column.renderCell(row[column.field], row) : row[column.field]}</TableCell>
+                  <TableCell key={column.field}>
+                    {column.renderCell
+                      ? column.renderCell(row[column.field], row)
+                      : row[column.field]}
+                  </TableCell>
                 ))}
                 {expandable && (
                   <TableCell>
-                    <IconButton aria-label="expand row" size="small" onClick={() => handleExpandClick(index)}>
-                      {expandedRow === index ? <KeyboardArrowUp fontSize="medium" /> : <KeyboardArrowDown fontSize="medium" />}
+                    <IconButton
+                      aria-label="expand row"
+                      size="small"
+                      onClick={() => handleExpandClick(index)}
+                    >
+                      {expandedRow === index ? (
+                        <KeyboardArrowUp fontSize="medium" />
+                      ) : (
+                        <KeyboardArrowDown fontSize="medium" />
+                      )}
                     </IconButton>
                   </TableCell>
                 )}
               </TableRow>
               {expandable && expandedRow === index && (
                 <TableRow>
-                  <TableCell sx={{ padding: "0 !important" }} colSpan={columns.length + 1}>
-                    <Collapse in={expandedRow === index} timeout="auto" unmountOnExit>
+                  <TableCell
+                    sx={{ padding: "0 !important" }}
+                    colSpan={columns.length + 1}
+                  >
+                    <Collapse
+                      in={expandedRow === index}
+                      timeout="auto"
+                      unmountOnExit
+                    >
                       {row.details}
                     </Collapse>
                   </TableCell>
@@ -132,8 +170,18 @@ const CustomTable = ({ fetchData, columns, expandable = false, height = "30vh", 
           ))}
           {loading && (
             <TableRow>
-              <TableCell colSpan={columns.length + (expandable ? 1 : 0)} align="center">
-                <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+              <TableCell
+                colSpan={columns.length + (expandable ? 1 : 0)}
+                align="center"
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100%",
+                  }}
+                >
                   <CircularProgress color="primary" />
                 </Box>
               </TableCell>
@@ -141,23 +189,29 @@ const CustomTable = ({ fetchData, columns, expandable = false, height = "30vh", 
           )}
           {data.length === 0 && !loading && (
             <TableRow>
-              <TableCell colSpan={columns.length + (expandable ? 1 : 0)} align="center">
-
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                zIndex: 1,
-                marginBlock: 5,
-              }}
+              <TableCell
+                colSpan={columns.length + (expandable ? 1 : 0)}
+                align="center"
               >
-              <img src={NoTableDataIcon} alt="No Data" style={{marginBottom: 10}} />
-              <TextView variant="Regular_18" color="text.secondary">
-                No orders so far
-              </TextView>
-            </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    zIndex: 1,
+                    marginBlock: 5,
+                  }}
+                >
+                  <img
+                    src={NoTableDataIcon}
+                    alt="No Data"
+                    style={{ marginBottom: 10 }}
+                  />
+                  <TextView variant="Regular_18" color="text.secondary">
+                    No orders so far
+                  </TextView>
+                </Box>
               </TableCell>
             </TableRow>
           )}

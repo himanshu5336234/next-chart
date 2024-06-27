@@ -1,4 +1,3 @@
-
 import axios from "axios";
 import { configurationData } from "./helpers";
 import chartWS from "./streaming";
@@ -6,16 +5,23 @@ import chartWS from "./streaming";
 const binanceBaseUrl = "https://fapi.binance.com";
 const lastBarsCache = new Map();
 
-let allSymbols: any = []
+const allSymbols: any = [];
 //  JSON.parse((window as any).localStorage.getItem("tradablesymbolList"));
 let lastStartTime: any;
-const getBinanceKlines = (symbol: string, interval: any, startTime: any, endTime: any, limit: number) => {
+const getBinanceKlines = (
+  symbol: string,
+  interval: any,
+  startTime: any,
+  endTime: any,
+  limit: number
+) => {
   if (lastStartTime && startTime === lastStartTime) {
     return [];
   }
   lastStartTime = startTime;
-  const url = `${binanceBaseUrl}/fapi/v1/continuousKlines?pair=${symbol}&contractType=PERPETUAL&interval=${interval}${startTime ? `&startTime=${startTime}` : ""}${endTime ? `&endTime=${endTime}` : ""
-    }${limit ? `&limit=${limit}` : ""}`;
+  const url = `${binanceBaseUrl}/fapi/v1/continuousKlines?pair=${symbol}&contractType=PERPETUAL&interval=${interval}${
+    startTime ? `&startTime=${startTime}` : ""
+  }${endTime ? `&endTime=${endTime}` : ""}${limit ? `&limit=${limit}` : ""}`;
   return axios
     .get(url)
     .then((res: { data: any }) => {
@@ -31,14 +37,31 @@ function pricescale(symbol: string) {
   return Math.pow(10, Number(0.0));
 }
 
-async function getKlines(from: any, to: any, symbolInfo: { name: string }, interval: any) {
+async function getKlines(
+  from: any,
+  to: any,
+  symbolInfo: { name: string },
+  interval: any
+) {
   let totalKlines: any[] = [];
   const kLinesLimit = 1500;
   try {
-    let data = await getBinanceKlines(symbolInfo.name, interval, from, to, kLinesLimit);
+    let data = await getBinanceKlines(
+      symbolInfo.name,
+      interval,
+      from,
+      to,
+      kLinesLimit
+    );
     totalKlines = [...totalKlines, ...data];
     while (data.length === kLinesLimit) {
-      data = await getBinanceKlines(symbolInfo.name, interval, from, to, kLinesLimit);
+      data = await getBinanceKlines(
+        symbolInfo.name,
+        interval,
+        from,
+        to,
+        kLinesLimit
+      );
       totalKlines = [...totalKlines, ...data];
     }
     const historyCBArray = totalKlines.map((kline) => ({
@@ -47,7 +70,7 @@ async function getKlines(from: any, to: any, symbolInfo: { name: string }, inter
       high: Number(kline[2]),
       low: Number(kline[3]),
       close: Number(kline[4]),
-      volume: Number(kline[5])
+      volume: Number(kline[5]),
     }));
     return historyCBArray;
   } catch (err) {
@@ -57,7 +80,14 @@ async function getKlines(from: any, to: any, symbolInfo: { name: string }, inter
 const { subscribeOnStream, unsubscribeFromStream, tvIntervals } = chartWS();
 
 const dataFeed = {
-  onReady: (callback: (arg0: { supports_marks: boolean; supports_timescale_marks: boolean; supports_time: boolean; supported_resolutions: string[] }) => void) => {
+  onReady: (
+    callback: (arg0: {
+      supports_marks: boolean;
+      supports_timescale_marks: boolean;
+      supports_time: boolean;
+      supported_resolutions: string[];
+    }) => void
+  ) => {
     if (allSymbols && allSymbols.length > 0) {
       setTimeout(() => {
         callback(configurationData);
@@ -116,9 +146,9 @@ const dataFeed = {
           has_intraday: true,
           has_daily: true,
           has_weekly_and_monthly: true,
-          currency_code: "USDT"
+          currency_code: "USDT",
         });
-      }, 10)
+      }, 10);
       return;
     }
     onResolveErrorCallback("not Found");
@@ -160,16 +190,32 @@ const dataFeed = {
   subscribeBars: (
     symbolInfo: { full_name: any },
     resolution: any,
-    onRealtimeCallback: (arg0: { time: any; close: number; open: number; high: number; low: number; volume: number; closeTime: any; openTime: any }) => void,
+    onRealtimeCallback: (arg0: {
+      time: any;
+      close: number;
+      open: number;
+      high: number;
+      low: number;
+      volume: number;
+      closeTime: any;
+      openTime: any;
+    }) => void,
     subscriberUID: string,
     onResetCacheNeededCallback: any
   ) => {
-    subscribeOnStream(symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback, lastBarsCache.get(symbolInfo.full_name));
+    subscribeOnStream(
+      symbolInfo,
+      resolution,
+      onRealtimeCallback,
+      subscriberUID,
+      onResetCacheNeededCallback,
+      lastBarsCache.get(symbolInfo.full_name)
+    );
   },
 
   unsubscribeBars: (subscriberUID: string) => {
-     unsubscribeFromStream(subscriberUID);
-  }
+    unsubscribeFromStream(subscriberUID);
+  },
 };
 
 export default dataFeed;

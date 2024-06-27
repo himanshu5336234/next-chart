@@ -11,7 +11,14 @@ interface OrderBookRowProps {
   symbolPricePrecision: number;
   items: string[];
 }
-const OrderBookRow = ({ setDecimalPrecision, Max, rowType, symbolQuantityPrecision, symbolPricePrecision, items }: OrderBookRowProps) => {
+const OrderBookRow = ({
+  setDecimalPrecision,
+  Max,
+  rowType,
+  symbolQuantityPrecision,
+  symbolPricePrecision,
+  items,
+}: OrderBookRowProps) => {
   const { ChangeInAsset } = useSelector((state: any) => state.ChangeInAsset);
   return (
     <Box
@@ -21,7 +28,7 @@ const OrderBookRow = ({ setDecimalPrecision, Max, rowType, symbolQuantityPrecisi
         // gap: 1,
         alignItems: "center",
         justifyContent: "space-between",
-        position: "relative"
+        position: "relative",
       }}
     >
       <TextView
@@ -38,7 +45,11 @@ const OrderBookRow = ({ setDecimalPrecision, Max, rowType, symbolQuantityPrecisi
         textAlign={"center"}
         color={"text.quaternary"}
         variant="Regular_11"
-        text={ChangeInAsset ? setDecimalPrecision(items[1], symbolQuantityPrecision) : setDecimalPrecision(items[1] * items[0], symbolPricePrecision)}
+        text={
+          ChangeInAsset
+            ? setDecimalPrecision(items[1], symbolQuantityPrecision)
+            : setDecimalPrecision(items[1] * items[0], symbolPricePrecision)
+        }
       />
 
       <TextView
@@ -47,7 +58,11 @@ const OrderBookRow = ({ setDecimalPrecision, Max, rowType, symbolQuantityPrecisi
         textAlign={"end"}
         variant="Regular_11"
         color={"text.quaternary"}
-        text={ChangeInAsset ? setDecimalPrecision(items[2], symbolQuantityPrecision) : setDecimalPrecision(items[2] * items[0], symbolPricePrecision)}
+        text={
+          ChangeInAsset
+            ? setDecimalPrecision(items[2], symbolQuantityPrecision)
+            : setDecimalPrecision(items[2] * items[0], symbolPricePrecision)
+        }
       />
 
       <Box
@@ -56,7 +71,7 @@ const OrderBookRow = ({ setDecimalPrecision, Max, rowType, symbolQuantityPrecisi
           width: "100%",
           height: "100%",
           left: "2px",
-          right: "2px"
+          right: "2px",
         }}
       >
         <Box
@@ -70,7 +85,7 @@ const OrderBookRow = ({ setDecimalPrecision, Max, rowType, symbolQuantityPrecisi
             background:
               rowType === "bidsSnapShot"
                 ? "linear-gradient(90deg, rgba(41, 181, 126, 0.18) -20%, rgba(41, 181, 126, 0) 113.33%)"
-                : "linear-gradient(90deg, rgba(255, 101, 84, 0.18) -20%, rgba(255, 101, 84, 0) 113.33%)"
+                : "linear-gradient(90deg, rgba(255, 101, 84, 0.18) -20%, rgba(255, 101, 84, 0) 113.33%)",
           }}
         ></Box>
       </Box>
@@ -83,6 +98,6 @@ OrderBookRow.propTypes = {
   rowType: PropTypes.string,
   symbolQuantityPrecision: PropTypes.number,
   symbolPricePrecision: PropTypes.number,
-  items: PropTypes.any
+  items: PropTypes.any,
 };
 export default OrderBookRow;

@@ -1,13 +1,13 @@
-import { createTheme, Theme } from '@mui/material/styles';
-import { darkPalette, LightPalette } from './palette';
-import { typography } from './typography';
+import { createTheme, Theme } from "@mui/material/styles";
+import { darkPalette, LightPalette } from "./palette";
+import { typography } from "./typography";
 
-import { MuiToggleButton } from './CustomComponents/ToggleButton';
-import { MuiButton } from './CustomComponents/MenuButton';
-import { MuiCheckbox } from './CustomComponents/Checkbox';
-import { MuiInputBase } from './CustomComponents/Input';
-import { MuiOutlinedInput } from './CustomComponents/OutlinedInput';
-import { MuiTabs } from './CustomComponents/Tabs';
+import { MuiToggleButton } from "./CustomComponents/ToggleButton";
+import { MuiButton } from "./CustomComponents/MenuButton";
+import { MuiCheckbox } from "./CustomComponents/Checkbox";
+import { MuiInputBase } from "./CustomComponents/Input";
+import { MuiOutlinedInput } from "./CustomComponents/OutlinedInput";
+import { MuiTabs } from "./CustomComponents/Tabs";
 
 const lightTheme = createTheme({
   palette: LightPalette,
@@ -22,7 +22,7 @@ const lightTheme = createTheme({
   },
 });
 
-const darkTheme: Theme = createTheme({
+const darkTheme = createTheme({
   palette: darkPalette,
   typography,
   components: {

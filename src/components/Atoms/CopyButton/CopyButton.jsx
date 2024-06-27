@@ -22,7 +22,7 @@ function CopyButton({ copyText, fontSize, additionalCopyHandler, sideText }) {
       <ClickAwayListener onClickAway={handleTooltipClose}>
         <Tooltip
           PopperProps={{
-            disablePortal: true
+            disablePortal: true,
           }}
           onClose={handleTooltipClose}
           open={open}
@@ -41,7 +41,7 @@ function CopyButton({ copyText, fontSize, additionalCopyHandler, sideText }) {
                 textDecoration: "underline",
                 cursor: "pointer",
                 textDecorationThickness: "3px",
-                textUnderlineOffset: "4px"
+                textUnderlineOffset: "4px",
               }}
               text={sideText}
             ></TextView>
@@ -57,5 +57,5 @@ export default CopyButton;
 CopyButton.propTypes = {
   copyText: PropTypes.string,
   fontSize: PropTypes.string,
-  additionalCopyHandler: PropTypes.func
+  additionalCopyHandler: PropTypes.func,
 };

@@ -1,4 +1,6 @@
-export const JsonToQueryParams = (payload: { [x: string]: string | number | boolean; }) => {
+export const JsonToQueryParams = (payload: {
+  [x: string]: string | number | boolean;
+}) => {
   return (
     "?" +
     Object.keys(payload)
