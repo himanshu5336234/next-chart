@@ -7,6 +7,7 @@ export const TradingViewChart = ({ ID, res }: { ID: number; res: string }) => {
   const chartContainerRef = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
     const resolution =  60
     const TradingViewWidget = new (window as any).TradingView.widget({
       ...widgetContainer,
@@ -29,7 +30,7 @@ export const TradingViewChart = ({ ID, res }: { ID: number; res: string }) => {
         });
         TradingViewWidget.chart();
       });
-    
+    }
   }, [ ID, res]);
 
   return (
