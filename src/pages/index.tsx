@@ -2,7 +2,7 @@ import Head from "next/head";
 
 import { Inter } from "next/font/google";
 import { TradingViewChart } from "@/TradingViewChart/TradingViewChart/TradingViewChart";
-
+import { Button } from "@mui/material"
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -16,6 +16,7 @@ export default function Home() {
         <script type="text/javascript" src="charting_library/charting_library.js" defer></script>
       </Head>
       <div style={{ height: "80vh" }}><TradingViewChart ID={0} res={""} /></div>
+      <Button>,njbhvgcf</Button>
     </>
   );
 }
