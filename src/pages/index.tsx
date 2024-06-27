@@ -56,8 +56,8 @@ export default function Home() {
     };
     const params: string[] = [];
     params.push(`${selectedOption.toLowerCase()}@ticker`);
-    params.push(`${selectedOption.toLowerCase()}@markPrice@1s`);
-    params.push(`${selectedOption.toLowerCase()}@depth10`);
+    // params.push(`${selectedOption.toLowerCase()}@markPrice@1s`);
+    // params.push(`${selectedOption.toLowerCase()}@depth10`);
     demo.params = params;
     return demo;
   };

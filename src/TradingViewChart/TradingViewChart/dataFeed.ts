@@ -1,30 +1,11 @@
 
 import axios from "axios";
 import { configurationData } from "./helpers";
-// import chartWS from "./streaming";
+import chartWS from "./streaming";
+
 const binanceBaseUrl = "https://fapi.binance.com";
 const lastBarsCache = new Map();
-const tvIntervals:any = {
-  "1s": "1s",
-  1: "1m",
-  3: "3m",
-  5: "5m",
-  15: "15m",
-  30: "30m",
-  60: "1h",
-  120: "2h",
-  240: "4h",
-  360: "6h",
-  480: "8h",
-  720: "12h",
-  D: "1d",
-  "1D": "1d",
-  "3D": "3d",
-  W: "1w",
-  "1W": "1w",
-  M: "1M",
-  "1M": "1M"
-};
+
 let allSymbols: any = []
 //  JSON.parse((window as any).localStorage.getItem("tradablesymbolList"));
 let lastStartTime: any;
@@ -73,7 +54,7 @@ async function getKlines(from: any, to: any, symbolInfo: { name: string }, inter
     throw new Error("Error in getting klines");
   }
 }
-//  const { subscribeOnStream, unsubscribeFromStream, tvIntervals } = chartWS();
+const { subscribeOnStream, unsubscribeFromStream, tvIntervals } = chartWS();
 
 const dataFeed = {
   onReady: (callback: (arg0: { supports_marks: boolean; supports_timescale_marks: boolean; supports_time: boolean; supported_resolutions: string[] }) => void) => {
@@ -183,11 +164,11 @@ const dataFeed = {
     subscriberUID: string,
     onResetCacheNeededCallback: any
   ) => {
-    // subscribeOnStream(symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback, lastBarsCache.get(symbolInfo.full_name));
+    subscribeOnStream(symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback, lastBarsCache.get(symbolInfo.full_name));
   },
 
   unsubscribeBars: (subscriberUID: string) => {
-    // unsubscribeFromStream(subscriberUID);
+     unsubscribeFromStream(subscriberUID);
   }
 };
 
