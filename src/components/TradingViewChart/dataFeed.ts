@@ -1,87 +1,7 @@
-import axios from "axios";
-import { configurationData } from "./helpers";
+import { configurationData, createGetChartCandle,  pricescale, tvIntervals } from "./helpers";
 import chartWS from "./streaming";
-
-const binanceBaseUrl = "https://fapi.binance.com";
-const lastBarsCache = new Map();
-
-const allSymbols: any = [];
-//  JSON.parse((window as any).localStorage.getItem("tradablesymbolList"));
-let lastStartTime: any;
-const getBinanceKlines = async (
-  symbol: string,
-  interval: string,
-  startTime?: number,
-  endTime?: number,
-  limit?: number 
-) => {
-  if (lastStartTime && startTime === lastStartTime) {
-    return [];
-  }
-  lastStartTime = startTime;
-
-  const cacheKey = `${symbol}_${interval}_${startTime}_${endTime}_${limit}`;
-  if (lastBarsCache.has(cacheKey)) {
-    return lastBarsCache.get(cacheKey);
-  }
-
-  const url = `${binanceBaseUrl}/fapi/v1/continuousKlines?pair=${symbol}&contractType=PERPETUAL&interval=${interval}${
-    startTime ? `&startTime=${startTime}` : ""
-  }${endTime ? `&endTime=${endTime}` : ""}${limit ? `&limit=${limit}` : ""}`;
-
-  try {
-    const response = await axios.get(url);
-    const data = response.data;
-    lastBarsCache.set(cacheKey, data);
-    return data;
-  } catch (error) {
-    console.error("Error fetching Binance klines", error);
-    return [];
-  }
-};
-
-function pricescale(symbol: string) {
-  // const symbolPrecisionData = allSymbols.find((data: { symbol: string }) => data.symbol.toLowerCase() === symbol.toLowerCase());
-  // symbolPrecisionData.pricePrecision;
-  return Math.pow(10, Number(2));
-}
-async function getKlines(
-  from: number,
-  to: number,
-  symbolInfo: { name: string },
-  interval: string
-) {
-  let totalKlines: any[] = [];
-  const kLinesLimit = 1500;
-
-  try {
-    let data = await getBinanceKlines(symbolInfo.name, interval, from, to, kLinesLimit);
-    totalKlines = [...totalKlines, ...data];
-
-    while (data.length === kLinesLimit) {
-      from = data[data.length - 1][0] + 1; // Update `from` to avoid fetching the same data
-      data = await getBinanceKlines(symbolInfo.name, interval, from, to, kLinesLimit);
-      totalKlines = [...totalKlines, ...data];
-    }
-
-    const historyCBArray = totalKlines.map((kline) => ({
-      time: kline[0],
-      open: Number(kline[1]),
-      high: Number(kline[2]),
-      low: Number(kline[3]),
-      close: Number(kline[4]),
-      volume: Number(kline[5]),
-    }));
-
-    return historyCBArray;
-  } catch (err) {
-    console.error("Error in getting klines", err);
-    throw new Error("Error in getting klines");
-  }
-}
-
-const { subscribeOnStream, unsubscribeFromStream, tvIntervals } = chartWS();
-
+const { subscribeOnStream, unsubscribeFromStream } = chartWS();
+const getChartCandle = createGetChartCandle();
 const dataFeed = {
   onReady: (
     callback: (arg0: {
@@ -91,23 +11,9 @@ const dataFeed = {
       supported_resolutions: string[];
     }) => void
   ) => {
-    if (allSymbols && allSymbols.length > 0) {
-      setTimeout(() => {
-        callback(configurationData);
-      }, 0);
-    } else {
-      try {
-        // topXTradableSymbolListApi().then((res: { data: { symbols: string } }) => {
-        //   const tradablesymbolList = res?.data?.symbols;
-        //   localStorage.setItem("tradablesymbolList", JSON.stringify(tradablesymbolList));
-        //   allSymbols = tradablesymbolList;
-
-        // });
-        callback(configurationData);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    setTimeout(() => {
+      callback(configurationData);
+    }, 0);
   },
 
   resolveSymbol: async (
@@ -179,7 +85,7 @@ const dataFeed = {
     if (!interval) onErrorCallback("Invalid Interval");
     from *= 1000;
     to *= 1000;
-    getKlines(from, to, symbolInfo, interval)
+    getChartCandle(from, to, symbolInfo, interval)
       .then((res) => {
         if (res.length === 0) {
           onHistoryCallback([], { noData: true });
@@ -212,12 +118,11 @@ const dataFeed = {
       onRealtimeCallback,
       subscriberUID,
       onResetCacheNeededCallback,
-      lastBarsCache.get(symbolInfo.full_name)
     );
   },
 
   unsubscribeBars: (subscriberUID: string) => {
-  console.log(subscriberUID,"subscriberUID");
+    console.log(subscriberUID, "subscriberUID");
     unsubscribeFromStream(subscriberUID);
   },
 };

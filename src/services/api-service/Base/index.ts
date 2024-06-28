@@ -16,23 +16,23 @@ export const deploymentEnv = {
 };
 
 export const BASE_URL = () => {
-  let densityBaseUrl;
+  let binanceBaseUrl;
   let binanceWsBase;
 
   switch (envVariable()) {
     case deploymentEnv.PROD:
     case deploymentEnv.STAGING:
-      densityBaseUrl = "https://api-coin.density.exchange";
+      binanceBaseUrl = "https://fapi.binance.com";
       binanceWsBase = "wss://fstream.binance.com/stream";
       break;
     case deploymentEnv.DEV:
     default:
-      densityBaseUrl = "https://api-coin.density.exchange";
+      binanceBaseUrl = "https://fapi.binance.com";
       binanceWsBase = "wss://fstream.binance.com/stream";
       break;
   }
   return {
-    densityBaseUrl,
+    binanceBaseUrl,
     binanceWsBase,
   };
 };

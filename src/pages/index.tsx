@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 import WebSocketClient from "@/helpers/WebSocketModule";
 import { BASE_URL } from "@/services/api-service/Base/index";
 import { TradingViewChart } from "@/components/TradingViewChart/TradingViewChart";
+import { getSymbolList } from "@/services/api-service/Apis";
 
 const selectedOption = "BTCUSDT";
-export default function Home() {
+export default function Home({ data:{symbols},query:{symbol} }:{data:any,query:any}) {
   const [websocketMarketClientIsOpen, setwebsocketMarketClientIsOpen] =
     useState(false);
   const handleOpen = () => {
@@ -105,9 +106,25 @@ export default function Home() {
         ></script>
       </Head>
       <Box style={{ height: "80vh" }}>
-        <TradingViewChart ID={0} res={""} />
+        <TradingViewChart symbolList={symbols} symbol={symbol} ID={0} res={""} />
         <CustomButton>vsfvk</CustomButton>
       </Box>
     </>
   );
 }
+export async function getServerSideProps({ query }) {
+
+
+  try {
+    // Fetch data from external API
+    const response = await getSymbolList()
+    const data = response.data;
+
+    // Pass only necessary data to the page via props
+    return { props: { data,query } };
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return { props: { data: null, error: 'Failed to fetch data' } };
+  }
+}
+

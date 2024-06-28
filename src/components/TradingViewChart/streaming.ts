@@ -1,73 +1,6 @@
 import WebSocketClient from "@/helpers/WebSocketModule";
 import { BASE_URL } from "@/services/api-service/Base/index";
-
-const tvIntervals: any = {
-  "1s": "1s",
-  1: "1m",
-  3: "3m",
-  5: "5m",
-  15: "15m",
-  30: "30m",
-  60: "1h",
-  120: "2h",
-  240: "4h",
-  360: "6h",
-  480: "8h",
-  720: "12h",
-  D: "1d",
-  "1D": "1d",
-  "3D": "3d",
-  W: "1w",
-  "1W": "1w",
-  M: "1M",
-  "1M": "1M",
-};
-
-function helperOnMessage(
-  msg: string,
-  paramStr: any,
-  onRealtimeCallback: (arg0: {
-    time: any;
-    close: number;
-    open: number;
-    high: number;
-    low: number;
-    volume: number;
-    closeTime: any;
-    openTime: any;
-  }) => void
-) {
-  const sData = JSON.parse(msg);
-  try {
-    if (sData.stream === paramStr && sData.data.k) {
-      console.log(sData, "sDatasDatasData");
-      const { o, h, l, v, c, T, t } = sData.data.k;
-
-      const lastSocketData = {
-        time: t,
-        close: Number(c),
-        open: Number(o),
-        high: Number(h),
-        low: Number(l),
-        volume: Number(v),
-        closeTime: T,
-        openTime: t,
-      };
-      onRealtimeCallback(lastSocketData);
-    }
-  } catch (e) {
-    console.error(e);
-  }
-}
-
-const generateSubscriptionParamFromUID = function (subscriberUID: string) {
-  const id = subscriberUID.split("_#_");
-  localStorage.setItem(
-    "user_pc_resolution_chart_density",
-    JSON.stringify({ resolution: id[2] })
-  );
-  return `${id[0].toLowerCase()}@kline_${tvIntervals[id[2]]}`;
-};
+import { generateSubscriptionParamFromUID, helperOnMessage } from "./helpers";
 
 const chartWS = () => {
   let connectingLive = false;
@@ -97,15 +30,12 @@ const chartWS = () => {
   };
 
   return {
-    tvIntervals,
-
     subscribeOnStream: function (
       _symbolInfo: any,
       _resolution: any,
       onRealtimeCallback: any,
       subscribeUID: string,
-      _onResetCacheNeededCallback: any,
-      _lastDailyBar: any
+      _onResetCacheNeededCallback: any
     ) {
       try {
         const paramStr = generateSubscriptionParamFromUID(subscribeUID);
@@ -132,7 +62,6 @@ const chartWS = () => {
             webSocketService.sendMessage(JSON.stringify(obj));
           });
         } else {
-         
           webSocketService.sendMessage(JSON.stringify(obj));
         }
       } catch (e) {

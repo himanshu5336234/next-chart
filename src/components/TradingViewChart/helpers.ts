@@ -1,27 +1,8 @@
 // Makes requests to CryptoCompare API
 
-// Generates a symbol ID from a pair of the coins
-export function generateSymbol(exchange: any, fromSymbol: any, toSymbol: any) {
-  const short = `${fromSymbol}/${toSymbol}`;
-  return {
-    short,
-    full: `${exchange}:${short}`,
-  };
-}
+import { getKlines } from "@/services/api-service/Apis";
 
-// Returns all parts of the symbol
-export function parseFullSymbol(fullSymbol: string) {
-  const match = fullSymbol.match(/^(\w+):(\w+)\/(\w+)$/);
-  if (!match) {
-    return null;
-  }
 
-  return {
-    exchange: match[1],
-    fromSymbol: match[2],
-    toSymbol: match[3],
-  };
-}
 export const widgetContainer = {
   auto_save_delay: 1,
   load_last_chart: true,
@@ -93,4 +74,117 @@ export const configurationData = {
     "1W",
     "1M",
   ],
+};
+export const tvIntervals: any = {
+  "1s": "1s",
+  1: "1m",
+  3: "3m",
+  5: "5m",
+  15: "15m",
+  30: "30m",
+  60: "1h",
+  120: "2h",
+  240: "4h",
+  360: "6h",
+  480: "8h",
+  720: "12h",
+  D: "1d",
+  "1D": "1d",
+  "3D": "3d",
+  W: "1w",
+  "1W": "1w",
+  M: "1M",
+  "1M": "1M",
+};
+export const pricescale = (symbol: string) => {
+  const allSymbols = JSON.parse(
+    (window as any).localStorage.getItem("symbolList")
+  );
+  const symbolPrecisionData = allSymbols.find(
+    (data: { symbol: string }) =>
+      data.symbol.toLowerCase() === symbol.toLowerCase()
+  );
+  symbolPrecisionData.pricePrecision;
+  return Math.pow(10, symbolPrecisionData);
+};
+
+
+export const createGetChartCandle = () => {
+  let lastStartTime: any = null;
+
+  return async (
+    from: number,
+    to: number,
+    symbolInfo: { name: string },
+    interval: string
+  ) => {
+    let totalKlines: any[] = [];
+    const kLinesLimit = 1500;
+
+    if (lastStartTime && from === lastStartTime) {
+      return [];
+    }
+    lastStartTime = from;
+
+    try {
+      let {data} = await getKlines(symbolInfo.name, interval, from, to, kLinesLimit);
+      totalKlines = [...totalKlines, ...data];
+      while (data.length === kLinesLimit) {
+    
+        from = data[data.length - 1][0] + 1; // Update `from` to avoid fetching the same data
+        data = await getKlines(symbolInfo.name, interval, from, to, kLinesLimit);
+        totalKlines = [...totalKlines, ...data];
+      }
+
+      const historyCBArray = totalKlines.map((kline) => ({
+        time: kline[0],
+        open: Number(kline[1]),
+        high: Number(kline[2]),
+        low: Number(kline[3]),
+        close: Number(kline[4]),
+        volume: Number(kline[5]),
+      }));
+
+      return historyCBArray;
+    } catch (err) {
+      console.error("Error in getting klines", err);
+      throw new Error("Error in getting klines");
+    }
+  };
+};
+
+
+export const generateSubscriptionParamFromUID = (subscriberUID: string) => {
+  const id = subscriberUID.split("_#_");
+  localStorage.setItem(
+    "user_pc_resolution_chart_density",
+    JSON.stringify({ resolution: id[2] })
+  );
+  return `${id[0].toLowerCase()}@kline_${tvIntervals[id[2]]}`;
+};
+
+export const helperOnMessage = (
+  msg: string,
+  paramStr: any,
+  onRealtimeCallback: Function
+) => {
+  const { stream, data } = JSON.parse(msg);
+  try {
+    if (stream === paramStr && data.k) {
+      const { o, h, l, v, c, T, t } = data.k;
+      const lastSocketData = {
+        time: t,
+        close: Number(c),
+        open: Number(o),
+        high: Number(h),
+        low: Number(l),
+        volume: Number(v),
+        closeTime: T,
+        openTime: t,
+      };
+      onRealtimeCallback(lastSocketData);
+    }
+  } catch (e) {
+    console.error(e);
+  }
 };

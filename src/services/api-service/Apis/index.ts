@@ -1,20 +1,24 @@
 import { Format } from "@/helpers/CurrencyLogo";
-import { CONSUME_OTP, CREATE_OTP } from "../Urls";
+import { GET_KLINES, GET_SYMBOLS } from "../Urls";
 import axiosWithApiServer from "../Utils/axiosHelpers/axiosWithApiServer";
 
-export const createOTP = (email: string) => {
-  const url = Format(CREATE_OTP.url);
+export const getSymbolList = () => {
+  const url = Format(GET_SYMBOLS.url);
   return axiosWithApiServer({
     url,
-    method: CREATE_OTP.reqType,
-    body: JSON.stringify({ email }),
+    method: GET_SYMBOLS.reqType,
   });
 };
-export const consumeOTP = (payload: any) => {
-  const url = Format(CONSUME_OTP.url);
+export const getKlines = (
+  symbol: string,
+  interval: string,
+  startTime: number,
+  endTime: number,
+  limit: number
+) => {
+  const url = Format(GET_KLINES.url,symbol,interval,startTime,endTime,limit);
   return axiosWithApiServer({
     url,
-    method: CONSUME_OTP.reqType,
-    body: JSON.stringify(payload),
+    method: GET_KLINES.reqType,
   });
 };
