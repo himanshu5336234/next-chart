@@ -66,8 +66,7 @@ const generateSubscriptionParamFromUID = function (subscriberUID: string) {
     "user_pc_resolution_chart_density",
     JSON.stringify({ resolution: id[2] })
   );
-  const paramStr: string = `${id[0].toLowerCase()}@kline_${tvIntervals[id[2]]}`;
-  return paramStr;
+  return `${id[0].toLowerCase()}@kline_${tvIntervals[id[2]]}`;
 };
 
 const chartWS = () => {
