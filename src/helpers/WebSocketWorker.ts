@@ -1,130 +1,109 @@
-export const workerCode = `
-let webSocket = null;
-let lastSentMessage = null;
+const webSocketWorkerScript = `
+let socket = null;
+let messageQueue = [];
+let isAppInBackground = false;
 let retryCount = 0;
-let url = null;
-let intervalID = null; 
-let onTabSwitchDisconnect = false; 
-self.onmessage = function (event) {
-  const { type, payload } = event.data;
+const maxRetries = 5;
+let url = '';
 
+onmessage = function(e) {
+  const { type, payload } = e.data;
   switch (type) {
-    case 'CONNECT':
-      url = payload.url;
+    case 'INIT':
+      url = payload;
       connect(url);
       break;
     case 'SEND':
-      send(payload.message);
+      sendMessage(payload);
       break;
-    case 'DISCONNECT': 
+    case 'APP_STATE_CHANGE':
+      handleAppStateChange(payload);
+      break;
+    case 'DISCONNECT':
       disconnect();
       break;
-    case 'RECONNECT':
-      reconnect();
+    default:
       break;
-    case 'HARDDISCONNECT':
-      hardDisconnect();
-      break;
-    case 'UPDATELASTMESSAGE':
-      updateLastMessage(payload);
-      break;
-    case "TAB_SWITCH_IN_ACTIVE":{
-      intervalID = setInterval(()=>{      
-        onTabSwitchDisconnect=true;      
-        disconnect();
-        clearInterval(intervalID); // Clear interval after setting
-      }, 1000*5*60); 
-      break;
-    }
-    case "TAB_SWITCH_ACTIVE":{   
-      if(onTabSwitchDisconnect){
-        onTabSwitchDisconnect=false; 
-        self.postMessage({ type: 'message', payload: JSON.stringify({data:{e:"RE_CONNECT"}}) });
-      }
-      clearInterval(intervalID); // Clear interval in tab switch active case
-      break;
-    }
   }
 };
-
-function updateLastMessage(payload) {
-  if(payload) {
-    lastSentMessage = payload
-  }
-}
-
-function disconnect() {
-  if(webSocket) {
-    webSocket.close(1000);
-    self.postMessage({ type: 'disconnected' });
-  }
-}
-
-function hardDisconnect() {
-  if(webSocket) {
-    clearInterval(intervalID)
-    webSocket.close(1000);
-    self.postMessage({ type: 'disconnected' });
-    lastSentMessage = null;
-  }
-}
-
 function connect(url) {
-  webSocket = new WebSocket(url);
-  webSocket.onopen = handleOpen;
-  webSocket.onmessage = handleMessage;
-  webSocket.onclose = handleClose;
-  webSocket.onerror = handleError;
-}
+  if (!socket || socket.readyState === WebSocket.CLOSED) {
+    socket = new WebSocket(url);
 
-function send(message) {
-  lastSentMessage = message;
-  if (webSocket && webSocket.readyState === WebSocket.OPEN) {
-    webSocket.send(message);
-  }
-}
+    socket.onopen = () => {
+      retryCount = 0;
+      if (!isAppInBackground) {
+        postMessage({ type: 'open' });
+      }
+    };
 
-function handleOpen() {
-  if (lastSentMessage) {
-    webSocket.send(lastSentMessage);
-  }
-  retryCount = 0; // Reset retry count on successful connection
-  self.postMessage({ type: 'open' });
-}
+    socket.onmessage = (message) => {
+      messageQueue.push(message.data);
+      if (!isAppInBackground) {
+        processMessageQueue();
+      }
+    };
 
-function handleMessage(event) {
-  self.postMessage({ type: 'message', payload: event.data });
-}
+    socket.onclose = () => {
+      if (!isAppInBackground) {
+        postMessage({ type: 'WebSocketClosed' });
+        attemptReconnect();
+      }
+    };
 
-function handleClose(event) {
-  if (event.code !== 1000) {
-    attemptReconnect();
-  }
-  self.postMessage({ type: 'close' });
-}
-
-function handleError(error) {
-  self.postMessage({ type: 'error', payload: error });
-}
-
-function reconnect() {
-  if (retryCount < 5) {
-    retryCount++;
-    setTimeout(() => {
-      connect(url);
-    }, Math.pow(2, retryCount) * 500);
-  } else {
-    self.postMessage({ type: 'maxRetries' });
+    socket.onerror = (error) => {
+      if (!isAppInBackground) {
+        postMessage({ type: 'WebSocketError', payload: error });
+        attemptReconnect();
+      }
+    };
   }
 }
 
 function attemptReconnect() {
-  if (retryCount < 5) {
-    retryCount++;
-    setTimeout(() => {
-      connect(url);
-    }, Math.pow(2, retryCount) * 1000);
+  if (retryCount < maxRetries) {
+    setTimeout(
+      () => {
+        retryCount += 1;
+        connect(url);
+      },
+      Math.pow(2, retryCount) * 1000
+    );
   } else {
-    self.postMessage({ type: 'maxRetries' });
+    postMessage({ type: 'WebSocketFailure', payload: 'Max retries exceeded' });
   }
-}`;
+}
+
+function processMessageQueue() {
+  if (messageQueue.length > 0) {
+    const message = messageQueue.shift();
+      postMessage({ type: 'WebSocketMessage', payload: message });
+      processMessageQueue();
+  }
+}
+
+function sendMessage(message) {
+  if (socket && socket.readyState === WebSocket.OPEN) {
+    socket.send(message);
+  }
+}
+
+function handleAppStateChange(nextAppState) {
+  if (nextAppState === 'inactive') {
+    isAppInBackground = true;
+  } else if (nextAppState === 'active') {
+    isAppInBackground = false;
+    processMessageQueue();
+  }
+}
+
+function disconnect() {
+  if (socket) {
+    socket.close();
+    messageQueue = [];
+  }
+}
+`;
+
+const webSocketWorkerBlob = new Blob([webSocketWorkerScript], { type: 'application/javascript' });
+export const webSocketWorkerURL = URL.createObjectURL(webSocketWorkerBlob);

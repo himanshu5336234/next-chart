@@ -22,15 +22,15 @@ export const TradingViewChart = ({ ID, res }: { ID: number; res: string }) => {
     });
 
     TradingViewWidget.onChartReady(() => {
-      TradingViewWidget.subscribe("onAutoSaveNeeded", () => {
-        TradingViewWidget.saveChartToServer(
-          () => console.log("Saved"),
-          () => console.log("failed to save"),
-          {
-            defaultChartName: "unnamed",
-          }
-        );
-      });
+      // TradingViewWidget.subscribe("onAutoSaveNeeded", () => {
+      //   TradingViewWidget.saveChartToServer(
+      //     () => console.log("Saved"),
+      //     () => console.log("failed to save"),
+      //     {
+      //       defaultChartName: "unnamed",
+      //     }
+      //   );
+      // });
       TradingViewWidget.chart();
     });
   }, [ID, res]);

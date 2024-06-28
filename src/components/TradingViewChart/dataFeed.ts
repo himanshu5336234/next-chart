@@ -43,7 +43,7 @@ const getBinanceKlines = async (
 function pricescale(symbol: string) {
   // const symbolPrecisionData = allSymbols.find((data: { symbol: string }) => data.symbol.toLowerCase() === symbol.toLowerCase());
   // symbolPrecisionData.pricePrecision;
-  return Math.pow(10, Number(0.0));
+  return Math.pow(10, Number(2));
 }
 async function getKlines(
   from: number,
@@ -217,7 +217,7 @@ const dataFeed = {
   },
 
   unsubscribeBars: (subscriberUID: string) => {
-    console.log(subscriberUID,"subscriberUID")
+  
     unsubscribeFromStream(subscriberUID);
   },
 };
