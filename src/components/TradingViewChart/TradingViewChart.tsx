@@ -1,11 +1,11 @@
-"use client";
+'use client'
+
 import React, { useEffect, useRef } from "react";
 
 import dataFeed from "./dataFeed";
 import { widgetContainer } from "./helpers";
 export const TradingViewChart = ({ ID, res }: { ID: number; res: string }) => {
-  const chartContainerRef =
-    useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
+  const chartContainerRef = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
 
   useEffect(() => {
     if (typeof window === "undefined") return;

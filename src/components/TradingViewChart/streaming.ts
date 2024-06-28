@@ -79,7 +79,7 @@ const chartWS = () => {
       params: [paramStr],
       id: 2,
     };
-    if (!webSocketService) {
+    if (!connectingLive) {
       const binanceWsBaseUrl = BASE_URL()?.binanceWsBase;
       webSocketService = WebSocketClient.getInstance(binanceWsBaseUrl);
 
@@ -132,7 +132,7 @@ const chartWS = () => {
             webSocketService.sendMessage(JSON.stringify(obj));
           });
         } else {
-          alert("")
+         
           webSocketService.sendMessage(JSON.stringify(obj));
         }
       } catch (e) {

@@ -217,7 +217,7 @@ const dataFeed = {
   },
 
   unsubscribeBars: (subscriberUID: string) => {
-  
+  console.log(subscriberUID,"subscriberUID");
     unsubscribeFromStream(subscriberUID);
   },
 };
