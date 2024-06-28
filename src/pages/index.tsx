@@ -1,68 +1,66 @@
 import Head from "next/head";
 import { Box } from "@mui/material";
-import CustomButton from "@/components/Atoms/CustomButton/CustomButton";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import WebSocketClient from "@/helpers/WebSocketModule";
-import { BASE_URL } from "@/services/api-service/Base/index";
 import { TradingViewChart } from "@/components/TradingViewChart/TradingViewChart";
 import { getSymbolList } from "@/services/api-service/Apis";
 
 const selectedOption = "BTCUSDT";
-export default function Home({ data:{symbols},query:{symbol} }:{data:any,query:any}) {
-  const [websocketMarketClientIsOpen, setwebsocketMarketClientIsOpen] =
-    useState(false);
-  const handleOpen = () => {
-    setwebsocketMarketClientIsOpen(true);
-  };
+export default function Home({ data: { symbols }, query: { symbol } }: { data: any, query: any }) {
+  // const [websocketMarketClientIsOpen, setwebsocketMarketClientIsOpen] =
+  //   useState(false);
+  // const handleOpen = () => {
+  //   setwebsocketMarketClientIsOpen(true);
+  // };
 
-  const sendMessage = (binanceWsBaseUrl: string, message: string) => {
-    WebSocketClient.getInstance(binanceWsBaseUrl).sendMessage(message);
-  };
+  // const sendMessage = (binanceWsBaseUrl: string, message: string) => {
+  //   WebSocketClient.getInstance(binanceWsBaseUrl).sendMessage(message);
+  // };
 
-  const handleMessageEvent = (message: string) => {
-    if (message) {
-      const { data } = JSON.parse(message);
-      if (data) {
-        const bData: any = {};
-        switch (data.e) {
-          case "markPriceUpdate":
-            bData[`${data.s.toLowerCase()}@markPrice`] = data.p;
-            break;
-          case "24hrTicker":
-            bData[`${data.s.toLowerCase()}@per`] = data.P;
-            bData[`${data.s.toLowerCase()}@ticker`] = data.c;
-            bData[`${data.s.toLowerCase()}@low`] = data.l;
-            bData[`${data.s.toLowerCase()}@high`] = data.h;
-            bData[`${data.s.toLowerCase()}@volumn`] = data.q;
-            break;
-          // case "depthUpdate": {
-          //   if (data?.a.length > 0) dispatch({ type: "SET_ASKS", payload: data });
-          //   if (data?.b.length > 0) dispatch({ type: "SET_BIDS", payload: data });
-          //   break;
-          // }
-          default:
-            break;
-        }
-        // if (Object.keys(bData).length > 0) {
-        //   dispatch({ type: "SET_BINANCE_MARKET_DATA", payload: bData });
-        // }
-      }
-    }
-  };
+  // const handleMessageEvent = (message: string) => {
+  //   if (message) {
+  //     const { data } = JSON.parse(message);
+  //     if (data) {
+  //       const bData: any = {};
+  //       switch (data.e) {
+  //         case "markPriceUpdate":
+  //           bData[`${data.s.toLowerCase()}@markPrice`] = data.p;
+  //           break;
+  //         case "24hrTicker":
+  //           bData[`${data.s.toLowerCase()}@per`] = data.P;
+  //           bData[`${data.s.toLowerCase()}@ticker`] = data.c;
+  //           bData[`${data.s.toLowerCase()}@low`] = data.l;
+  //           bData[`${data.s.toLowerCase()}@high`] = data.h;
+  //           bData[`${data.s.toLowerCase()}@volumn`] = data.q;
+  //           break;
+  //         // case "depthUpdate": {
+  //         //   if (data?.a.length > 0) dispatch({ type: "SET_ASKS", payload: data });
+  //         //   if (data?.b.length > 0) dispatch({ type: "SET_BIDS", payload: data });
+  //         //   break;
+  //         // }
+  //         default:
+  //           break;
+  //       }
+  //       // if (Object.keys(bData).length > 0) {
+  //       //   dispatch({ type: "SET_BINANCE_MARKET_DATA", payload: bData });
+  //       // }
+  //     }
+  //   }
+  // };
 
-  const getSubscriptionPayload = (selectedOption: string, method: string) => {
-    const demo: any = {
-      method: method,
-      params: [],
-      id: 1,
-    };
-    const params: string[] = [];
-    params.push(`${selectedOption.toLowerCase()}@ticker`);
-    params.push(`${selectedOption.toLowerCase()}@markPrice@1s`);
-    params.push(`${selectedOption.toLowerCase()}@depth10`);
-    demo.params = params;
-    return demo;
-  };
+  // const getSubscriptionPayload = (selectedOption: string, method: string) => {
+  //   const demo: any = {
+  //     method: method,
+  //     params: [],
+  //     id: 1,
+  //   };
+  //   const params: string[] = [];
+  //   params.push(`${selectedOption.toLowerCase()}@ticker`);
+  //   params.push(`${selectedOption.toLowerCase()}@markPrice@1s`);
+  //   params.push(`${selectedOption.toLowerCase()}@depth10`);
+  //   demo.params = params;
+  //   return demo;
+  // };
 
   // useEffect(() => {
   //   let webSocketService: any;
@@ -94,14 +92,23 @@ export default function Home({ data:{symbols},query:{symbol} }:{data:any,query:a
 
   return (
     <>
-      <Box style={{ height:"100vh" }}>
-        <TradingViewChart symbolList={symbols} symbol={symbol} ID={0}/>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <script
+          type="text/javascript"
+          src="chart/charting_library.js"
+          defer
+        ></script>
+      </Head>
+      <Box style={{ height: "100vh" }}>
+        <TradingViewChart symbolList={symbols} symbol={symbol} ID={0} />
         {/* <CustomButton>vsfvk</CustomButton> */}
       </Box>
     </>
   );
 }
-export async function getServerSideProps({ query }:any) {
+export async function getServerSideProps({ query }: any) {
 
 
   try {
@@ -110,7 +117,7 @@ export async function getServerSideProps({ query }:any) {
     const data = response.data;
 
     // Pass only necessary data to the page via props
-    return { props: { data,query } };
+    return { props: { data, query } };
   } catch (error) {
     console.error('Error fetching data:', error);
     return { props: { data: null, error: 'Failed to fetch data' } };
