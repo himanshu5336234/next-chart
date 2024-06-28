@@ -3,9 +3,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
 .theme-dark:root {
-    --tv-color-platform-background: #101019;
-    --tv-color-pane-background: #101019;
-    --tv-color-pane-background-secondary: #101019;
+    --tv-color-platform-background: #0E0E0F;
+    --tv-color-pane-background: #0E0E0F;
+    --tv-color-pane-background-secondary: #0E0E0F;
     --tv-color-toolbar-button-text: #B1B1BA;
     --tv-color-toolbar-button-text-active:#e2ff6f;
     --tv-color-toolbar-button-text-active-hover:#e2ff6f;

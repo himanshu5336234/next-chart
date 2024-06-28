@@ -8,6 +8,15 @@ export default function Document(props:any) {
   return (
     <Html lang="en">
       <Head>
+      <title>Trading </title>
+    
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <script
+          type="text/javascript"
+          src="chart/charting_library.js"
+          defer
+        ></script>
         <DocumentHeadTags {...props} />
       </Head>
       <body>

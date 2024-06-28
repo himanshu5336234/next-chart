@@ -29,7 +29,6 @@ export const colors = {
   greyDarkMode3: "#29292E",
   greyDarkMode2: "#1B1B1F",
   greyDarkMode1: "#0E0E0F",
-
   correctBuy: "#29B57E",
   incorrectSell: "#FF6554",
   waiting: "#E9AE18",

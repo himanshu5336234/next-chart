@@ -27,28 +27,28 @@ export const widgetContainer = {
     "show_symbol_logos",
     "hide_right_toolbar",
   ],
-  toolbar_bg: "#101019",
+  toolbar_bg: "#0E0E0F",
   loading_screen: {
-    backgroundColor: "#101019",
-    foregroundColor: "#101019",
+    backgroundColor: "#0E0E0F",
+    foregroundColor: "#0E0E0F",
   },
   overrides: {
     "paneProperties.backgroundType": "solid",
-    "paneProperties.background": "#101019",
+    "paneProperties.background": "#0E0E0F",
     "paneProperties.textColor": "#ffffff",
-    "paneProperties.vertGridProperties.color": "#222225",
-    "paneProperties.horzGridProperties.color": "#222225",
+    "paneProperties.vertGridProperties.color": "#19191D",
+    "paneProperties.horzGridProperties.color": "#19191D",
     "paneProperties.crossHairProperties.color": "#A9A9A9",
     "mainSeriesProperties.candleStyle.borderUpColor": "#29B57E",
-    "mainSeriesProperties.candleStyle.borderDownColor": "#F46151",
+    "mainSeriesProperties.candleStyle.borderDownColor": "#FF6554",
     "mainSeriesProperties.candleStyle.borderColor": "#29B57E",
     "mainSeriesProperties.candleStyle.upColor": "#29B57E",
-    "mainSeriesProperties.candleStyle.downColor": "#F46151",
+    "mainSeriesProperties.candleStyle.downColor": "#FF6554",
     "mainSeriesProperties.candleStyle.wickColor": "#29B57E",
     "mainSeriesProperties.candleStyle.wickUpColor": "#29B57E",
-    "mainSeriesProperties.candleStyle.wickDownColor": "#F46151",
+    "mainSeriesProperties.candleStyle.wickDownColor": "#FF6554",
     "scalesProperties.textColor": "white",
-    "scalesProperties.backgroundColor": "#171717",
+    "scalesProperties.backgroundColor": "#0E0E0F",
     "symbolWatermarkProperties.color": "rgba(0, 0, 0, 0.00)",
     "symbolWatermarkProperties.visibility": false,
   },
@@ -104,22 +104,22 @@ export const pricescale = (symbol: string) => {
     (data: { symbol: string }) =>
       data.symbol.toLowerCase() === symbol.toLowerCase()
   );
-  symbolPrecisionData.pricePrecision;
-  return Math.pow(10, symbolPrecisionData);
+ 
+  return Math.pow(10,  symbolPrecisionData.pricePrecision);
 };
 
 
 export const createGetChartCandle = () => {
   let lastStartTime: any = null;
-
+  let totalKlines: any[] = [];
+  const kLinesLimit = 1500;
   return async (
     from: number,
     to: number,
     symbolInfo: { name: string },
     interval: string
   ) => {
-    let totalKlines: any[] = [];
-    const kLinesLimit = 1500;
+ 
 
     if (lastStartTime && from === lastStartTime) {
       return [];
