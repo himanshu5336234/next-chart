@@ -166,7 +166,7 @@ export const generateSubscriptionParamFromUID = (subscriberUID: string) => {
 export const helperOnMessage = (
   msg: string,
   paramStr: any,
-  onRealtimeCallback: Function
+  onRealtimeCallback: any
 ) => {
   const { stream, data } = JSON.parse(msg);
   try {

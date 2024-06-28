@@ -106,13 +106,13 @@ export default function Home({ data:{symbols},query:{symbol} }:{data:any,query:a
         ></script>
       </Head>
       <Box style={{ height: "80vh" }}>
-        <TradingViewChart symbolList={symbols} symbol={symbol} ID={0} res={""} />
+        <TradingViewChart symbolList={symbols} symbol={symbol} ID={0}/>
         <CustomButton>vsfvk</CustomButton>
       </Box>
     </>
   );
 }
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps({ query }:any) {
 
 
   try {

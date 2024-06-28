@@ -12,9 +12,9 @@ export const getSymbolList = () => {
 export const getKlines = (
   symbol: string,
   interval: string,
-  startTime: number,
-  endTime: number,
-  limit: number
+  startTime: any,
+  endTime: any,
+  limit: any
 ) => {
   const url = Format(GET_KLINES.url,symbol,interval,startTime,endTime,limit);
   return axiosWithApiServer({
