@@ -20,7 +20,7 @@ const OrderBook = ({orderBook}) => {
       <TextView component={"p"} text={"Order Book"}  />
       <AskOrbids asksOrBids={asksOrBids} handleTabsChange={handleTabsChange} />
       <TableHeadWrapperForAsksBids />
-      <OrderBookTable orderBook={orderBook} asksOrBids={asksOrBids} />
+     <OrderBookTable orderBook={orderBook} asksOrBids={asksOrBids} />
     </Box>
   );
 };

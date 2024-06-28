@@ -17,3 +17,7 @@ export const GET_ORDER_BOOK = {
   url: "/fapi/v1/depth?symbol={0}&limit={1}",
   reqType: REQUEST_TYPE.GET
 };
+export const GET_TICKER_PRICE = {
+  url: "/fapi/v1/ticker/24hr",
+  reqType: REQUEST_TYPE.GET
+};
