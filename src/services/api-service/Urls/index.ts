@@ -13,3 +13,7 @@ export const AUTH_LOGIN = {
   url: "/v1/user/login",
   reqType: REQUEST_TYPE.POST,
 };
+export const GET_ORDER_BOOK = {
+  url: "/fapi/v1/depth?symbol={0}&limit={1}",
+  reqType: REQUEST_TYPE.GET
+};

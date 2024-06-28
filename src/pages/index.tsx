@@ -1,95 +1,18 @@
 import Head from "next/head";
-import { Box } from "@mui/material";
-import { useState } from "react";
-import WebSocketClient from "@/helpers/WebSocketModule";
+import { Box, Grid } from "@mui/material";
 import { TradingViewChart } from "@/components/TradingViewChart/TradingViewChart";
-import { getSymbolList } from "@/services/api-service/Apis";
+import { getOrderBook, getSymbolList } from "@/services/api-service/Apis";
+import OrderBook from "@/components/OrderBook/OrderBook";
 
-const selectedOption = "BTCUSDT";
-export default function Home({ data: { symbols }, query: { symbol } }: { data: any, query: any }) {
-  // const [websocketMarketClientIsOpen, setwebsocketMarketClientIsOpen] =
-  //   useState(false);
-  // const handleOpen = () => {
-  //   setwebsocketMarketClientIsOpen(true);
-  // };
-
-  // const sendMessage = (binanceWsBaseUrl: string, message: string) => {
-  //   WebSocketClient.getInstance(binanceWsBaseUrl).sendMessage(message);
-  // };
-
-  // const handleMessageEvent = (message: string) => {
-  //   if (message) {
-  //     const { data } = JSON.parse(message);
-  //     if (data) {
-  //       const bData: any = {};
-  //       switch (data.e) {
-  //         case "markPriceUpdate":
-  //           bData[`${data.s.toLowerCase()}@markPrice`] = data.p;
-  //           break;
-  //         case "24hrTicker":
-  //           bData[`${data.s.toLowerCase()}@per`] = data.P;
-  //           bData[`${data.s.toLowerCase()}@ticker`] = data.c;
-  //           bData[`${data.s.toLowerCase()}@low`] = data.l;
-  //           bData[`${data.s.toLowerCase()}@high`] = data.h;
-  //           bData[`${data.s.toLowerCase()}@volumn`] = data.q;
-  //           break;
-  //         // case "depthUpdate": {
-  //         //   if (data?.a.length > 0) dispatch({ type: "SET_ASKS", payload: data });
-  //         //   if (data?.b.length > 0) dispatch({ type: "SET_BIDS", payload: data });
-  //         //   break;
-  //         // }
-  //         default:
-  //           break;
-  //       }
-  //       // if (Object.keys(bData).length > 0) {
-  //       //   dispatch({ type: "SET_BINANCE_MARKET_DATA", payload: bData });
-  //       // }
-  //     }
-  //   }
-  // };
-
-  // const getSubscriptionPayload = (selectedOption: string, method: string) => {
-  //   const demo: any = {
-  //     method: method,
-  //     params: [],
-  //     id: 1,
-  //   };
-  //   const params: string[] = [];
-  //   params.push(`${selectedOption.toLowerCase()}@ticker`);
-  //   params.push(`${selectedOption.toLowerCase()}@markPrice@1s`);
-  //   params.push(`${selectedOption.toLowerCase()}@depth10`);
-  //   demo.params = params;
-  //   return demo;
-  // };
-
-  // useEffect(() => {
-  //   let webSocketService: any;
-  //   const binanceWsBaseUrl = BASE_URL()?.binanceWsBase;
-
-  //   if (binanceWsBaseUrl) {
-  //     webSocketService = WebSocketClient.getInstance(binanceWsBaseUrl);
-  //     webSocketService.addListener("open", handleOpen);
-  //     webSocketService.addListener("WebSocketMessage", handleMessageEvent);
-  //   }
-
-  //   if (selectedOption && selectedOption.length > 0 && websocketMarketClientIsOpen && binanceWsBaseUrl) {
-  //     const sub = getSubscriptionPayload(selectedOption, "SUBSCRIBE");
-  //     if (sub.params.length > 0) {
-  //       sendMessage(binanceWsBaseUrl, JSON.stringify(sub));
-  //     }
-  //   }
-
-  //   return () => {
-  //     if (binanceWsBaseUrl && selectedOption && websocketMarketClientIsOpen && selectedOption.length > 0) {
-  //       const unsub = getSubscriptionPayload(selectedOption, "UNSUBSCRIBE");
-  //       if (unsub.params.length > 0) {
-  //         sendMessage(binanceWsBaseUrl, JSON.stringify(unsub));
-  //         webSocketService.removeAllListeners();
-  //       }
-  //     }
-  //   };
-  // }, [selectedOption, websocketMarketClientIsOpen])
-
+export default function Home({
+  orderBook,
+  symbols,
+  symbol,
+}: {
+  orderBook: any;
+  symbols: any;
+  symbol: string;
+}) {
   return (
     <>
       <Head>
@@ -101,26 +24,54 @@ export default function Home({ data: { symbols }, query: { symbol } }: { data: a
           defer
         ></script>
       </Head>
-      <Box style={{ height: "100vh" }}>
-        <TradingViewChart symbolList={symbols} symbol={symbol} ID={0} />
-        {/* <CustomButton>vsfvk</CustomButton> */}
-      </Box>
+      <Grid container>
+        <Grid item xs={9}>
+          <Box style={{ height: "70vh" }}>
+            <TradingViewChart symbolList={symbols} symbol={symbol} ID={0} />
+          </Box>
+        </Grid>
+
+        <Grid item xs={3}>
+          <OrderBook orderBook={orderBook}/>
+        </Grid>
+      </Grid>
     </>
   );
 }
-export async function getServerSideProps({ query }: any) {
-
-
+export async function getServerSideProps({ query: { symbol } }: any) {
   try {
-    // Fetch data from external API
-    const response = await getSymbolList()
-    const data = response.data;
+    const [orderBookResponse, symbolListResponse] = await Promise.all([
+      getOrderBook(symbol),
+      getSymbolList(),
+    ]);
 
-    // Pass only necessary data to the page via props
-    return { props: { data, query } };
+    // Assuming the response from getOrderBook has a property named `orderBook`
+    const { data: orderBook } = orderBookResponse;
+    const {
+      data: { symbols },
+    } = symbolListResponse;
+    const asks = addTotalSums(findAndDelete(orderBook.asks, orderBook.asks, "ASKS"));
+    const bids = addTotalSums(findAndDelete(orderBook.bids, orderBook.bids, "BIDS"));
+    return { props: { orderBook: { ...orderBook,asks,bids }, symbols, symbol } };
   } catch (error) {
-    console.error('Error fetching data:', error);
-    return { props: { data: null, error: 'Failed to fetch data' } };
+    console.error("Error fetching data:", error);
+    return { props: { data: null, error: "Failed to fetch data" } };
   }
 }
-
+function findAndDelete(currentLevels: any, orders:  any, type: string) {
+  if (currentLevels) {
+    const index =
+      type === "BIDS"
+        ? currentLevels.findIndex((item: any[]) => Number(item[0]) <= Number(orders[orders.length - 1][0]))
+        : currentLevels.findIndex((item: any[]) => Number(item[0]) >= Number(orders[orders.length - 1][0]));
+    return orders.concat(currentLevels.slice(index + 1));
+  }
+}
+function addTotalSums(orders: any[]) {
+  let sum = 0;
+  return orders.map((item) => {
+    sum += Number(item[1]);
+    item[2] = sum;
+    return item;
+  });
+}

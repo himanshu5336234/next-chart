@@ -89,6 +89,7 @@ background-color: transparent;
 }
 body{
   margin: 0;
+  background-color:black
 }
 /* Handle on hover */
 ::selection {

@@ -1,5 +1,5 @@
 import { Format } from "@/helpers/CurrencyLogo";
-import { GET_KLINES, GET_SYMBOLS } from "../Urls";
+import { GET_KLINES,GET_ORDER_BOOK, GET_SYMBOLS } from "../Urls";
 import axiosWithApiServer from "../Utils/axiosHelpers/axiosWithApiServer";
 
 export const getSymbolList = () => {
@@ -20,5 +20,13 @@ export const getKlines = (
   return axiosWithApiServer({
     url,
     method: GET_KLINES.reqType,
+  });
+};
+
+export const getOrderBook = (payload:string) => {
+  const url = Format(GET_ORDER_BOOK.url, payload, "1000");
+  return axiosWithApiServer({
+    url,
+    method: GET_ORDER_BOOK.reqType
   });
 };

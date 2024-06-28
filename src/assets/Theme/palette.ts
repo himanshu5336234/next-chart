@@ -23,7 +23,8 @@ export const LightPalette = {
     main: colors.correctBuy,
   },
   background: {
-    default: colors.white,
+    default: colors.black,
+    
     paper: colors.greyLightMode5,
   },
   text: {
