@@ -79,7 +79,7 @@ export const TradingViewChart = ({ themeMode, symbol = "BTCUSDT" }: { themeMode:
     <>
        <MarketSegment symbol={symbol}/>
        <CustomDivider alignment={""}/>
-      <Box bgcolor="background.secondary"  style={{ height: "calc( 100% - 45px)" }} ref={chartContainerRef}></Box>
+      <Box bgcolor="background.secondary"  style={{ height: "calc( 100% - 49px)" }} ref={chartContainerRef}></Box>
     </>
   );
 };

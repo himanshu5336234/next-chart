@@ -7,16 +7,7 @@ export const Layouts = {
       y: 0,
       i: "market",
       minH: 5,
-      minW: 40
-    },
-    {
-      w: 30,
-      h: 50,
-      minH: 30,
-      x: 110,
-      minW: 25,
-      y: 0,
-      i: "orderForm"
+      minW: 28
     },
     {
       w: 85,
@@ -35,42 +26,23 @@ export const Layouts = {
       minH: 20,
       minW: 20,
       i: "orderBook"
-    },
-
-    {
-      w: 140,
-      h: 34,
-      x: 0,
-      y: 50,
-      minH: 15,
-      minW: 100,
-      i: "userActivities"
     }
   ],
   md: [
     {
-      w: 28,
+      w: 0,
       h: 50,
       x: 0,
       y: 0,
       i: "market",
       minH: 5,
-      minW: 40
+      minW: 28
     },
     {
-      w: 30,
-      h: 50,
-      minH: 30,
-      x: 110,
-      minW: 25,
-      y: 0,
-      i: "orderForm"
-    },
-    {
-      w: 85,
+      maxW: 60,
       h: 50,
       x: 28,
-      y: 5,
+      y: 0,
       minH: 30,
       i: "chart",
       minW: 45
@@ -98,95 +70,43 @@ export const Layouts = {
   sm: [
     {
       w: 100,
-      h: 5,
+      h: 50,
       x: 0,
       y: 0,
-      i: "marketSegment",
-      minH: 5
-    },
-    {
-      w: 72,
-      h: 32,
-      x: 0,
-      y: 5,
       i: "chart",
       minW: 45,
       minH: 30
     },
     {
-      w: 72,
-      h: 22,
+      w: 100,
+      h: 30,
       x: 0,
       y: 37,
       i: "orderBook",
       minH: 20,
       minW: 20
-    },
-    {
-      w: 28,
-      h: 54,
-      x: 72,
-      y: 5,
-      i: "orderForm",
-      minH: 30,
-      minW: 25
-    },
-    {
-      w: 100,
-      h: 25,
-      x: 0,
-      y: 59,
-      i: "userActivities",
-      minH: 15,
-      minW: 100
     }
   ],
-  xs: [
+  sx: [
     {
-      w: 60,
-      h: 5,
+      w: 100,
+      h: 50,
       x: 0,
       y: 0,
-      i: "marketSegment",
-      minH: 5
-    },
-    {
-      w: 60,
-      h: 32,
-      x: 0,
-      y: 5,
       i: "chart",
-      minH: 30,
-      minW: 45
-    },
-    {
-      w: 60,
-      h: 22,
-      x: 0,
-      y: 37,
-      i: "orderBook",
-      minH: 20,
-      minW: 20
-    },
-    {
-      w: 60,
-      h: 7,
-      x: 0,
-      y: 85,
-      i: "orderForm",
-      minW: 25,
+      minW: 45,
       minH: 30
     },
     {
-      w: 60,
-      h: 26,
+      w: 100,
+      h: 30,
       x: 0,
-      y: 59,
-      i: "userActivities",
-      minH: 15,
-      minW: 100
+      y: 37,
+      i: "orderBook",
+      minH: 20,
+      minW: 20
     }
-  ]
+  ],
 };
 export const addChartData = ({ currentLayout, compName, DefaultLayout }: { currentLayout: any; compName: string; DefaultLayout: any }) => {
   const newlayout = { ...currentLayout };
