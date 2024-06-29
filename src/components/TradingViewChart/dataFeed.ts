@@ -1,5 +1,5 @@
 import { getSymbolList } from "@/services/api-service/Apis";
-let time =0
+let time = 0;
 import {
   configurationData,
   createGetChartCandle,
@@ -9,6 +9,7 @@ import {
 import chartWS from "./streaming";
 const { subscribeOnStream, unsubscribeFromStream } = chartWS();
 const getChartCandle = createGetChartCandle();
+
 const dataFeed = {
   onReady: (
     callback: (arg0: {
@@ -21,15 +22,14 @@ const dataFeed = {
     const allSymbols = JSON.parse(
       (window as any).localStorage.getItem("symbolList")
     );
-    if ( allSymbols && allSymbols.length > 0) {
+    if (allSymbols && allSymbols.length > 0) {
       setTimeout(() => {
         callback(configurationData);
       }, 0);
     } else {
-      time=500
+      time = 500;
       getSymbolList().then(({ data }: any) => {
-        localStorage.setItem("symbolList", JSON.stringify(data.symbols))
-
+        localStorage.setItem("symbolList", JSON.stringify(data.symbols));
       });
       setTimeout(() => {
         callback(configurationData);
@@ -111,7 +111,10 @@ const dataFeed = {
         if (res.length === 0) {
           onHistoryCallback([], { noData: true });
         } else {
-          onHistoryCallback(res, { noData: false });
+          // Sort data by timestamp
+          const sortedData = res.sort((a, b) => a.time - b.time);
+          // console.log(sortedData);
+          onHistoryCallback(sortedData, { noData: false });
         }
       })
       .catch(() => onErrorCallback(`Error in 'getKlines' func`));

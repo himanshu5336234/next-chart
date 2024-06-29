@@ -118,13 +118,7 @@ export const createGetChartCandle = () => {
     interval: string
   ) => {
  
-
-    if (lastStartTime && from === lastStartTime) {
-      return [];
-    }
-    lastStartTime = from;
-
-    try {
+   try {
       let {data} = await getKlines(symbolInfo.name, interval, from, to, kLinesLimit);
       totalKlines = [...totalKlines, ...data];
       while (data.length === kLinesLimit) {

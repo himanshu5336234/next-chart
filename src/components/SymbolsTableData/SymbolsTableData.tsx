@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { getTickerPrice } from "@/services/api-service/Apis";
 import { Box, Grid, useTheme } from "@mui/material";
@@ -14,6 +14,7 @@ import { numFormatter } from "@/helpers/commaHelper";
 
 const SymbolsTableData = () => {
   const theme = useTheme();
+  const ref = useRef<any>();
   const dispatch = useAppDispatch();
   const router = useRouter();
   const [data, setData] = useState({ usdt: [], usdc: [] });
@@ -145,7 +146,7 @@ const SymbolsTableData = () => {
       return 0;
     });
   return (
-    <Grid container gap={2} sx={{ p: 1, bgcolor: "background.secondary" }}>
+    <Grid ref={ref} height={"100%"} container gap={2} sx={{ p: 1, bgcolor: "background.secondary" }}>
       <Grid item xs={12}>
         <BasicSearchField
           placeholder="Search"
@@ -215,7 +216,7 @@ const SymbolsTableData = () => {
         <AutoSizer disableHeight>
           {({ width }) => (
             <List
-              height={600}
+              height={ref.current?.offsetHeight -200}
               rowCount={filteredData.length}
               rowHeight={35}
               rowRenderer={rowRenderer}

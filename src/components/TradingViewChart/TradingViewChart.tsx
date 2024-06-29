@@ -15,7 +15,6 @@ export const TradingViewChart = ({ themeMode, symbol = "BTCUSDT" }: { themeMode:
 
     const TradingViewWidget = new (window as any).TradingView.widget({
       locale: (window as any).navigator.language.split("-")[0] || "en-IN",
-
       auto_save_delay: 1,
       load_last_chart: true,
       autosize: true,
@@ -80,7 +79,7 @@ export const TradingViewChart = ({ themeMode, symbol = "BTCUSDT" }: { themeMode:
     <>
        <MarketSegment symbol={symbol}/>
        <CustomDivider alignment={""}/>
-      <Box bgcolor="background.secondary"  style={{ height: "100%" }} ref={chartContainerRef}></Box>
+      <Box bgcolor="background.secondary"  style={{ height: "calc( 100% - 45px)" }} ref={chartContainerRef}></Box>
     </>
   );
 };

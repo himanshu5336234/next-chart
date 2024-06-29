@@ -1,8 +1,15 @@
 import Head from "next/head";
 import { Box, Grid } from "@mui/material";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { TradingViewChart } from "@/components/TradingViewChart/TradingViewChart";
 import SymbolsTableData from "@/components/SymbolsTableData/SymbolsTableData";
 import OrderBookServer from "@/components/OrderBook/OrderBookServer";
+import { Responsive, WidthProvider } from "react-grid-layout";
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
+import { Layouts } from "@/assets/Theme/layoutConfig";
+
+const ResponsiveGridLayout = WidthProvider(Responsive);
 export default function Home({
   symbol,
   theme,
@@ -10,6 +17,20 @@ export default function Home({
   theme: string;
   symbol: string;
 }) {
+  const showComponent = (item: any) => {
+    switch (item) {
+      case "orderForm":
+        return <SymbolsTableData />;
+      case "chart":
+        return <TradingViewChart symbol={symbol} ID={0} themeMode={theme} />;
+
+      case "orderBook":
+        return <SymbolsTableData />;
+
+      default:
+        break;
+    }
+  };
   return (
     <>
       <Head>
@@ -20,7 +41,7 @@ export default function Home({
           defer
         ></script>
       </Head>
-      <Grid container gap={1}>
+      {/* <Grid container gap={1}>
         <Grid item xs={2.5}>
           <SymbolsTableData />
         </Grid>
@@ -32,7 +53,50 @@ export default function Home({
         <Grid item xs={2.4}>
           <OrderBookServer symbol={symbol} />
         </Grid>
-      </Grid>
+      </Grid> */}
+      <ResponsiveGridLayout
+        className="layout"
+        layouts={Layouts}
+        isDraggable={true}
+        isResizable={true}
+        autoSize
+        rowHeight={10}
+        isRearrangeable={true}
+        draggableHandle=".grid-item__title"
+        margin={[1, 2.1]}
+        breakpoints={{ lg: 1440, md: 990, sm: 650, xs: 575 }}
+        cols={{ lg: 14 * 10, md: 12 * 10, sm: 10 * 10, xs: 6 * 10 }}
+      >
+        <Box
+          key={"market"}
+          bgcolor={"background.primary"}
+          className={`grid-item`}
+        >
+          <Box className="grid-item__graph">
+            {" "}
+            <SymbolsTableData />
+          </Box>
+        </Box>
+        <Box
+          key={"chart"}
+          bgcolor={"background.primary"}
+          className={`grid-item`}
+        >
+          <Box position={"relative"} className="grid-item__graph">
+
+            <TradingViewChart symbol={symbol} ID={0} themeMode={theme} />
+          </Box>
+        </Box>
+        <Box
+          key={"orderBook"}
+          bgcolor={"background.primary"}
+          className={`grid-item`}
+        >
+
+          <OrderBookServer symbol={symbol} />
+        </Box>
+
+      </ResponsiveGridLayout>
     </>
   );
 }
