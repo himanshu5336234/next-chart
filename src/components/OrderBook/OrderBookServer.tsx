@@ -23,7 +23,7 @@ function OrderBookServer({symbol  }: any) {
     }, [symbol]);
 
     return <>
-        <OrderBook orderBook={orderBook} />
+        <OrderBook symbol={symbol} orderBook={orderBook} />
     </>
 }
 

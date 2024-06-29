@@ -1,4 +1,5 @@
 import NewWebSocketClient from "@/helpers/WebSocketModule";
+import { addTotalSums, findAndDelete } from "@/pages/api/orderbook";
 import { BASE_URL } from "@/services/api-service/Base";
 import { Box } from "@mui/material";
 import React, { memo, useCallback, useEffect, useState } from "react";
@@ -15,7 +16,6 @@ const OrderBookRowWrapper = ({
   orderType: string;
   symbol: string;
 }) => {
-
   const [originalOrders,setOriginalOrder]=useState([])
   useEffect(()=>{
     const bidsAndAsksOrders:any = orderType === "bids"? [...orders[orderType]] : [...orders[orderType]].reverse();
@@ -33,9 +33,13 @@ const OrderBookRowWrapper = ({
 
   const handlemessageEvent = (message: string) => {
    const {stream,data} =JSON.parse(message)
-   console.log(data.s);
-   if(data.e ==="depthUpdate"){
 
+   if(data && data.e ==="depthUpdate" && data?.s.toLowerCase() ===symbol.toLowerCase()
+   ){
+    const bidsAndAsksUpdatedOrder:any = orderType === "bids"? [...data["b"]] : [...data["a"]];
+    const asks = addTotalSums(findAndDelete(originalOrders, bidsAndAsksUpdatedOrder, orderType.toUpperCase()));
+    const bidsAndAsksOrders:any = orderType === "bids"? asks : asks.reverse();
+    setOriginalOrder(bidsAndAsksOrders)
    }
   };
  
@@ -51,7 +55,7 @@ const OrderBookRowWrapper = ({
         return orders.map((items: any, index: number) => {
           return (
             <Box key={index}>
-              <OrderBookRow items={items} Max={maxOrder} rowType={orderType} />
+              <OrderBookRow symbol={symbol} items={items} Max={maxOrder} rowType={orderType} />
             </Box>
           );
         });

@@ -6,7 +6,7 @@ import OrderBookTable from "./OrderBookTable";
 import TextView from "../Atoms/TextView/TextView";
 
 
-const OrderBook = ({ orderBook,symbol }: { orderBook: any }) => {
+const OrderBook = ({ orderBook,symbol }: { orderBook: any,symbol:string }) => {
   const [asksOrBids, setAsksOrBids] = useState("ALL");
 
   const handleTabsChange = useCallback(

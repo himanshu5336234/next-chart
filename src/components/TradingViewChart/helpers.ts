@@ -1,5 +1,6 @@
 // Makes requests to CryptoCompare API
 
+import { getSymbolDetails } from "@/helpers/Symboldetails";
 import { getKlines } from "@/services/api-service/Apis";
 
 
@@ -97,15 +98,7 @@ export const tvIntervals: any = {
   "1M": "1M",
 };
 export const pricescale = (symbol: string) => {
-  const allSymbols = JSON.parse(
-    (window as any).localStorage.getItem("symbolList")
-  );
-  const symbolPrecisionData = allSymbols.find(
-    (data: { symbol: string }) =>
-      data.symbol.toLowerCase() === symbol.toLowerCase()
-  );
- 
-  return Math.pow(10,  symbolPrecisionData.pricePrecision);
+  return Math.pow(10,  getSymbolDetails(symbol).pricePrecision);
 };
 
 

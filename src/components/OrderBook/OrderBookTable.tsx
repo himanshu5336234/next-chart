@@ -46,8 +46,7 @@ const OrderBookTable = ({
           <OrderBookRowWrapper
             orders={orderBook}
             height={asksOrBids === "ALL" ? ref2 / 2 - 17.5 : ref2 - 35}
-            orderType={"bids"}
-          />
+            orderType={"bids"} symbol={symbol}          />
         )}
       </Box>
     </Box>

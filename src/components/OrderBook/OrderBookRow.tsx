@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Box, useTheme } from "@mui/material";
 import PropTypes from "prop-types";
 import TextView from "../Atoms/TextView/TextView";
+import { getSymbolDetails, setDecimalPrecision } from "@/helpers/Symboldetails";
 
 interface OrderBookRowProps {
 
   Max: number;
   rowType: string;
-
+   symbol:string;
   items: string[];
 }
-const OrderBookRow = ({  Max, rowType, items }: OrderBookRowProps) => {
-  const theme =useTheme()
+const OrderBookRow = ({ Max, rowType, items,symbol }: OrderBookRowProps) => {
+  const theme = useTheme()
+   const pricescale = useMemo(() => {
+    return   getSymbolDetails(symbol);
+  },[symbol])
+  
   return (
     <Box
       sx={{
@@ -25,26 +30,26 @@ const OrderBookRow = ({  Max, rowType, items }: OrderBookRowProps) => {
     >
       <TextView
         style={{ flex: 1 }}
-        component={"h4"}
+
         textType={"number"}
-        color={rowType === "bids" ? theme.palette.success.main :theme.palette.error.main}
+        color={rowType === "bids" ? theme.palette.success.main : theme.palette.error.main}
         text={String(Number(items[0]))}
       />
 
       <TextView
         style={{ flex: 1 }}
-        component={"h4"}
+
         textAlign={"center"}
         textType={"number"}
-        text={String(items[1] * items[0])}
+        text={  setDecimalPrecision(String(Number(items[1]) * Number(items[0])),pricescale.pricePrecision)}
       />
 
       <TextView
         style={{ flex: 1 }}
-        component={"h4"}
-  textType={"number"}
 
-        text={String(items[2] * items[0])}
+        textType={"number"}
+
+        text={  setDecimalPrecision(String(Number(items[2]) * Number(items[0])),pricescale.pricePrecision)}
       />
 
       <Box

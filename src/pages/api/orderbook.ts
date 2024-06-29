@@ -28,7 +28,7 @@ export default async function handler(req, res) {
 }
 
 // Helper function to filter and combine order book levels
-function findAndDelete(currentLevels, orders, type) {
+ export function findAndDelete(currentLevels, orders, type) {
     if (currentLevels) {
         const index = type === "BIDS"
             ? currentLevels.findIndex(
@@ -42,7 +42,7 @@ function findAndDelete(currentLevels, orders, type) {
 }
 
 // Helper function to add cumulative sums to order book levels
-function addTotalSums(orders) {
+ export function addTotalSums(orders) {
     let sum = 0;
     return orders.map((item) => {
         sum += Number(item[1]);

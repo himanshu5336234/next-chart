@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import { getTickerPrice } from "@/services/api-service/Apis";
 import { Box, Grid, useTheme } from "@mui/material";
@@ -6,6 +6,7 @@ import { AutoSizer, List } from "react-virtualized";
 import TextView from "../Atoms/TextView/TextView";
 import BasicSearchField from "../Atoms/CustomInput/BasicSearchField";
 import axios from "axios";
+import { getSymbolDetails } from "@/helpers/Symboldetails";
 
 const SymbolsTableData = () => {
   const theme = useTheme()
@@ -36,6 +37,7 @@ const SymbolsTableData = () => {
   };
 
   const rowRenderer = ({ index, key, style }) => {
+
     const row: any = filteredData[index];
     return (
       <Box sx={style} key={key} onClick={() => handleRowClick(row.symbol)}>
