@@ -3,6 +3,7 @@ import { Box, Grid } from "@mui/material";
 import { TradingViewChart } from "@/components/TradingViewChart/TradingViewChart";
 import SymbolsTableData from "@/components/SymbolsTableData/SymbolsTableData";
 import OrderBookServer from "@/components/OrderBook/OrderBookServer";
+import MarketSegment from "@/components/MarketSegment/MarketSegment";
 
 export default function Home({ symbol,theme}: {theme:string; symbol: string }) {
   return (
@@ -21,6 +22,7 @@ export default function Home({ symbol,theme}: {theme:string; symbol: string }) {
         </Grid>
         <Grid item xs={6.9}>
           <Box style={{ height: "70vh" }}>
+            <MarketSegment/>
             <TradingViewChart symbol={symbol} ID={0} themeMode={theme} />
           </Box>
         </Grid>

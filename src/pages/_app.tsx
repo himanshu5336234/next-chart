@@ -1,25 +1,33 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { AppCacheProvider } from "@mui/material-nextjs/v13-pagesRouter";
+import { CacheProvider } from "@emotion/react";
+import createCache from "@emotion/cache";
 import { ThemeProvider } from "@mui/material/styles";
-import { darkTheme,lightTheme } from "@/assets/Theme/index";
+import { darkTheme, lightTheme } from "@/assets/Theme";
 import { useRouter } from "next/router";
-import { Paper } from "@mui/material";
-export default function App(props: AppProps) {
+import { Provider } from "react-redux";
+import { wrapper } from "@/services/redux/store/configureStore";
+
+// Create an Emotion cache for MUI
+const clientSideEmotionCache = createCache({ key: "css" });
+
+function App(props: AppProps) {
   const { Component, pageProps } = props;
+  const { store } = wrapper.useWrappedStore(pageProps);
   const router = useRouter();
 
   const { theme } = router.query;
-  const themeMode = theme === 'dark'? darkTheme : lightTheme;
-  return (
-    <>
-      <AppCacheProvider {...props}>
-        <ThemeProvider theme={themeMode}>
+  const themeMode = theme === "dark" ? darkTheme : lightTheme;
 
+  return (
+    <CacheProvider value={clientSideEmotionCache}>
+      <Provider store={store}>
+        <ThemeProvider theme={themeMode}>
           <Component {...pageProps} />
-   
         </ThemeProvider>
-      </AppCacheProvider>
-    </>
+      </Provider>
+    </CacheProvider>
   );
 }
+
+export default wrapper.withRedux(App);

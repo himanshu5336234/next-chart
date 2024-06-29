@@ -38,10 +38,10 @@ const SymbolsTableData = () => {
 
     const row: any = filteredData[index];
     return (
-      <Box sx={style} key={key} onClick={() => handleRowClick(row.symbol)}>
+      <Box sx={{...style,cursor:"pointer",":hover":{backgroundColor:"background.tertiary",borderRadius:1}}} key={key} onClick={() => handleRowClick(row.symbol)}>
         <Grid container gap={1} p={1}>
           <Grid xs={4} item>
-            <TextView>{row.symbol}</TextView>
+            <TextView    fontWeight={"Medium"}>{row.symbol}</TextView>
           </Grid>
           <Grid item xs={2}>
             <TextView  fontWeight={"Medium"} textType="number">{parseFloat(row.lastPrice).toFixed(2)}</TextView>

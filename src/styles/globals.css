@@ -79,7 +79,7 @@ input:focus-visible {
 }
 /* Track */
 ::-webkit-scrollbar-track {
-background-color: transparent;
+/* background-color: transparent; */
   
 }
 
@@ -89,6 +89,7 @@ background-color: transparent;
 }
 body{
   margin: 0;
+  background-color: black;
 }
 /* Handle on hover */
 ::selection {

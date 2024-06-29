@@ -24,7 +24,8 @@ export const LightPalette = {
   },
   background: {
     default: colors.white,
-    secondary: colors.greyLightMode1,
+    secondary: colors.white,
+    tertiary: colors.greyLightMode3,
     paper: colors.white,
   },
   text: {
@@ -73,6 +74,7 @@ export const darkPalette = {
   background: {
     primary: colors.black,
     secondary: colors.greyDarkMode1,
+    tertiary: colors.greyDarkMode3,
     paper: colors.black,
     default:colors.black,
     modal: colors.greyDarkMode2,

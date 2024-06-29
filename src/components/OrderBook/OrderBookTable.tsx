@@ -23,7 +23,7 @@ console.log(height);
           <OrderBookRowWrapper
             symbol={symbol}
             orders={orderBook}
-            height={asksOrBids === "ALL" ? height / 2 - 17.5 : height}
+            height={asksOrBids === "ALL" ? height / 2 - 18 : height}
             orderType={"asks"}
           />
         )}
@@ -37,7 +37,7 @@ console.log(height);
         {(asksOrBids === "ALL" || asksOrBids === "BIDS") && (
           <OrderBookRowWrapper
             orders={orderBook}
-            height={asksOrBids === "ALL" ? height / 2 - 17.5 : height }
+            height={asksOrBids === "ALL" ? height / 2 - 18 : height }
             orderType={"bids"}
             symbol={symbol}
           />
