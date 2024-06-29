@@ -97,10 +97,8 @@ export const tvIntervals: any = {
   "1M": "1M",
 };
 export const pricescale = (symbol: string) => {
-  const allSymbols = JSON.parse(
-    (window as any).localStorage.getItem("symbolList")
-  );
-  const symbolPrecisionData = allSymbols.find(
+  const allSymbols = JSON.parse((window as any).localStorage.getItem("symbolList")??"[]") ?? []
+  const symbolPrecisionData = allSymbols && allSymbols.find(
     (data: { symbol: string }) =>
       data.symbol.toLowerCase() === symbol.toLowerCase()
   );

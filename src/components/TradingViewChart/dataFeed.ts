@@ -1,4 +1,10 @@
-import { configurationData, createGetChartCandle,  pricescale, tvIntervals } from "./helpers";
+import { getSymbolList } from "@/services/api-service/Apis";
+import {
+  configurationData,
+  createGetChartCandle,
+  pricescale,
+  tvIntervals,
+} from "./helpers";
 import chartWS from "./streaming";
 const { subscribeOnStream, unsubscribeFromStream } = chartWS();
 const getChartCandle = createGetChartCandle();
@@ -11,9 +17,22 @@ const dataFeed = {
       supported_resolutions: string[];
     }) => void
   ) => {
-    setTimeout(() => {
-      callback(configurationData);
-    }, 0);
+    const allSymbols = JSON.parse(
+      (window as any).localStorage.getItem("symbolList")
+    );
+    if ( allSymbols && allSymbols.length > 0) {
+      setTimeout(() => {
+        callback(configurationData);
+      }, 0);
+    } else {
+      getSymbolList().then(({ data }: any) => {
+        localStorage.setItem("symbolList", JSON.stringify(data.symbols))
+
+      });
+      setTimeout(() => {
+        callback(configurationData);
+      }, 300);
+    }
   },
 
   resolveSymbol: async (
@@ -57,7 +76,7 @@ const dataFeed = {
           has_weekly_and_monthly: true,
           currency_code: "USDT",
         });
-      }, 10);
+      }, 100);
       return;
     }
     onResolveErrorCallback("not Found");
@@ -117,7 +136,7 @@ const dataFeed = {
       resolution,
       onRealtimeCallback,
       subscriberUID,
-      onResetCacheNeededCallback,
+      onResetCacheNeededCallback
     );
   },
 
