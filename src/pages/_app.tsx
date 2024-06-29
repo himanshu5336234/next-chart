@@ -23,7 +23,10 @@ function App(props: AppProps) {
     <CacheProvider value={clientSideEmotionCache}>
       <Provider store={store}>
         <ThemeProvider theme={themeMode}>
+          <div style={{height:"100vh",overflow:"auto", background:(theme === "dark" ? "black" : "#F0F0F2")}}>
           <Component {...pageProps} />
+          </div>
+   
         </ThemeProvider>
       </Provider>
     </CacheProvider>
