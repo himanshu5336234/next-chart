@@ -36,13 +36,19 @@ const ToggleGroup = ({
                 {name}
               </ToggleButton>
             );
-          } else {
+          } else
             return (
-              <ToggleButton key={index} variant={variant} value={value} id={id}>
-                {name}
-              </ToggleButton>
+              <>
+
+                <ToggleButton key={index}
+                  value={value}
+                  onClick={()=>null}
+                  id={id}>
+                  {name}
+                </ToggleButton>
+              </>
             );
-          }
+
         })}
       </StyledToggleButtonGroup>
     );
@@ -56,7 +62,7 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(
     width: "100%",
     gap: 16,
     "& .MuiToggleButtonGroup-grouped": {
-      textTransform:"capitalize",
+      textTransform: "capitalize",
       padding: "2px 12px",
       border: "none",
       "&:not(:last-of-type)": {
@@ -66,7 +72,7 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(
       "&:not(:first-of-type)": {
         borderRadius:
           styles && styles.borderRadius ? styles.borderRadius : "4px",
-          marginLeft: 0,
+        marginLeft: 0,
       },
       ...styles,
     },

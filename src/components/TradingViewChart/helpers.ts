@@ -108,7 +108,6 @@ export const pricescale = (symbol: string) => {
 
 
 export const createGetChartCandle = () => {
-  let lastStartTime: any = null;
   let totalKlines: any[] = [];
   const kLinesLimit = 1500;
   return async (

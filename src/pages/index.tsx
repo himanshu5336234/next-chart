@@ -61,7 +61,6 @@ export default function Home({
         isResizable={true}
         autoSize
         rowHeight={10}
-        isRearrangeable={true}
         draggableHandle=".grid-item__title"
         margin={[1, 2.1]}
         breakpoints={{ lg: 1440, md: 990, sm: 650, xs: 575 }}
