@@ -8,8 +8,7 @@ import TextView from "../Atoms/TextView/TextView";
 interface PositionLtpProps {
   symbol: string;
   type: string;
-  variant: string;
-  symbolPricePrecision: number;
+  variant?: string;
 }
 const MarketStreamData: React.FC<PositionLtpProps> = ({
   symbol,

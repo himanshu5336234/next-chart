@@ -19,7 +19,7 @@ const MarketSegment = ({ symbol }: Props) => {
   const [isConnected, setIsConnected] = useState(false);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    let webSocketService = NewWebSocketClient.getInstance(
+    const webSocketService = NewWebSocketClient.getInstance(
       BASE_URL()?.binanceWsBase
     );
     if (isConnected) {
@@ -61,7 +61,8 @@ const MarketSegment = ({ symbol }: Props) => {
         setIsConnected(true);
       });
     }
-    return () => {};
+
+  
   }, [symbol, isConnected]);
 
   return (
