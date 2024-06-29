@@ -6,10 +6,10 @@ const chartWS = () => {
   let connectingLive = false;
   let webSocketService: any;
 
-  const initializeWebSocket = (paramStr: string, onRealtimeCallback: any) => {
+  const initializeWebSocket = (paramStr: string, onRealtimeCallback: any,subscribeUID:any) => {
     const obj = {
       method: "SUBSCRIBE",
-      params: [paramStr],
+      params: [paramStr ,`${subscribeUID.split("_#_")[0].toLowerCase()}@depth20`],
       id: 2,
     };
     if (!connectingLive) {
@@ -39,7 +39,7 @@ const chartWS = () => {
     ) {
       try {
         const paramStr = generateSubscriptionParamFromUID(subscribeUID);
-        initializeWebSocket(paramStr, onRealtimeCallback);
+        initializeWebSocket(paramStr, onRealtimeCallback,subscribeUID);
       } catch (e) {
         console.error(e, "Error in subscribeOnStream");
       }
@@ -50,7 +50,7 @@ const chartWS = () => {
         const paramStr = generateSubscriptionParamFromUID(subscriberUID);
         const obj: any = {
           method: "UNSUBSCRIBE",
-          params: [paramStr],
+          params: [paramStr ,`${subscriberUID.split("_#_")[0].toLowerCase()}@depth20`],
           id: 2,
         };
         if (!webSocketService) {

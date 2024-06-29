@@ -6,7 +6,7 @@ import OrderBookTable from "./OrderBookTable";
 import TextView from "../Atoms/TextView/TextView";
 
 
-const OrderBook = ({orderBook}) => {
+const OrderBook = ({ orderBook,symbol }: { orderBook: any }) => {
   const [asksOrBids, setAsksOrBids] = useState("ALL");
 
   const handleTabsChange = useCallback(
@@ -17,10 +17,10 @@ const OrderBook = ({orderBook}) => {
   );
   return (
     <Box height={"100%"} bgcolor="background.default" width={"100%"} p={2}>
-      <TextView component={"p"} text={"Order Book"}  />
+      <TextView component={"p"} text={"Order Book"} />
       <AskOrbids asksOrBids={asksOrBids} handleTabsChange={handleTabsChange} />
       <TableHeadWrapperForAsksBids />
-     <OrderBookTable orderBook={orderBook} asksOrBids={asksOrBids} />
+      {orderBook?.asks?.length > 0 && <OrderBookTable symbol={symbol} orderBook={orderBook} asksOrBids={asksOrBids} />}
     </Box>
   );
 };

@@ -10,7 +10,7 @@ export const widgetContainer = {
   allow_symbol_change: true,
   theme: "dark",
   timezone: "Asia/Kolkata",
-  library_path: "/chart/charting_library.js",
+  library_path: "chart/",
   custom_css_url: "css/style.css",
   custom_font_family: '"Text-Medium", sans-serif',
   disabled_features: [
@@ -47,7 +47,7 @@ export const widgetContainer = {
     "mainSeriesProperties.candleStyle.wickColor": "#29B57E",
     "mainSeriesProperties.candleStyle.wickUpColor": "#29B57E",
     "mainSeriesProperties.candleStyle.wickDownColor": "#FF6554",
-    "scalesProperties.textColor": "white",
+    "scalesProperties.textColor": "#ffffff",
     "scalesProperties.backgroundColor": "#0E0E0F",
     "symbolWatermarkProperties.color": "rgba(0, 0, 0, 0.00)",
     "symbolWatermarkProperties.visibility": false,

@@ -4,6 +4,7 @@ import { TradingViewChart } from "@/components/TradingViewChart/TradingViewChart
 import { getOrderBook, getSymbolList } from "@/services/api-service/Apis";
 import OrderBook from "@/components/OrderBook/OrderBook";
 import SymbolsTableData from "@/components/SymbolsTableData/SymbolsTableData";
+import OrderBookServer from "@/components/OrderBook/OrderBookServer";
 
 export default function Home({
   orderBook,
@@ -21,23 +22,23 @@ export default function Home({
 
         <script
           type="text/javascript"
-          src="chart/charting_library.js"
+          src="/chart/charting_library.js"
           defer
         ></script>
       </Head>
       <Grid container gap={1}>
       <Grid item xs={2.5}>
           <SymbolsTableData/>
-          {/* <OrderBook orderBook={orderBook}/> */}
+
         </Grid>
         <Grid item xs={6.9}>
           <Box style={{ height: "70vh" }}>
-            <TradingViewChart symbolList={symbols} symbol={symbol} ID={0} />
+            <TradingViewChart  symbol={symbol} ID={0} />
           </Box>
         </Grid>
-        <Grid item xs={2}>
-          <SymbolsTableData/>
-          {/* <OrderBook orderBook={orderBook}/> */}
+        <Grid item xs={2.4}>
+
+          <OrderBookServer symbol={symbol}/>
         </Grid>
       
       </Grid>

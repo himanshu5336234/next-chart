@@ -5,9 +5,10 @@ import { Box, Grid, useTheme } from "@mui/material";
 import { AutoSizer, List } from "react-virtualized";
 import TextView from "../Atoms/TextView/TextView";
 import BasicSearchField from "../Atoms/CustomInput/BasicSearchField";
+import axios from "axios";
 
 const SymbolsTableData = () => {
-  const theme =useTheme()
+  const theme = useTheme()
   const router = useRouter();
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,7 +18,7 @@ const SymbolsTableData = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getTickerPrice();
+        const response = await getTickerPrice()
         setData(response.data);
       } catch (error) {
         console.error("Error fetching data", error);
@@ -30,12 +31,12 @@ const SymbolsTableData = () => {
   const handleRowClick = (symbol: any) => {
     router.push({
       pathname: "/",
-      query: { symbol },
+      query: { symbol: symbol.toLowerCase() },
     });
   };
 
-  const rowRenderer = ({ index, key,style }) => {
-    const row:any= filteredData[index];
+  const rowRenderer = ({ index, key, style }) => {
+    const row: any = filteredData[index];
     return (
       <Box sx={style} key={key} onClick={() => handleRowClick(row.symbol)}>
         <Grid container gap={1} p={1}>
@@ -47,9 +48,9 @@ const SymbolsTableData = () => {
           </Grid>
           <Grid item xs={2}>
             <TextView
-            textType="number"
+              textType="number"
               style={{
-                color: parseFloat(row.priceChangePercent) > 0 ? theme.palette.success.main :theme.palette.error.main
+                color: parseFloat(row.priceChangePercent) > 0 ? theme.palette.success.main : theme.palette.error.main
               }}
             >
               {parseFloat(row.priceChangePercent).toFixed(2)}%
@@ -66,23 +67,23 @@ const SymbolsTableData = () => {
   const filteredData = data.filter(row =>
     row.symbol.toLowerCase().includes(searchQuery.toLowerCase())
   )
-  .sort((a, b) => {
-    if (sortCriteria === "symbol") {
-      return sortOrder? a.symbol.localeCompare(b.symbol) : b.symbol.localeCompare(a.symbol);
-    }
-    if (sortCriteria === "lastPrice") {
-      return sortOrder? a.lastPrice - b.lastPrice : b.lastPrice - a.lastPrice;
-    }
-    if (sortCriteria === "priceChangePercent") {
-      return sortOrder? a.priceChangePercent - b.priceChangePercent : b.priceChangePercent - a.priceChangePercent;
-    }
-    if (sortCriteria === "quoteVolume") {
-      return sortOrder? a.quoteVolume - b.quoteVolume : b.quoteVolume - a.quoteVolume;
-    }
-    return 0;
-  });
+    .sort((a, b) => {
+      if (sortCriteria === "symbol") {
+        return sortOrder ? a.symbol.localeCompare(b.symbol) : b.symbol.localeCompare(a.symbol);
+      }
+      if (sortCriteria === "lastPrice") {
+        return sortOrder ? a.lastPrice - b.lastPrice : b.lastPrice - a.lastPrice;
+      }
+      if (sortCriteria === "priceChangePercent") {
+        return sortOrder ? a.priceChangePercent - b.priceChangePercent : b.priceChangePercent - a.priceChangePercent;
+      }
+      if (sortCriteria === "quoteVolume") {
+        return sortOrder ? a.quoteVolume - b.quoteVolume : b.quoteVolume - a.quoteVolume;
+      }
+      return 0;
+    });
   return (
-    <Box sx={{p:1,backgroundColor:"background.default"}}>
+    <Box sx={{ p: 1, backgroundColor: "background.default" }}>
       <BasicSearchField
         placeholder="Search"
         autoFocus={true}
@@ -91,28 +92,28 @@ const SymbolsTableData = () => {
       />
       <Grid container gap={1} mt={3} p={1}>
         <Grid xs={4} item>
-          <TextView onClick={()=>{
+          <TextView onClick={() => {
             setSortCriteria("symbol");
             setSortOrder(!sortOrder)
 
           }}>Trading Pairs</TextView>
         </Grid>
         <Grid item xs={2}>
-          <TextView onClick={()=>{
+          <TextView onClick={() => {
             setSortCriteria("lastPrice");
             setSortOrder(!sortOrder)
 
           }}>Price</TextView>
         </Grid>
         <Grid item xs={2}>
-          <TextView onClick={()=>{
+          <TextView onClick={() => {
             setSortCriteria("priceChangePercent");
             setSortOrder(!sortOrder)
 
           }}>24H %</TextView>
         </Grid>
         <Grid item xs={2}>
-          <TextView  onClick={()=>{
+          <TextView onClick={() => {
             setSortCriteria("quoteVolume");
             setSortOrder(!sortOrder)
 

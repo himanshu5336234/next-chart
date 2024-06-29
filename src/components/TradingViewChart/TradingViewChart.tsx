@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 
 import dataFeed from "./dataFeed";
 import { widgetContainer } from "./helpers";
-export const TradingViewChart = ({ symbolList,symbol="BTCUSDT" }: { ID: number; symbol: string,symbolList:any[] }) => {
+export const TradingViewChart = ({ symbol="BTCUSDT" }: { ID: number; symbol: string }) => {
   const chartContainerRef = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export const TradingViewChart = ({ symbolList,symbol="BTCUSDT" }: { ID: number; 
     TradingViewWidget.onChartReady(() => {
       TradingViewWidget.chart();
     });
-  }, [symbol,symbolList]);
+  }, [symbol]);
 
   return (
     <>

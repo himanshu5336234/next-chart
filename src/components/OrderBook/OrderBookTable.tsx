@@ -6,9 +6,11 @@ import OrderBookRowWrapper from "./OrderBookRowWrapper";
 const OrderBookTable = ({
   asksOrBids,
   orderBook,
+  symbol
 }: {
   asksOrBids: string;
   orderBook: any;
+  symbol:string
 }) => {
   const ref = useRef(null);
   const ref2 = ref?.current?.offsetHeight ?? 300;
@@ -26,6 +28,8 @@ const OrderBookTable = ({
       <Box height={"100%"} width={"100%"} overflow={"hidden"} ref={ref}>
         {(asksOrBids === "ALL" || asksOrBids === "ASKS") && (
           <OrderBookRowWrapper
+          symbol={symbol}
+          
             orders={orderBook}
             height={asksOrBids === "ALL" ? ref2 / 2 - 17.5 : ref2 - 35}
             orderType={"asks"}
