@@ -1,17 +1,24 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { AppCacheProvider } from "@mui/material-nextjs/v13-pagesRouter";
+import { CacheProvider } from "@emotion/react";
+import createCache from "@emotion/cache";
 import { ThemeProvider } from "@mui/material/styles";
 import { darkTheme } from "@/assets/Theme/index";
-export default function App(props: AppProps) {
-  const { Component, pageProps } = props;
+
+// Create a client-side cache
+const clientSideEmotionCache = createCache({ key: "css" });
+
+interface MyAppProps extends AppProps {
+  emotionCache?: any;
+}
+
+export default function MyApp(props: MyAppProps) {
+  const { Component, pageProps, emotionCache = clientSideEmotionCache } = props;
   return (
-    <>
-      <AppCacheProvider {...props}>
-        <ThemeProvider theme={darkTheme}>
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </AppCacheProvider>
-    </>
+    <CacheProvider value={emotionCache}>
+      <ThemeProvider theme={darkTheme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </CacheProvider>
   );
 }
