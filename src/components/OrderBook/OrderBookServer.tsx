@@ -1,9 +1,7 @@
-import { getOrderBook } from "@/services/api-service/Apis";
+
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import OrderBook from "./OrderBook";
-
-type Props = {};
 
 function OrderBookServer({symbol  }: any) {
     const [orderBook, setOrderBook] = useState([]);
@@ -14,7 +12,6 @@ function OrderBookServer({symbol  }: any) {
             setOrderBook(response.data);
         } catch (error) {
             console.error("Error fetching data:", error);
-            setError("Failed to fetch data");
         }
     };
 

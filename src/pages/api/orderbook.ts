@@ -1,7 +1,7 @@
 import { getOrderBook } from "@/services/api-service/Apis";
 
 // API endpoint to fetch order book data
-export default async function handler(req, res) {
+export default async function handler(req: { query: { symbol: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: { error: string; }): void; new(): any; }; }; }) {
     const { symbol } = req.query;
     
     // Error handling for missing symbol query parameter
@@ -28,21 +28,21 @@ export default async function handler(req, res) {
 }
 
 // Helper function to filter and combine order book levels
- export function findAndDelete(currentLevels, orders, type) {
+ export function findAndDelete(currentLevels: any, orders: any, type: string) {
     if (currentLevels) {
         const index = type === "BIDS"
             ? currentLevels.findIndex(
-                (item) => Number(item[0]) <= Number(orders[orders.length - 1][0])
+                (item: any) => Number(item[0]) <= Number(orders[orders.length - 1][0])
               )
             : currentLevels.findIndex(
-                (item) => Number(item[0]) >= Number(orders[orders.length - 1][0])
+                (item:any) => Number(item[0]) >= Number(orders[orders.length - 1][0])
               );
         return orders.concat(currentLevels.slice(index + 1));
     }
 }
 
 // Helper function to add cumulative sums to order book levels
- export function addTotalSums(orders) {
+ export function addTotalSums(orders: any[]) {
     let sum = 0;
     return orders.map((item) => {
         sum += Number(item[1]);

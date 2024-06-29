@@ -21,7 +21,7 @@
 // }
 {
   "compilerOptions": {
-    
+
     "baseUrl": ".",
     "noImplicitAny": true,
     "noImplicitThis": true,
@@ -66,6 +66,6 @@
   "exclude": [
     "node_modules"
   ],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx",],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx","types/react-virtualized.d.ts"],
   // tions/Tradingjourney/TradingJourneyContent.jsx", "app/components/Sections/Whydensity/WhyDensityContent.jsx", "sanity-cms/schemas/blog.ts", "app/api", "sanity-cms/lib/client.ts", "sanity-cms/db/processblogs.mjs", "app/api/sanity-algolia.ts"  ]
 }

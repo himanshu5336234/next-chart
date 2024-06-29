@@ -13,8 +13,8 @@ const OrderBook = ({
   symbol: string;
 }) => {
   const [asksOrBids, setAsksOrBids] = useState("ALL");
-  const [height, setHeight] = useState(300);
-  const ref = createRef();
+  const [height, setHeight] = useState<any>(300);
+  const ref = createRef<any>();
   const handleTabsChange = useCallback(
     (newValue: string) => {
       setAsksOrBids(newValue);
@@ -22,8 +22,7 @@ const OrderBook = ({
     [asksOrBids]
   );
   useEffect(() => {
-    console.log(ref.current);
-    setHeight(ref.current.offsetHeight);
+    setHeight(ref?.current.offsetHeight);
   }, []);
   return (
     <Box height={"100%"} bgcolor="background.default" width={"100%"} p={2}>

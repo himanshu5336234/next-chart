@@ -4,7 +4,7 @@ import Both from "@/assets/images/orderBook/Both.svg";
 import Asks from "@/assets/images/orderBook/Asks.svg";
 import Bids from "@/assets/images/orderBook/Bids.svg";
 
-const AskOrbids = ({ asksOrBids, handleTabsChange }: { asksOrBids: string; handleTabsChange: Function }) => {
+const AskOrbids = ({ asksOrBids, handleTabsChange }: { asksOrBids: string; handleTabsChange:any }) => {
   return (
     <Box
       sx={{

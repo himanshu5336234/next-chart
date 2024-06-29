@@ -67,7 +67,7 @@ const OrderBookRow = ({ Max, rowType, items,symbol }: OrderBookRowProps) => {
             transitionProperty: "all",
             transitionDuration: ".3s",
             transitionTimingFunction: "cubic-bezier(.4,0,.2,1)",
-            width: `${(items[2] / Max) * 100}%`,
+            width: `${(Number(items[2]) / Max) * 100}%`,
             height: "100%",
             background:
               rowType === "bids"

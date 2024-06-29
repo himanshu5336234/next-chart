@@ -5,8 +5,6 @@ import { Box, Grid, useTheme } from "@mui/material";
 import { AutoSizer, List } from "react-virtualized";
 import TextView from "../Atoms/TextView/TextView";
 import BasicSearchField from "../Atoms/CustomInput/BasicSearchField";
-import axios from "axios";
-import { getSymbolDetails } from "@/helpers/Symboldetails";
 
 const SymbolsTableData = () => {
   const theme = useTheme()
@@ -36,7 +34,7 @@ const SymbolsTableData = () => {
     });
   };
 
-  const rowRenderer = ({ index, key, style }) => {
+  const rowRenderer = ({ index, key, style }:any) => {
 
     const row: any = filteredData[index];
     return (
@@ -66,10 +64,10 @@ const SymbolsTableData = () => {
     );
   };
 
-  const filteredData = data.filter(row =>
+  const filteredData = data.filter((row:any) =>
     row.symbol.toLowerCase().includes(searchQuery.toLowerCase())
   )
-    .sort((a, b) => {
+    .sort((a:any, b:any) => {
       if (sortCriteria === "symbol") {
         return sortOrder ? a.symbol.localeCompare(b.symbol) : b.symbol.localeCompare(a.symbol);
       }
@@ -90,7 +88,7 @@ const SymbolsTableData = () => {
         placeholder="Search"
         autoFocus={true}
         value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setSearchQuery(e.target.value)}
       />
       <Grid container gap={1} mt={3} p={1}>
         <Grid xs={4} item>
