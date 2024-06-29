@@ -73,7 +73,7 @@ const SymbolsTableData = () => {
         key={key}
         onClick={() => handleRowClick(row.symbol)}
       >
-        <Grid container gap={1} p={1}>
+        <Grid container justifyContent={"space-between"} alignItems={"center"} gap={1} p={1}>
           <Grid xs={4} item>
             <SymbolWrapper
               symbolText

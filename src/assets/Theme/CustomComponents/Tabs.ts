@@ -5,8 +5,8 @@ export const MuiTabs = {
       fontSize: "12px",
       alignItems: "center",
       "& .MuiTabs-indicator": {
-        borderBottom: `1px solid ${theme.palette.neutral.black}`,
-        backgroundColor: `${theme.palette.neutral.black}`,
+        // borderBottom: `1px solid ${theme.palette}`,
+        // backgroundColor: `${theme.palette.neutral.black}`,
       },
     }),
   },

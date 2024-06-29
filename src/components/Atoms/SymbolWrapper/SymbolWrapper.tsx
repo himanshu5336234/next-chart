@@ -45,8 +45,8 @@ const WrapperCard = {
   gap: 1,
 };
 const ImageStyles = {
-  height: "15px",
-  width: "15px",
+  height: "18px",
+  width: "18px",
   borderRadius: "50%",
   backgroundColor: "white",
 };

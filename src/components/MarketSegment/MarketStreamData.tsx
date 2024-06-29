@@ -8,11 +8,13 @@ interface PositionLtpProps {
   symbol: string;
   type: string;
   variant?: string;
+  color?:string;
 }
 const MarketStreamData: React.FC<PositionLtpProps> = ({
   symbol,
   type,
   variant,
+  color
 }) => {
   const snapltp = useAppSelector(
     (state: any) =>
@@ -22,7 +24,7 @@ const MarketStreamData: React.FC<PositionLtpProps> = ({
   );
 
   return (
-    <TextView variant={variant} textType={"number"} fontWeight={"Medium"}>
+    <TextView color={color} variant={variant} textType={"number"} fontWeight={"Medium"}>
       {setDecimalPrecision(String(snapltp),getSymbolDetails(symbol)?.pricePrecision) || "--"}
     </TextView>
   );

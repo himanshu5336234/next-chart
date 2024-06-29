@@ -1,6 +1,7 @@
 'use client'
 import { Box } from "@mui/material";
 import React, { useEffect, useRef } from "react";
+import CustomDivider from "../Atoms/Divider/CustomDivider";
 import MarketSegment from "../MarketSegment/MarketSegment";
 
 import dataFeed from "./dataFeed";
@@ -78,6 +79,7 @@ export const TradingViewChart = ({ themeMode, symbol = "BTCUSDT" }: { themeMode:
   return (
     <>
        <MarketSegment symbol={symbol}/>
+       <CustomDivider alignment={""}/>
       <Box bgcolor="background.secondary"  style={{ height: "100%" }} ref={chartContainerRef}></Box>
     </>
   );

@@ -1,6 +1,6 @@
-import { Box } from "@mui/system";
+
+import { Box } from "@mui/material";
 import React from "react";
-import PropTypes from "prop-types";
 const linerDividerHorizontal = {
   color: "#808090",
   background: "linear-gradient(90deg, rgba(128, 128, 144, 0.2) 0%, #808090 52.08%, rgba(128, 128, 144, 0.2) 100%)",
@@ -14,7 +14,4 @@ const linerDividerVertical = {
 };
 const CustomDivider = ({ alignment }: { alignment: string }) => <Box sx={alignment === "vertical" ? linerDividerVertical : linerDividerHorizontal}></Box>;
 
-CustomDivider.propTypes = {
-  alignment: PropTypes.string
-};
 export default CustomDivider;

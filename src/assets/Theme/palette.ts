@@ -31,6 +31,7 @@ export const LightPalette = {
   text: {
     primary: colors.black,
     secondary: colors.greyLightMode8,
+    tertiary: colors.greyLightMode7,
   },
   grey: {
     100: colors.greyLightMode1,

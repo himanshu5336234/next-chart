@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
-import { Grid } from "@mui/material";
+import { Box, Tabs, useTheme } from "@mui/material";
 import TextView from "../Atoms/TextView/TextView";
 import NewWebSocketClient from "@/helpers/WebSocketModule";
 import { BASE_URL } from "@/services/api-service/Base";
@@ -19,6 +19,7 @@ const obj = {
 const MarketSegment = ({ symbol }: Props) => {
   const [isConnected, setIsConnected] = useState(false);
   const dispatch = useAppDispatch();
+  const theme = useTheme();
   useEffect(() => {
     const webSocketService = NewWebSocketClient.getInstance(
       BASE_URL()?.binanceWsBase
@@ -62,48 +63,90 @@ const MarketSegment = ({ symbol }: Props) => {
         setIsConnected(true);
       });
     }
-
-
   }, [symbol, isConnected]);
 
   return (
-    <Grid gap={1} bgcolor="background.secondary" container alignItems={"center"} p={1}>
-      <Grid item md={2}>
-        <SymbolWrapper symbolText variant={"Regular_16"} symbol={symbol} />
-      </Grid>
-      <Grid item md={1.5}>
-        <MarketStreamData
-          symbol={symbol}
-          type={"ticker"}
-          variant={"Regular_18"}
-        />
-      </Grid>
-      <Grid item xs={6} md={1.5}>
-        <TextView component={"p"}>24h Change</TextView>
-        <TextView component={"p"}>
-          <MarketStreamData symbol={symbol} type={"high"} />/
-          <MarketStreamData symbol={symbol} type={"low"} />
-        </TextView>
-      </Grid>
-      <Grid item xs={6} md={1.2}>
-        <TextView component={"p"}>Mark</TextView>
-        <MarketStreamData symbol={symbol} type={"markPrice"} />
-      </Grid>
-      <Grid item xs={6} md={1.2}>
-        <TextView component={"p"}>Index</TextView>
-        <TextView component={"p"}>61,084</TextView>
-      </Grid>
-      <Grid item xs={6} md={1.5}>
-        <TextView component={"p"}>24h Volume</TextView>
-        <MarketStreamData symbol={symbol} type={"volumn"} />
-      </Grid>
-      <Grid item xs={6} md={2}>
-        <TextView component={"p"}>Funding Rate</TextView>
-        <TextView component={"p"} color="warning">
-          <MarketStreamData symbol={symbol} type={"per"} /> in 03:44:29
-        </TextView>
-      </Grid>
-    </Grid>
+    <Box
+      sx={{ overflow: "auto", width: "100%", bgcolor: "background.secondary" }}
+    >
+      <Tabs
+        sx={{
+          height: "100%",
+          ".MuiTabScrollButton-root:hover": {
+            backgroundColor: "background.secondary",
+          },
+          ".MuiTabScrollButton-root": {
+            height: "100%",
+            width: { sx: "20px", xs: "6px" },
+            ".MuiSvgIcon-root: hover": { color: theme.palette.text.primary },
+            ".MuiTabs-flexContainer ": {
+              gap: "10px",
+            },
+          },
+          display: "flex",
+          alignItems: "center",
+          gap: { sm: 1, xs: 0.5 },
+        }}
+        variant="scrollable"
+        scrollButtons
+        allowScrollButtonsMobile
+        aria-label="scrollable force tabs example"
+      >
+        <Box
+          gap={2}
+          display={"flex"}
+          width={"100%"}
+          alignItems={"center"}
+          p={1}
+        >
+          <Box>
+            <SymbolWrapper symbolText variant={"Regular_16"} symbol={symbol} />
+          </Box>
+
+          <Box>
+            <MarketStreamData
+              symbol={symbol}
+              type={"ticker"}
+              variant={"Regular_18"}
+            />
+          </Box>
+          <Box>
+            <TextView color={"text.tertiary"} component={"p"}>24h Change</TextView>
+            <TextView component={"p"}>
+              <MarketStreamData
+                color={"error.main"}
+                symbol={symbol}
+                type={"high"}
+              />
+              {" / "}
+              <MarketStreamData
+                color={theme.palette.success.main}
+                symbol={symbol}
+                type={"low"}
+              />
+            </TextView>
+          </Box>
+          <Box>
+            <TextView color={"text.tertiary"}  component={"p"}>Mark</TextView>
+            <MarketStreamData symbol={symbol} type={"markPrice"} />
+          </Box>
+          <Box>
+            <TextView color={"text.tertiary"}  component={"p"}>Index</TextView>
+            <TextView component={"p"}>61,084</TextView>
+          </Box>
+          <Box>
+            <TextView  color={"text.tertiary"}  component={"p"}>24h Volume</TextView>
+            <MarketStreamData symbol={symbol} type={"volumn"} />
+          </Box>
+          <Box>
+            <TextView color={"text.tertiary"}  component={"p"}>Funding Rate</TextView>
+            <TextView component={"p"} >
+              <MarketStreamData color="warning.main" symbol={symbol} type={"per"} />% in 03:44:29
+            </TextView>
+          </Box>
+        </Box>
+      </Tabs>
+    </Box>
   );
 };
 
