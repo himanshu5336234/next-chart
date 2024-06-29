@@ -1,3 +1,4 @@
+import { setDecimalPrecision } from "./Symboldetails";
 export const numberWithCommas = (x: string | number | undefined|any) => {
   if (x === undefined || isNaN(x)) return "--";
   const parts = x.toString().split(".");
@@ -5,12 +6,12 @@ export const numberWithCommas = (x: string | number | undefined|any) => {
   return parts.join(".");
 };
 
-export const numFormatter = (num: number, precision: number | undefined) => {
+export const numFormatter = (num: number, precision: number ) => {
   if (num > 999 && num < 1000000) {
-    return (num / 1000).toFixed(precision) + "K";
+    return  setDecimalPrecision(String(num / 1000),2) + "K";
   } else if (num > 1000000) {
-    return (num / 1000000).toFixed(precision) + "M";
+    return setDecimalPrecision(String(num / 1000000),1) + "M";
   } else if (num < 900) {
-    return num.toFixed(precision);
+    return setDecimalPrecision(String(num),1);
   }
 };

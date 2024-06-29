@@ -1,6 +1,5 @@
 "use client";
-import { setDecimalPrecision } from "@/helpers/PrecisionHelper";
-import { getSymbolDetails } from "@/helpers/Symboldetails";
+import { getSymbolDetails, setDecimalPrecision } from "@/helpers/Symboldetails";
 import { useAppSelector } from "@/services/redux/hooks";
 import React, { memo } from "react";
 import TextView from "../Atoms/TextView/TextView";
@@ -29,4 +28,4 @@ const MarketStreamData: React.FC<PositionLtpProps> = ({
   );
 };
 
-export default (MarketStreamData);
+export default memo(MarketStreamData);

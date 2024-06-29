@@ -1,22 +1,25 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { getCurrencyUrl } from "@/helpers/CurrencyLogo.js";
+
 import TextView from "../TextView/TextView";
+import { getCurrencyUrl } from "@/helpers/CurrencyLogo";
 interface SymbolWrapperProps {
   symbol: string;
-  symbolText?: string;
+  variant?:string;
+  symbolText?: boolean;
 }
 
 export const SymbolWrapper: React.FC<SymbolWrapperProps> = ({
   symbol,
   symbolText,
+  variant="Rwgular_12"
 }) => {
   return (
     <Box sx={WrapperCard}>
       {
         <Box
           component={"img"}
-          // onError={(event) => (event.target.style.display = "none")}
+          onError={(event:any) => (event.target.style.display = "none")}
           src={getCurrencyUrl(
             symbol.toUpperCase().replace("USDT", "").toLowerCase()
           )}
@@ -26,8 +29,8 @@ export const SymbolWrapper: React.FC<SymbolWrapperProps> = ({
       }
       <Box sx={SymbolStyles}>
         {symbolText && (
-          <TextView variant={"Regular_12"} component={"p"}>
-            {symbol.toUpperCase().replace("USDT", "")}
+          <TextView fontWeight={"Medium"} variant={variant} component={"p"}>
+            {symbol.toUpperCase().replace(("USDT"||"USDC"), "")}
           </TextView>
         )}
       </Box>

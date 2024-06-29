@@ -20,7 +20,7 @@ function App(props: AppProps) {
   const themeMode = theme === "dark" ? darkTheme : lightTheme;
 
   return (
-    <CacheProvider value={clientSideEmotionCache}>
+
       <Provider store={store}>
         <ThemeProvider theme={themeMode}>
           <div style={{height:"100vh",overflow:"auto", background:(theme === "dark" ? "black" : "#F0F0F2")}}>
@@ -29,7 +29,7 @@ function App(props: AppProps) {
    
         </ThemeProvider>
       </Provider>
-    </CacheProvider>
+
   );
 }
 

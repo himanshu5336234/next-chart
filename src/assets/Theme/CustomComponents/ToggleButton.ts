@@ -13,14 +13,16 @@ export const MuiToggleButton:any = {
     {
       props: { variant: "chip" },
       style: ({ theme }: { theme: any }) => ({
-        paddingX: 4,
-        paddingY: 2,
+        paddingX: 0,
+        paddingY: 0,
+        fontSize:"10px",
+
         color: theme.palette.grey[700],
         backgroundColor: "transparent",
 
         "&.Mui-selected": {
           color: theme.palette.primary.main,
-          backgroundColor: "#282F0F",
+          // backgroundColor: "#282F0F",
         },
         "&:hover": {
           color: theme.palette.primary.main,

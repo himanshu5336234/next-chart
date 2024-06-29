@@ -7,6 +7,7 @@ import { BASE_URL } from "@/services/api-service/Base";
 import { useAppDispatch } from "@/services/redux/hooks";
 import { setMarketStreamDataList } from "@/services/redux/store/Slices/tradableSymbolListSlice";
 import MarketStreamData from "./MarketStreamData";
+import { SymbolWrapper } from "../Atoms/SymbolWrapper/SymbolWrapper";
 type Props = {
   symbol: string;
 };
@@ -62,14 +63,13 @@ const MarketSegment = ({ symbol }: Props) => {
       });
     }
 
-  
+
   }, [symbol, isConnected]);
 
   return (
-    <Grid bgcolor="background.secondary" container alignItems={"center"} p={1}>
-      <Grid item md={1.5}>
-        <TextView component={"p"}>BTC-PERP</TextView>
-        <TextView component={"p"}>Bitcoin</TextView>
+    <Grid gap={1} bgcolor="background.secondary" container alignItems={"center"} p={1}>
+      <Grid item md={2}>
+        <SymbolWrapper symbolText variant={"Regular_16"} symbol={symbol} />
       </Grid>
       <Grid item md={1.5}>
         <MarketStreamData
