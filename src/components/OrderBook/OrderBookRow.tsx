@@ -33,7 +33,7 @@ const OrderBookRow = ({ Max, rowType, items,symbol }: OrderBookRowProps) => {
 
         textType={"number"}
         color={rowType === "bids" ? theme.palette.success.main : theme.palette.error.main}
-        text={String(Number(items[0]))}
+        text={setDecimalPrecision(String(Number(items[0])),pricescale.pricePrecision)}
       />
 
       <TextView

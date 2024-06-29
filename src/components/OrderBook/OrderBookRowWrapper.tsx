@@ -1,3 +1,4 @@
+import { convertToPrecisionValueInContractAssetUnit } from "@/helpers/PrecisionHelper";
 import NewWebSocketClient from "@/helpers/WebSocketModule";
 import { addTotalSums, findAndDelete } from "@/pages/api/orderbook";
 import { BASE_URL } from "@/services/api-service/Base";
@@ -7,7 +8,7 @@ import OrderBookRow from "./OrderBookRow";
 const binanceWsBaseUrl = BASE_URL()?.binanceWsBase;
 const OrderBookRowWrapper = ({
   orders,
-  height,
+  height = 200,
   orderType,
   symbol,
 }: {
@@ -16,11 +17,16 @@ const OrderBookRowWrapper = ({
   orderType: string;
   symbol: string;
 }) => {
-  const [originalOrders,setOriginalOrder]=useState([])
-  useEffect(()=>{
-    const bidsAndAsksOrders:any = orderType === "bids"? [...orders[orderType]] : [...orders[orderType]].reverse();
-    setOriginalOrder(bidsAndAsksOrders)
-  },[orders])
+  const [originalOrders, setOriginalOrder] = useState([]);
+  useEffect(() => {
+    if (orders?.asks?.length > 0) {
+      const bidsAndAsksOrders: any =
+        orderType === "bids"
+          ? [...orders[orderType]]
+          : [...orders[orderType]].reverse();
+      setOriginalOrder(bidsAndAsksOrders);
+    }
+  }, [orders]);
   useEffect(() => {
     const webSocketService = NewWebSocketClient.getInstance(binanceWsBaseUrl);
     if (symbol) {
@@ -28,40 +34,73 @@ const OrderBookRowWrapper = ({
     } else {
       webSocketService.removeListener("WebSocketMessage", handlemessageEvent);
     }
-
   }, [symbol]);
 
   const handlemessageEvent = (message: string) => {
-   const {stream,data} =JSON.parse(message)
+    const { data } = JSON.parse(message);
 
-   if(data && data.e ==="depthUpdate" && data?.s.toLowerCase() ===symbol.toLowerCase()
-   ){
-    const bidsAndAsksUpdatedOrder:any = orderType === "bids"? [...data["b"]] : [...data["a"]];
-    const asks = addTotalSums(findAndDelete(originalOrders, bidsAndAsksUpdatedOrder, orderType.toUpperCase()));
-    const bidsAndAsksOrders:any = orderType === "bids"? asks : asks.reverse();
-    setOriginalOrder(bidsAndAsksOrders)
-   }
+    if (
+      data &&
+      data.e === "depthUpdate" &&
+      data?.s.toLowerCase() === symbol.toLowerCase()
+    ) {
+      const bidsAndAsksUpdatedOrder: any =
+        orderType === "bids" ? [...data["b"]] : [...data["a"]];
+      const asks = addTotalSums(
+        findAndDelete(
+          originalOrders,
+          bidsAndAsksUpdatedOrder,
+          orderType.toUpperCase()
+        )
+      );
+      const bidsAndAsksOrders: any =
+        orderType === "bids" ? asks : asks.reverse();
+      setOriginalOrder(bidsAndAsksOrders);
+    }
   };
- 
+
   const showOrdersRows = useCallback(
-    (payload: any, orderType: string) => {
+    (payload: any, orderType: string, height: number) => {
       if (payload.length > 0) {
         const orders =
           orderType === "bids"
-            ? payload.slice(0, height / 25)
-            : payload.slice(payload.length - height / 25);
+            ? payload.slice(
+                0,
+                Number(
+                  convertToPrecisionValueInContractAssetUnit(
+                    String(height / 25),
+                    2
+                  )
+                )
+              )
+            : payload.slice(
+                payload.length -
+                  Number(
+                    convertToPrecisionValueInContractAssetUnit(
+                      String(height / 25),
+                      2
+                    )
+                  )
+              );
         const maxOrder =
-          orderType === "bids" ? orders[orders.length - 1][2] : orders[0][2];
+          orders.length > 0 && orderType === "bids"
+            ? orders[orders.length - 1][2]
+            : orders[0][2];
         return orders.map((items: any, index: number) => {
           return (
             <Box key={index}>
-              <OrderBookRow symbol={symbol} items={items} Max={maxOrder} rowType={orderType} />
+              <OrderBookRow
+                symbol={symbol}
+                items={items}
+                Max={maxOrder}
+                rowType={orderType}
+              />
             </Box>
           );
         });
       }
     },
-    [height]
+    [originalOrders, orderType, height]
   );
 
   return (
@@ -71,7 +110,7 @@ const OrderBookRowWrapper = ({
       overflow={"hidden"}
       height={height}
     >
-      {showOrdersRows(originalOrders, orderType)}
+      {showOrdersRows(originalOrders, orderType, height)}
     </Box>
   );
 };
