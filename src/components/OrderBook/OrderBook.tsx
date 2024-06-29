@@ -25,7 +25,7 @@ const OrderBook = ({
     setHeight(ref?.current.offsetHeight);
   }, []);
   return (
-    <Box height={"100%"} bgcolor="background.default" width={"100%"} p={2}>
+    <Box height={"100%"} bgcolor="background.secondary" width={"100%"} p={2}>
       <TextView component={"p"} text={"Order Book"} />
       <AskOrbids asksOrBids={asksOrBids} handleTabsChange={handleTabsChange} />
       <TableHeadWrapperForAsksBids />

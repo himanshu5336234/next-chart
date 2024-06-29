@@ -30,7 +30,7 @@ const OrderBookRow = ({ Max, rowType, items,symbol }: OrderBookRowProps) => {
     >
       <TextView
         style={{ flex: 1 }}
-
+        fontWeight={"Medium"}
         textType={"number"}
         color={rowType === "bids" ? theme.palette.success.main : theme.palette.error.main}
         text={setDecimalPrecision(String(Number(items[0])),pricescale.pricePrecision)}
@@ -41,12 +41,13 @@ const OrderBookRow = ({ Max, rowType, items,symbol }: OrderBookRowProps) => {
 
         textAlign={"center"}
         textType={"number"}
+        fontWeight={"Medium"}
         text={  setDecimalPrecision(String(Number(items[1]) * Number(items[0])),pricescale.pricePrecision)}
       />
 
       <TextView
         style={{ flex: 1 }}
-
+        fontWeight={"Medium"}
         textType={"number"}
 
         text={  setDecimalPrecision(String(Number(items[2]) * Number(items[0])),pricescale.pricePrecision)}

@@ -19,7 +19,6 @@ export const colors = {
   greyLightMode7: "#808090",
   greyLightMode8: "#32333A",
   greyLightMode9: "#19191D",
-
   greyDarkMode9: "#D8D8DD",
   greyDarkMode8: "#B1B1BA",
   greyDarkMode7: "#8B8B97",

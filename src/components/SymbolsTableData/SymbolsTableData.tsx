@@ -44,10 +44,11 @@ const SymbolsTableData = () => {
             <TextView>{row.symbol}</TextView>
           </Grid>
           <Grid item xs={2}>
-            <TextView textType="number">{parseFloat(row.lastPrice).toFixed(2)}</TextView>
+            <TextView  fontWeight={"Medium"} textType="number">{parseFloat(row.lastPrice).toFixed(2)}</TextView>
           </Grid>
           <Grid item xs={2}>
             <TextView
+             fontWeight={"Medium"}
               textType="number"
               style={{
                 color: parseFloat(row.priceChangePercent) > 0 ? theme.palette.success.main : theme.palette.error.main
@@ -57,7 +58,7 @@ const SymbolsTableData = () => {
             </TextView>
           </Grid>
           <Grid item xs={2}>
-            <TextView textType="number">{parseFloat(row.quoteVolume).toFixed(2)}</TextView>
+            <TextView  fontWeight={"Medium"} textType="number">{parseFloat(row.quoteVolume).toFixed(2)}</TextView>
           </Grid>
         </Grid>
       </Box>
@@ -83,7 +84,7 @@ const SymbolsTableData = () => {
       return 0;
     });
   return (
-    <Box sx={{ p: 1, backgroundColor: "background.default" }}>
+    <Box sx={{ p: 1,bgcolor:"background.secondary"  }}>
       <BasicSearchField
         placeholder="Search"
         autoFocus={true}
@@ -92,7 +93,7 @@ const SymbolsTableData = () => {
       />
       <Grid container gap={1} mt={3} p={1}>
         <Grid xs={4} item>
-          <TextView onClick={() => {
+          <TextView fontWeight={"Medium"} onClick={() => {
             setSortCriteria("symbol");
             setSortOrder(!sortOrder)
 
@@ -106,14 +107,14 @@ const SymbolsTableData = () => {
           }}>Price</TextView>
         </Grid>
         <Grid item xs={2}>
-          <TextView onClick={() => {
+          <TextView  fontWeight={"Medium"} onClick={() => {
             setSortCriteria("priceChangePercent");
             setSortOrder(!sortOrder)
 
           }}>24H %</TextView>
         </Grid>
         <Grid item xs={2}>
-          <TextView onClick={() => {
+          <TextView  fontWeight={"Medium"} onClick={() => {
             setSortCriteria("quoteVolume");
             setSortOrder(!sortOrder)
 
