@@ -1,4 +1,5 @@
 import { getSymbolList } from "@/services/api-service/Apis";
+let time =0
 import {
   configurationData,
   createGetChartCandle,
@@ -25,13 +26,14 @@ const dataFeed = {
         callback(configurationData);
       }, 0);
     } else {
+      time=500
       getSymbolList().then(({ data }: any) => {
         localStorage.setItem("symbolList", JSON.stringify(data.symbols))
 
       });
       setTimeout(() => {
         callback(configurationData);
-      }, 300);
+      }, time);
     }
   },
 
@@ -76,7 +78,7 @@ const dataFeed = {
           has_weekly_and_monthly: true,
           currency_code: "USDT",
         });
-      }, 100);
+      }, time);
       return;
     }
     onResolveErrorCallback("not Found");
