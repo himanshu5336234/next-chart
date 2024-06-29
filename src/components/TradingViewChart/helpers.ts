@@ -1,6 +1,5 @@
 // Makes requests to CryptoCompare API
 
-import { getSymbolDetails } from "@/helpers/Symboldetails";
 import { getKlines } from "@/services/api-service/Apis";
 
 
@@ -48,7 +47,7 @@ export const widgetContainer = {
     "mainSeriesProperties.candleStyle.wickColor": "#29B57E",
     "mainSeriesProperties.candleStyle.wickUpColor": "#29B57E",
     "mainSeriesProperties.candleStyle.wickDownColor": "#FF6554",
-    "scalesProperties.textColor": "#ffffff",
+    "scalesProperties.textColor": "white",
     "scalesProperties.backgroundColor": "#0E0E0F",
     "symbolWatermarkProperties.color": "rgba(0, 0, 0, 0.00)",
     "symbolWatermarkProperties.visibility": false,
@@ -98,7 +97,15 @@ export const tvIntervals: any = {
   "1M": "1M",
 };
 export const pricescale = (symbol: string) => {
-  return Math.pow(10,  getSymbolDetails(symbol).pricePrecision);
+  const allSymbols = JSON.parse(
+    (window as any).localStorage.getItem("symbolList")
+  );
+  const symbolPrecisionData = allSymbols.find(
+    (data: { symbol: string }) =>
+      data.symbol.toLowerCase() === symbol.toLowerCase()
+  );
+ 
+  return Math.pow(10,  symbolPrecisionData.pricePrecision);
 };
 
 

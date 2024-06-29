@@ -4,12 +4,12 @@ import {
   documentGetInitialProps,
 } from "@mui/material-nextjs/v13-pagesRouter";
 
-export default function Document(props:any) {
+export default function Document(props: any) {
   return (
     <Html lang="en">
       <Head>
-      
-  
+
+
         <DocumentHeadTags {...props} />
       </Head>
       <body>

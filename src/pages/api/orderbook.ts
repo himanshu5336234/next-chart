@@ -1,7 +1,7 @@
 import { getOrderBook } from "@/services/api-service/Apis";
 
 // API endpoint to fetch order book data
-export default async function handler(req: { query: { symbol: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: { error: string; }): void; new(): any; }; }; }) {
+export default async function handler(req: { query: { symbol: any}; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: { error: string; }): void; new(): any; }; }; }) {
     const { symbol } = req.query;
     
     // Error handling for missing symbol query parameter

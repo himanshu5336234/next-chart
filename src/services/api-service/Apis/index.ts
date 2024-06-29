@@ -24,7 +24,7 @@ export const getKlines = (
 };
 
 export const getOrderBook = (payload:string) => {
-  const url = Format(GET_ORDER_BOOK.url, payload, "1000");
+  const url = Format(GET_ORDER_BOOK.url, payload.toUpperCase(), "1000");
   return axiosWithApiServer({
     url,
     method: GET_ORDER_BOOK.reqType
