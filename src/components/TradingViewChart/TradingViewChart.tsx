@@ -1,6 +1,7 @@
 'use client'
 import { Box } from "@mui/material";
 import React, { useEffect, useRef } from "react";
+import MarketSegment from "../MarketSegment/MarketSegment";
 
 import dataFeed from "./dataFeed";
 import { widgetContainer } from "./helpers";
@@ -48,6 +49,8 @@ export const TradingViewChart = ({ themeMode, symbol = "BTCUSDT" }: { themeMode:
         'paneProperties.vertGridProperties.color': themeMode === 'dark' ? '#19191D' : '#E0E0E0',
         'paneProperties.horzGridProperties.color': themeMode === 'dark' ? '#19191D' : '#E0E0E0',
         'paneProperties.crossHairProperties.color': themeMode === 'dark' ? '#FFFFFF' : '#0E0E0F',
+        'scalesProperties.textColor': themeMode === 'dark' ? 'white' : 'black',
+        'scalesProperties.backgroundColor': themeMode === 'dark' ? '#0E0E0F' : '#FFFFFF',
         'mainSeriesProperties.candleStyle.borderUpColor': '#29B57E',
         'mainSeriesProperties.candleStyle.borderDownColor': '#FF6554',
         'mainSeriesProperties.candleStyle.borderColor': '#29B57E',
@@ -56,8 +59,6 @@ export const TradingViewChart = ({ themeMode, symbol = "BTCUSDT" }: { themeMode:
         'mainSeriesProperties.candleStyle.wickColor': '#29B57E',
         'mainSeriesProperties.candleStyle.wickUpColor': '#29B57E',
         'mainSeriesProperties.candleStyle.wickDownColor': '#FF6554',
-        'scalesProperties.textColor': themeMode === 'dark' ? 'white' : 'black',
-        'scalesProperties.backgroundColor': themeMode === 'dark' ? '#0E0E0F' : '#FFFFFF',
         'symbolWatermarkProperties.color': 'rgba(0, 0, 0, 0.00)',
         'symbolWatermarkProperties.visibility': false,
       },
@@ -76,6 +77,7 @@ export const TradingViewChart = ({ themeMode, symbol = "BTCUSDT" }: { themeMode:
 
   return (
     <>
+       <MarketSegment symbol={symbol}/>
       <Box bgcolor="background.secondary"  style={{ height: "100%" }} ref={chartContainerRef}></Box>
     </>
   );

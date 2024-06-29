@@ -1,10 +1,10 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
-import tradableSymbolList from "../Slices/tradableSymbolListSlice";
+import marketStreamData from "../Slices/tradableSymbolListSlice";
 
 
 const rootReducer = combineReducers({
-  tradableSymbolList,
+  marketStreamData,
 });
 
 export default rootReducer;
