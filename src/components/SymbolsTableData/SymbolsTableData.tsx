@@ -5,9 +5,12 @@ import { Box, Grid, useTheme } from "@mui/material";
 import { AutoSizer, List } from "react-virtualized";
 import TextView from "../Atoms/TextView/TextView";
 import BasicSearchField from "../Atoms/CustomInput/BasicSearchField";
+import { setMarketStreamDataList } from "@/services/redux/store/Slices/tradableSymbolListSlice";
+import { useAppDispatch } from "@/services/redux/hooks";
 
 const SymbolsTableData = () => {
   const theme = useTheme()
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -16,9 +19,21 @@ const SymbolsTableData = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const bData: any = {};
       try {
         const response = await getTickerPrice()
         setData(response.data);
+        response.data.forEach((element:any) => {
+          console.log(element);
+          bData[`${element.symbol.toLowerCase()}@per`] = element.priceChangePercent;
+          bData[`${element.symbol.toLowerCase()}@ticker`] = element.lastPrice;
+          bData[`${element.symbol.toLowerCase()}@low`] = element.lowPrice;
+          bData[`${element.symbol.toLowerCase()}@high`] = element.highPrice;
+          bData[`${element.symbol.toLowerCase()}@volumn`] = element.volume;
+        });
+        if (Object.keys(bData).length > 0) {
+          dispatch(setMarketStreamDataList(bData));
+        }
       } catch (error) {
         console.error("Error fetching data", error);
       }
