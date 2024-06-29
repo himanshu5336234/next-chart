@@ -4,13 +4,12 @@ import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import rootReducer from "./reducers";
 
 const makeStore = () => configureStore({
-  reducer: (state, action) => {
+  reducer: (state:any, action:any) => {
     if (action.type === HYDRATE) {
-      const nextState = {
+      return  {
         ...state, // use previous state
         ...action.payload, // apply delta from hydration
       };
-      return nextState;
     } else {
       return rootReducer(state, action);
     }

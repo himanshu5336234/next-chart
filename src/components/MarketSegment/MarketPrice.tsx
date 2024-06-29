@@ -1,9 +1,6 @@
+import { setDecimalPrecision } from "@/helpers/PrecisionHelper";
 import React, { memo } from "react";
-import { useAppSelector } from "../../../frontend-BL/redux/hooks";
-import { Colors } from "../../../Provider/Colorsfont";
-import Typography from "../../UI/atoms/Typography";
-import { FONT_FAMILY, TEXT_VARIENT } from "../../UI/types/enums/enums";
-
+import TextView from "../Atoms/TextView/TextView";
 interface PositionLtpProps {
   symbol: string;
   type: string;
@@ -20,17 +17,14 @@ const PositionLtp: React.FC<PositionLtpProps> = ({
   symbolPricePrecision,
   color
 }) => {
-  const snapltp = 0
+  const snapltp = "0"
 //    useAppSelector((state) => state.BinanceStreamData.binanceMarketData?.[`${symbol?.toLowerCase()}@${type}`]);
 
   return (
-    <Typography
-      variant={ variant || TEXT_VARIENT.caption1}
-      fontStyle={FONT_FAMILY.numberMedium}
-      color={color}
+    <TextView
     >
-      {newSetDecimalPrecision(snapltp, symbolPricePrecision) || "--"}
-    </Typography>
+      {setDecimalPrecision(snapltp, symbolPricePrecision) || "--"}
+    </TextView>
   );
 };
 

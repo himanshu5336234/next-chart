@@ -21,7 +21,7 @@
 // }
 {
   "compilerOptions": {
-
+    "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "noImplicitAny": true,
     "noImplicitThis": true,
