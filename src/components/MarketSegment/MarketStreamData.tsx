@@ -1,6 +1,8 @@
 "use client";
+import { setDecimalPrecision } from "@/helpers/PrecisionHelper";
+import { getSymbolDetails } from "@/helpers/Symboldetails";
 import { useAppSelector } from "@/services/redux/hooks";
-import React, { memo, useMemo } from "react";
+import React, { memo } from "react";
 import TextView from "../Atoms/TextView/TextView";
 
 interface PositionLtpProps {
@@ -13,7 +15,6 @@ const MarketStreamData: React.FC<PositionLtpProps> = ({
   symbol,
   type,
   variant,
-  symbolPricePrecision,
 }) => {
   const snapltp = useAppSelector(
     (state: any) =>
@@ -24,10 +25,9 @@ const MarketStreamData: React.FC<PositionLtpProps> = ({
 
   return (
     <TextView variant={variant} textType={"number"} fontWeight={"Medium"}>
-      {snapltp ?? "--"}
-      {/* {setDecimalPrecision(snapltp, symbolPricePrecision) || "--"} */}
+      {setDecimalPrecision(String(snapltp),getSymbolDetails(symbol)?.pricePrecision) || "--"}
     </TextView>
   );
 };
 
-export default memo(MarketStreamData);
+export default (MarketStreamData);
