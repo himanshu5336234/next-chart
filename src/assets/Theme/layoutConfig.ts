@@ -29,8 +29,17 @@ export const Layouts = {
     }
   ],
   md: [
-
     {
+      w: 0,
+      h: 50,
+      x: 0,
+      y: 0,
+      i: "market",
+      minH: 5,
+      minW: 28
+    },
+    {
+      w:0,
       maxW: 60,
       h: 50,
       x: 28,
@@ -49,15 +58,6 @@ export const Layouts = {
       i: "orderBook"
     },
 
-    {
-      w: 140,
-      h: 34,
-      x: 0,
-      y: 50,
-      minH: 15,
-      minW: 100,
-      i: "userActivities"
-    }
   ],
   sm: [
     {
@@ -79,26 +79,35 @@ export const Layouts = {
       minW: 20
     }
   ],
-  sx: [
+  xs: [
     {
-      w: 100,
-      h: 50,
+      w: 60,
+      h: 5,
       x: 0,
       y: 0,
-      i: "chart",
-      minW: 45,
-      minH: 30
+      i: "market",
+      minH: 5
     },
     {
-      w: 100,
-      h: 30,
+      w: 60,
+      h: 32,
+      x: 0,
+      y: 5,
+      i: "chart",
+      minH: 30,
+      minW: 45
+    },
+    {
+      w: 60,
+      h: 22,
       x: 0,
       y: 37,
       i: "orderBook",
       minH: 20,
       minW: 20
-    }
-  ],
+    },
+
+  ]
 };
 export const addChartData = ({ currentLayout, compName, DefaultLayout }: { currentLayout: any; compName: string; DefaultLayout: any }) => {
   const newlayout = { ...currentLayout };
