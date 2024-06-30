@@ -8,6 +8,7 @@ import { useAppDispatch } from "@/services/redux/hooks";
 import { setMarketStreamDataList } from "@/services/redux/store/Slices/tradableSymbolListSlice";
 import MarketStreamData from "./MarketStreamData";
 import { SymbolWrapper } from "../Atoms/SymbolWrapper/SymbolWrapper";
+import LastTradedPrice from "./LastTradedPrice";
 type Props = {
   symbol: string;
 };
@@ -103,15 +104,30 @@ const MarketSegment = ({ symbol }: Props) => {
             <SymbolWrapper symbolText variant={"Regular_16"} symbol={symbol} />
           </Box>
 
-          <Box>
-            <MarketStreamData
+          <Box sx={{ minWidth: 120 }}>
+            <LastTradedPrice
               symbol={symbol}
               type={"ticker"}
               variant={"Regular_18"}
             />
           </Box>
-          <Box>
-            <TextView color={"text.tertiary"} component={"p"}>24h Change</TextView>
+
+          <Box sx={{ minWidth: 70 }}>
+            <TextView color={"text.tertiary"} component={"p"}>
+              Mark
+            </TextView>
+            <MarketStreamData symbol={symbol} type={"markPrice"} />
+          </Box>
+          <Box sx={{ minWidth: 70 }}>
+            <TextView color={"text.tertiary"} component={"p"}>
+              Index
+            </TextView>
+            <TextView component={"p"}>61,084</TextView>
+          </Box>
+          <Box sx={{ minWidth: 130 }}>
+            <TextView color={"text.tertiary"} component={"p"}>
+              24h Change
+            </TextView>
             <TextView component={"p"}>
               <MarketStreamData
                 color={"error.main"}
@@ -127,21 +143,22 @@ const MarketSegment = ({ symbol }: Props) => {
             </TextView>
           </Box>
           <Box>
-            <TextView color={"text.tertiary"}  component={"p"}>Mark</TextView>
-            <MarketStreamData symbol={symbol} type={"markPrice"} />
-          </Box>
-          <Box>
-            <TextView color={"text.tertiary"}  component={"p"}>Index</TextView>
-            <TextView component={"p"}>61,084</TextView>
-          </Box>
-          <Box>
-            <TextView  color={"text.tertiary"}  component={"p"}>24h Volume</TextView>
+            <TextView color={"text.tertiary"} component={"p"}>
+              24h Volume
+            </TextView>
             <MarketStreamData symbol={symbol} type={"volumn"} />
           </Box>
-          <Box>
-            <TextView color={"text.tertiary"}  component={"p"}>Funding Rate</TextView>
-            <TextView component={"p"} >
-              <MarketStreamData color="warning.main" symbol={symbol} type={"per"} />% in 03:44:29
+          <Box sx={{ minWidth: 100 }}>
+            <TextView color={"text.tertiary"} component={"p"}>
+              Funding Rate
+            </TextView>
+            <TextView component={"p"}>
+              <MarketStreamData
+                color="warning.main"
+                symbol={symbol}
+                type={"per"}
+              />
+              % in 03:44:29
             </TextView>
           </Box>
         </Box>

@@ -26,7 +26,7 @@ const OrderBook = ({
   }, []);
   return (
     <Box height={"100%"} bgcolor="background.secondary" width={"100%"} p={2}>
-      <TextView component={"p"} text={"Order Book"} />
+      <TextView component={"p"} fontWeight={"Medium"} text={"Order Book"} />
       <AskOrbids asksOrBids={asksOrBids} handleTabsChange={handleTabsChange} />
       <TableHeadWrapperForAsksBids />
       <Box height={"calc(100% - 70px)"}>

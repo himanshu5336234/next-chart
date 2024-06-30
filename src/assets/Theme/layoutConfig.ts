@@ -29,15 +29,7 @@ export const Layouts = {
     }
   ],
   md: [
-    {
-      w: 0,
-      h: 50,
-      x: 0,
-      y: 0,
-      i: "market",
-      minH: 5,
-      minW: 28
-    },
+
     {
       maxW: 60,
       h: 50,

@@ -2,6 +2,8 @@ import { convertToPrecisionValueInContractAssetUnit } from "@/helpers/PrecisionH
 import NewWebSocketClient from "@/helpers/WebSocketModule";
 import { addTotalSums, findAndDelete } from "@/pages/api/orderbook";
 import { BASE_URL } from "@/services/api-service/Base";
+import { useAppDispatch } from "@/services/redux/hooks";
+import { setMarketStreamDataList } from "@/services/redux/store/Slices/tradableSymbolListSlice";
 import { Box } from "@mui/material";
 import React, { memo, useCallback, useEffect, useState } from "react";
 import OrderBookRow from "./OrderBookRow";
@@ -17,6 +19,7 @@ const OrderBookRowWrapper = ({
   orderType: string;
   symbol: string;
 }) => {
+  const dispatch = useAppDispatch();
   const [originalOrders, setOriginalOrder] = useState([]);
   useEffect(() => {
     if (orders?.asks?.length > 0) {
@@ -38,14 +41,13 @@ const OrderBookRowWrapper = ({
 
   const handlemessageEvent = (message: string) => {
     const { data } = JSON.parse(message);
-
+    const bData: any = {};
     if (
       data &&
       data.e === "depthUpdate" &&
       data?.s.toLowerCase() === symbol.toLowerCase()
     ) {
-      const bidsAndAsksUpdatedOrder: any =
-        orderType === "bids" ? [...data["b"]] : [...data["a"]];
+      const bidsAndAsksUpdatedOrder: any = orderType === "bids" ? [...data["b"]] : [...data["a"]];
       const asks = addTotalSums(
         findAndDelete(
           originalOrders,
@@ -53,9 +55,13 @@ const OrderBookRowWrapper = ({
           orderType.toUpperCase()
         )
       );
-      const bidsAndAsksOrders: any =
-        orderType === "bids" ? asks : asks.reverse();
+      const bidsAndAsksOrders: any = orderType === "bids" ? asks : asks.reverse();
+      bData[`${data.s.toLowerCase()}@${orderType}`] = bidsAndAsksOrders[0][0];
+
       setOriginalOrder(bidsAndAsksOrders);
+      if (Object.keys(bData).length > 0) {
+        dispatch(setMarketStreamDataList(bData));
+      }
     }
   };
 
