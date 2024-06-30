@@ -36,7 +36,7 @@ const SymbolsTableData = () => {
           ),
         });
         response.data.forEach((element: any) => {
-          console.log(element);
+
           bData[`${element.symbol.toLowerCase()}@per`] =
             element.priceChangePercent;
           bData[`${element.symbol.toLowerCase()}@ticker`] = element.lastPrice;

@@ -8,6 +8,7 @@ import { Responsive, WidthProvider } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import { Layouts } from "@/assets/Theme/layoutConfig";
+import TopWindowsTabs from "@/components/TopWindowTabs/TopWindowsTabs";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 export default function Home({
@@ -41,19 +42,8 @@ export default function Home({
           defer
         ></script>
       </Head>
-      {/* <Grid container gap={1}>
-        <Grid item xs={2.5}>
-          <SymbolsTableData />
-        </Grid>
-        <Grid item xs={6.9}>
-          <Box style={{ height: "70vh" }}>
-            <TradingViewChart symbol={symbol} ID={0} themeMode={theme} />
-          </Box>
-        </Grid>
-        <Grid item xs={2.4}>
-          <OrderBookServer symbol={symbol} />
-        </Grid>
-      </Grid> */}
+      <TopWindowsTabs/>
+
       <ResponsiveGridLayout
         className="layout"
         layouts={Layouts}
@@ -66,7 +56,7 @@ export default function Home({
         breakpoints={{ lg: 1440, md: 990, sm: 650, xs: 575 }}
         cols={{ lg: 14 * 10, md: 12 * 10, sm: 10 * 10, xs: 6 * 10 }}
       >
-        <Box
+        {/* <Box
           key={"market"}
           bgcolor={"background.primary"}
           className={`grid-item`}
@@ -75,7 +65,7 @@ export default function Home({
             {" "}
             <SymbolsTableData />
           </Box>
-        </Box>
+        </Box> */}
         <Box
           key={"chart"}
           bgcolor={"background.primary"}
@@ -97,6 +87,7 @@ export default function Home({
 
       </ResponsiveGridLayout>
     </>
+
   );
 }
 export async function getServerSideProps({
