@@ -47,7 +47,8 @@ const OrderBookRowWrapper = ({
       data.e === "depthUpdate" &&
       data?.s.toLowerCase() === symbol.toLowerCase()
     ) {
-      const bidsAndAsksUpdatedOrder: any = orderType === "bids" ? [...data["b"]] : [...data["a"]];
+      const bidsAndAsksUpdatedOrder: any =
+        orderType === "bids" ? [...data["b"]] : [...data["a"]];
       const asks = addTotalSums(
         findAndDelete(
           originalOrders,
@@ -55,7 +56,8 @@ const OrderBookRowWrapper = ({
           orderType.toUpperCase()
         )
       );
-      const bidsAndAsksOrders: any = orderType === "bids" ? asks : asks.reverse();
+      const bidsAndAsksOrders: any =
+        orderType === "bids" ? asks : asks.reverse();
       bData[`${data.s.toLowerCase()}@${orderType}`] = bidsAndAsksOrders[0][0];
 
       setOriginalOrder(bidsAndAsksOrders);

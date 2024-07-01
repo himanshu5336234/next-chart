@@ -1,17 +1,8 @@
 export const Layouts = {
   lg: [
-    // {
-    //   w: 28,
-    //   h: 50,
-    //   x: 0,
-    //   y: 0,
-    //   i: "market",
-    //   minH: 5,
-    //   minW: 28
-    // },
     {
       w: 113,
-      h: 73,
+      h: 60,
       x: 0,
       y: 5,
       minH: 30,
@@ -20,7 +11,7 @@ export const Layouts = {
     },
     {
       w: 27,
-      h: 73,
+      h: 60,
       x: 113,
       y: 0,
       minH: 20,
@@ -29,20 +20,11 @@ export const Layouts = {
     }
   ],
   md: [
-    // {
-    //   w: 0,
-    //   h: 50,
-    //   x: 0,
-    //   y: 0,
-    //   i: "market",
-    //   minH: 5,
-    //   minW: 28
-    // },
     {
-      w:0,
+      w:93,
       maxW: 60,
       h: 50,
-      x: 28,
+      x: 0,
       y: 0,
       minH: 30,
       i: "chart",
@@ -51,7 +33,7 @@ export const Layouts = {
     {
       w: 27,
       h: 50,
-      x: 113,
+      x: 93,
       y: 0,
       minH: 20,
       minW: 20,
@@ -61,7 +43,7 @@ export const Layouts = {
   ],
   sm: [
     {
-      w: 100,
+      w: 70,
       h: 50,
       x: 0,
       y: 0,
@@ -70,24 +52,16 @@ export const Layouts = {
       minH: 30
     },
     {
-      w: 100,
-      h: 30,
-      x: 0,
-      y: 37,
+      w: 30,
+      h: 50,
+      x: 70,
+      y: 0,
       i: "orderBook",
       minH: 20,
       minW: 20
     }
   ],
   xs: [
-    {
-      w: 60,
-      h: 5,
-      x: 0,
-      y: 0,
-      i: "market",
-      minH: 5
-    },
     {
       w: 60,
       h: 32,

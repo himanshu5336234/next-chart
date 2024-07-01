@@ -100,11 +100,11 @@ const MarketSegment = ({ symbol }: Props) => {
           alignItems={"center"}
           p={1}
         >
-          <Box>
+         <Box sx={{ minWidth: 120 }}>
             <SymbolWrapper symbolText variant={"Regular_16"} symbol={symbol} />
           </Box>
 
-          <Box sx={{ minWidth: 120 }}>
+          <Box sx={{ minWidth: 100 }}>
             <LastTradedPrice
               symbol={symbol}
               type={"ticker"}

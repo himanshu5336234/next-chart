@@ -9,7 +9,8 @@ export const colors = {
   primaryShade3: "#7C912B",
   primaryShade4: "#3D4911",
   white: "#FFFFFF",
-  black: "#1B1B1F",
+  black: "#0E0E0F",
+
   greyLightMode1: "#FBFAFB",
   greyLightMode2: "#F5F5F8",
   greyLightMode3: "#F0F0F2",
@@ -18,18 +19,21 @@ export const colors = {
   greyLightMode6: "#B8B8C3",
   greyLightMode7: "#808090",
   greyLightMode8: "#32333A",
-  greyLightMode9: "#19191D",
-  greyDarkMode9: "#D8D8DD",
-  greyDarkMode8: "#B1B1BA",
-  greyDarkMode7: "#8B8B97",
-  greyDarkMode6: "#666673",
-  greyDarkMode5: "#44444D",
-  greyDarkMode4: "#383840",
-  greyDarkMode3: "#29292E",
-  greyDarkMode2: "#1B1B1F",
+
+
+  greyDarkMode8: "#D8D8DD",
+  greyDarkMode7: "#B1B1BA",
+  greyDarkMode6: "#8B8B97",
+  greyDarkMode5: "#666673",
+  greyDarkMode4: "#44444D",
+  greyDarkMode3: "#383840",
+  greyDarkMode2: "#29292E",
   greyDarkMode1: "#1B1B1F",
+
+
   correctBuy: "#29B57E",
   incorrectSell: "#FF6554",
-  waiting: "#f7931a",
+  
+  waiting: "#E9AE18",
   link: "#294CFF",
 };
