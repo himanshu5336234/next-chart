@@ -10,7 +10,7 @@ export const MuiCheckbox = {
       ".MuiSvgIcon-root": {
         borderRadius: "6px",
         padding: 1,
-        border: " 1px solid #8B8B97",
+
       },
     },
     colorPrimary: {

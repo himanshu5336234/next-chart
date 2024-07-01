@@ -62,7 +62,7 @@ export default function BasicTextFields(props: any) {
 
                 width: "100%",
                 borderRadius: 1,
-                border: "1px solid",
+                border: "0.1px solid",
                 borderColor: [Error ? theme.palette.error.main : "#29292E"],
                 ".MuiInputBase-input": {
                   p: " 10px 16px",
@@ -71,7 +71,7 @@ export default function BasicTextFields(props: any) {
                 ".MuiInputBase-input:focus-visible": {
                   borderRadius: 1,
                   border:
-                    "1px solid var(--Electric-Green-Primary, rgba(235, 255, 37, 1))",
+                    "0.5px solid var(--Electric-Green-Primary, rgba(235, 255, 37, 1))",
                 },
                 "& .MuiOutlinedInput-root": {
                   "& > fieldset": { borderWidth: "0px" },

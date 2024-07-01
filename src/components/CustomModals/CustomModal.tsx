@@ -1,11 +1,34 @@
-import React from "react";
-import { Typography, Box, Modal } from "@mui/material";
-import { BUTTONWRAPPER, CONTIANER } from "./Style";
+import React, { ReactNode } from "react";
+import { Typography, Box, Modal, SxProps, Theme} from "@mui/material";
+import { BUTTONWRAPPER, CONTIANER} from "./Style";
 import CustomButton from "../Atoms/CustomButton/CustomButton";
 import TextView from "../Atoms/TextView/TextView";
+
+interface CustomModalProps {
+  IsOpen: boolean;
+  ContainerSx?: SxProps<Theme> | undefined;
+  isSecondaryAction?: boolean;
+  TitleSx?: SxProps<Theme> | undefined
+  isPrimaryAction?: boolean;
+  isClose?: boolean;
+  close: () => void;
+  primaryName?: string;
+  primaryAction?: () => void;
+  secondaryName?: string;
+  isDisabled?: boolean;
+  isloading?: boolean;
+  secondaryAction?: () => void;
+  title: string;
+  subtitle?: string;
+  titleIllustration?: ReactNode;
+  children?: ReactNode;
+  primaryDisabled?: boolean;
+  primaryButtonSX?: SxProps<Theme> | undefined;
+  secondaryButtonSX?: SxProps<Theme> | undefined;
+}
 const CustomModal = ({
   IsOpen,
-  ContainerSx,
+  ContainerSx ={},
   isSecondaryAction,
   TitleSx,
   isPrimaryAction,
@@ -23,19 +46,13 @@ const CustomModal = ({
   children,
   primaryDisabled,
   primaryButtonSX,
-  secondaryButtonSX,
-}: // paddingSX
-any) => {
+  secondaryButtonSX
+}:
+CustomModalProps) => {
   return (
     <Modal open={IsOpen} onClose={close}>
-      <Box sx={[{ ...CONTIANER, ...ContainerSx }]}>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-          }}
-        >
+      <Box sx={[CONTIANER ]}>
+        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
           {isClose === true && (
             <Box sx={{ alignSelf: "flex-end" }}>
               <Box
@@ -45,26 +62,20 @@ any) => {
                   height: "32px",
                   borderRadius: "4px",
                   display: "flex",
-                  cursor: "pointer",
+                  cursor: "pointer"
                 }}
               >
-                <Typography sx={{ m: " auto", fontSize: "16.82px" }}>
-                  &#x2715;
-                </Typography>
+                <TextView style={{ m: " auto", fontSize: "16.82px" }}>&#x2715;</TextView>
               </Box>
             </Box>
           )}
           <Box sx={{ display: "flex", alignItems: "center", gap: "16px" }}>
             {titleIllustration}
-            <TextView component={"h1"} variant="SemiBold_32" style={TitleSx}>
+            <TextView component={"h1"} variant="Regular_24" style={TitleSx}>
               {title}
             </TextView>
           </Box>
-          <TextView
-            component={"p"}
-            variant={"Regular_16"}
-            color={"text.tertiary"}
-          >
+          <TextView component={"p"} variant={"Regular_16"} color={"text.tertiary"}>
             {subtitle}
           </TextView>
         </Box>
@@ -73,17 +84,7 @@ any) => {
           <>
             {/* <CustomDivider /> */}
             <Box maxWidth="md" sx={BUTTONWRAPPER}>
-              {isSecondaryAction && (
-                <CustomButton
-                  id={"secondary-btn-confirm"}
-                  variant={"secondary"}
-                  style={secondaryButtonSX}
-                  onClick={secondaryAction}
-                  label={secondaryName}
-                />
-              )}
-
-              {/* {isPrimaryAction && !loading && ( */}
+              {isSecondaryAction && <CustomButton id={"secondary-btn-confirm"} variant={"secondary"} style={secondaryButtonSX} onClick={secondaryAction} label={secondaryName} />}
               {isPrimaryAction && (
                 <CustomButton
                   id={"primary-btn"}

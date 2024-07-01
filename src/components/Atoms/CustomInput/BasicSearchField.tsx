@@ -12,7 +12,7 @@ const BasicSearchField = (props: any) => {
         px: 1,
         width: "100%",
         borderRadius: 1,
-        border: "1px solid",
+        border: "0.5px solid",
         borderColor: "#29292E",
       }}
     >

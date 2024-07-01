@@ -8,6 +8,7 @@ import "react-resizable/css/styles.css";
 import { Layouts } from "@/assets/Theme/layoutConfig";
 import TopWindowsTabs from "@/components/TopWindowTabs/TopWindowsTabs";
 import OrderBook from "@/components/OrderBook/OrderBook";
+import WorkSpaceForm from "@/components/WorkSpaceForm";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 export default function Home({
@@ -75,6 +76,7 @@ export default function Home({
         </Box>
 
       </ResponsiveGridLayout>
+      <WorkSpaceForm/>
     </>
 
   );
