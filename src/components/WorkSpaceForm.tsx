@@ -30,12 +30,11 @@ const [allSymbols,setAllSymbols]=useState<any>([])
 useEffect(() => {
   if(typeof window !=="undefined"){
   const allSymbols = JSON.parse((window as any).localStorage.getItem("symbolList") ||"[]");
-  setAllSymbols(allSymbols.map((item:any)=> item.symbol))
+  setAllSymbols(allSymbols.map((item:any)=> item.symbol.toLowerCase()))
 
 }
 }, []);
   const handleChange = (event: { target: { name: any; checked: any } }) => {
-
     const value = event.target.name;
     setCheckedValues((prev: any[]) =>
       event.target.checked
@@ -47,11 +46,11 @@ useEffect(() => {
   const handleSubmit = () => {
     localStorage.setItem(
       "workspace",
-      JSON.stringify([...workSpace,
+      JSON.stringify([...workSpace.filter((item:any)=>item.name !==dropdownValue),
         { name: dropdownValue, component: checkedValues, layout: Layouts },
       ])
     );
-    setWorkSpace([...workSpace,
+    setWorkSpace([...workSpace.filter((item:any)=>item.name !==dropdownValue),
       { name: dropdownValue, component: checkedValues, layout: Layouts },
     ])
     handleClose();

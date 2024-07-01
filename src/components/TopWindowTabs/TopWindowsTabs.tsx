@@ -31,6 +31,8 @@ function TopWindowsTabs({ setCurrentWorkSpace }: { setCurrentWorkSpace: any }) {
       }
     }
   }, []);
+
+
   const ShowUi:any = useCallback((workSpace:any) => {
   return  workSpace?.map((item: any, index: any) => (
       <Tab
@@ -49,6 +51,7 @@ function TopWindowsTabs({ setCurrentWorkSpace }: { setCurrentWorkSpace: any }) {
           >
             <SymbolWrapper symbol={item.name} symbolText />
             <CloseIcon
+            onClick ={()=>handleRemoveItemFromWorkspace(item)}
               sx={{
                 fontSize: 14,
                 color: theme.palette.grey[800],
@@ -60,6 +63,15 @@ function TopWindowsTabs({ setCurrentWorkSpace }: { setCurrentWorkSpace: any }) {
       />
     ));
   }, [workSpace]);
+
+  const handleRemoveItemFromWorkspace= (current:any) => {
+    localStorage.setItem(
+      "workspace",
+      JSON.stringify([...workSpace.filter((item:any)=>item.name !==current.name)])
+    );
+    setWorkSpace([...workSpace.filter((item:any)=>item.name !==current.name)])
+  };
+
   return (
     <Box
       sx={{
@@ -95,7 +107,7 @@ function TopWindowsTabs({ setCurrentWorkSpace }: { setCurrentWorkSpace: any }) {
       >
         {ShowUi(workSpace)}
       </Tabs>
-      <TextView onClick={() => setOpen(true)}>+</TextView>
+      <TextView variant={"Regular_24"} onClick={() => setOpen(true)}>+</TextView>
       {open && (
         <WorkSpaceForm setWorkSpace={setWorkSpace} workSpace={workSpace} open={open} setOpen={setOpen} />
       )}

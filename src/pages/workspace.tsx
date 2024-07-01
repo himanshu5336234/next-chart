@@ -1,8 +1,8 @@
-"use client"
+
 import TopWindowsTabs from "@/components/TopWindowTabs/TopWindowsTabs";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback,  useState } from "react";
 import { Layouts } from "@/assets/Theme/layoutConfig";
-import {  Responsive, WidthProvider } from "react-grid-layout";
+import { Responsive, WidthProvider } from "react-grid-layout";
 import Head from "next/head";
 import { Box } from "@mui/system";
 import { TradingViewChart } from "@/components/TradingViewChart/TradingViewChart";
@@ -16,7 +16,7 @@ function workspace({}: Props) {
   const [currentWorkSpace, setCurrentWorkSpace] = useState<any>({
     theme: "light",
     name: "btcusdt",
-    component: ["orderBook", "chart"],
+    component: ["orderBook", "chart", "watchlist"],
     layout: Layouts,
   });
 
