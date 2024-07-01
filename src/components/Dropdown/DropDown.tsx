@@ -62,8 +62,8 @@ const Dropdown = ({varient="primary", label, value, onChange, options, placehold
         <Box mb={2}>
           <BasicSearchField  placeholder={placeholder} onchange={handleSearchChange} />
         </Box>
-        {filteredCoins?.map((coin: boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.Key | null | undefined) => (
-          <MenuItem sx={{ p: 1 }} variant={"Regular_14"} fontWeight={"Medium"} value={coin} key={coin} >
+        {filteredCoins?.map((coin: any) => (
+          <MenuItem sx={{ p: 1 }}  value={coin} key={coin} >
           <SymbolWrapper symbol={coin} symbolText={coin} />
            </MenuItem>
         ))}

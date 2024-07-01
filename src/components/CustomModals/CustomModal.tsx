@@ -1,14 +1,13 @@
 import React, { ReactNode } from "react";
-import { Typography, Box, Modal, SxProps, Theme} from "@mui/material";
+import {  Box, Modal} from "@mui/material";
 import { BUTTONWRAPPER, CONTIANER} from "./Style";
 import CustomButton from "../Atoms/CustomButton/CustomButton";
 import TextView from "../Atoms/TextView/TextView";
 
 interface CustomModalProps {
   IsOpen: boolean;
-  ContainerSx?: SxProps<Theme> | undefined;
   isSecondaryAction?: boolean;
-  TitleSx?: SxProps<Theme> | undefined
+  TitleSx?: any;
   isPrimaryAction?: boolean;
   isClose?: boolean;
   close: () => void;
@@ -23,12 +22,11 @@ interface CustomModalProps {
   titleIllustration?: ReactNode;
   children?: ReactNode;
   primaryDisabled?: boolean;
-  primaryButtonSX?: SxProps<Theme> | undefined;
-  secondaryButtonSX?: SxProps<Theme> | undefined;
+  primaryButtonSX?: any;
+  secondaryButtonSX?: any;
 }
 const CustomModal = ({
   IsOpen,
-  ContainerSx ={},
   isSecondaryAction,
   TitleSx,
   isPrimaryAction,

@@ -9,10 +9,10 @@ import { TradingViewChart } from "@/components/TradingViewChart/TradingViewChart
 import OrderBook from "@/components/OrderBook/OrderBook";
 import SymbolsTableData from "@/components/SymbolsTableData/SymbolsTableData";
 
-type Props = {};
+
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-function workspace({}: Props) {
+function Workspace() {
   const [currentWorkSpace, setCurrentWorkSpace] = useState<any>({
     theme: "light",
     name: "btcusdt",
@@ -88,4 +88,4 @@ function workspace({}: Props) {
   );
 }
 
-export default workspace;
+export default Workspace;
