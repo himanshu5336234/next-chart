@@ -11,7 +11,7 @@ function TopWindowsTabs() {
   const [symbols, setSymbols] = useState([]);
   const theme = useTheme();
   const router = useRouter();
-  const handleChange = (event, newValue) => {
+  const handleChange = (event: any, newValue: React.SetStateAction<number>) => {
     setValue(newValue);
   };
 
@@ -45,7 +45,7 @@ function TopWindowsTabs() {
       <Tabs
         value={value}
         onChange={handleChange}
-        indicatorColor="none"
+     
         textColor="inherit"
         sx={{
           color: theme.palette.text.primary,

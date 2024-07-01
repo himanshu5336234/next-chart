@@ -42,7 +42,7 @@ export const LightPalette = {
     600: colors.greyLightMode6,
     700: colors.greyLightMode7,
     800: colors.greyLightMode8,
-    900: colors.greyLightMode9,
+    900: colors.black,
     1000: colors.black,
   },
 };
@@ -98,7 +98,7 @@ export const darkPalette = {
     600: colors.greyDarkMode6,
     700: colors.greyDarkMode7,
     800: colors.greyDarkMode8,
-    900: colors.greyDarkMode9,
+    900: colors.black,
     1000: colors.black,
   },
 };

@@ -1,9 +1,7 @@
 import Head from "next/head";
-import { Box, Grid } from "@mui/material";
-import CancelIcon from "@mui/icons-material/Cancel";
+import { Box } from "@mui/material";
 import { TradingViewChart } from "@/components/TradingViewChart/TradingViewChart";
 import SymbolsTableData from "@/components/SymbolsTableData/SymbolsTableData";
-import OrderBookServer from "@/components/OrderBook/OrderBookServer";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";

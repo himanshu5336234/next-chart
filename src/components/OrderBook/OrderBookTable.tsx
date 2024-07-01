@@ -22,10 +22,10 @@ const OrderBookTable = ({
           orders={orderBook}
           height={
             asksOrBids === "ALL"
-              ? convertToPrecisionValueInContractAssetUnit(
+              ? Number(convertToPrecisionValueInContractAssetUnit(
                   String(height / 2 - 17),
                   1
-                )
+                ))
               : height
           }
           orderType={"asks"}
@@ -45,10 +45,10 @@ const OrderBookTable = ({
           orders={orderBook}
           height={
             asksOrBids === "ALL"
-              ? convertToPrecisionValueInContractAssetUnit(
+              ? Number(convertToPrecisionValueInContractAssetUnit(
                   String(height / 2 - 17),
                   1
-                )
+                ))
               : height
           }
           orderType={"bids"}
