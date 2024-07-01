@@ -3,9 +3,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
 .theme-dark:root {
-    --tv-color-platform-background: #0E0E0F;
-    --tv-color-pane-background: #0E0E0F;
-    --tv-color-pane-background-secondary: #0E0E0F;
+    --tv-color-platform-background: #1B1B1F;
+    --tv-color-pane-background: #1B1B1F;
+    --tv-color-pane-background-secondary: #1B1B1F;
     --tv-color-toolbar-button-text: #B1B1BA;
     --tv-color-toolbar-button-text-active:#e2ff6f;
     --tv-color-toolbar-button-text-active-hover:#e2ff6f;
@@ -53,12 +53,12 @@ body{
   width: 20px;
 }
 html.theme-dark .menuWrap-biWYdsXC {
-  background-color: #0E0E0F;
+  background-color: #1B1B1F;
   /* box-shadow:0 2px 4px #0006; */
 }
 html.theme-dark .item-RhC5uhZw {
   font-size: 11px;
-  background-color: #0E0E0F;
+  background-color: #1B1B1F;
 
 }
 html.theme-dark .item-RhC5uhZw.isActive-RhC5uhZw:hover {

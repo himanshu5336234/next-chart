@@ -9,6 +9,7 @@ import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import { Layouts } from "@/assets/Theme/layoutConfig";
 import TopWindowsTabs from "@/components/TopWindowTabs/TopWindowsTabs";
+import OrderBook from "@/components/OrderBook/OrderBook";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 export default function Home({
@@ -56,16 +57,6 @@ export default function Home({
         breakpoints={{ lg: 1440, md: 990, sm: 650, xs: 575 }}
         cols={{ lg: 14 * 10, md: 12 * 10, sm: 10 * 10, xs: 6 * 10 }}
       >
-        {/* <Box
-          key={"market"}
-          bgcolor={"background.primary"}
-          className={`grid-item`}
-        >
-          <Box className="grid-item__graph">
-            {" "}
-            <SymbolsTableData />
-          </Box>
-        </Box> */}
         <Box
           key={"chart"}
           bgcolor={"background.primary"}
@@ -82,7 +73,7 @@ export default function Home({
           className={`grid-item`}
         >
 
-          <OrderBookServer symbol={symbol} />
+          <OrderBook symbol={symbol} />
         </Box>
 
       </ResponsiveGridLayout>

@@ -15,6 +15,7 @@ const OrderBookTable = ({
   symbol: string;
   height: number;
 }) => {
+  console.log(height,"kdcdskjncdsjk");
   return (
     <Box height={"100%"} width={"100%"} overflow={"hidden"}>
       {(asksOrBids === "ALL" || asksOrBids === "ASKS") && (

@@ -68,7 +68,7 @@ function TopWindowsTabs() {
         }}
       >
         {symbols.map((item: any, index) => (
-          <>
+  
             <Tab
               onClick={() => {handleRowClick(item.symbol)}}
               key={index}
@@ -92,8 +92,7 @@ function TopWindowsTabs() {
                 </div>
               }
             />
-            <TextView textType="number" color={theme.palette.grey[600]} variant={"Regular_18"} >{"|"}</TextView>
-          </>
+          
         ))}
       </Tabs>
     </Box>

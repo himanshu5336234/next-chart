@@ -27,10 +27,10 @@ export const widgetContainer = {
     "show_symbol_logos",
     "hide_right_toolbar",
   ],
-  toolbar_bg: "#0E0E0F",
+  toolbar_bg: "#1B1B1F",
   loading_screen: {
-    backgroundColor: "#0E0E0F",
-    foregroundColor: "#0E0E0F",
+    backgroundColor: "#1B1B1F",
+    foregroundColor: "#1B1B1F",
   },
   overrides: {
     "paneProperties.backgroundType": "solid",
