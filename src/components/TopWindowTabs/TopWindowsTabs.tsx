@@ -1,38 +1,65 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Tabs, Tab, Box, useTheme, IconButton } from "@mui/material";
 import { SymbolWrapper } from "../Atoms/SymbolWrapper/SymbolWrapper";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import { useRouter } from "next/router";
 import TextView from "../Atoms/TextView/TextView";
+import WorkSpaceForm from "../WorkSpaceForm";
 
-function TopWindowsTabs() {
+function TopWindowsTabs({ setCurrentWorkSpace }: { setCurrentWorkSpace: any }) {
+  const [open, setOpen] = useState(false);
   const [value, setValue] = useState(0);
-  const [symbols, setSymbols] = useState([]);
   const theme = useTheme();
-  const router = useRouter();
+  const [workSpace, setWorkSpace] = useState<any>([]);
   const handleChange = (event: any, newValue: React.SetStateAction<number>) => {
     setValue(newValue);
   };
 
-  const handleRowClick = (symbol: any) => {
-    router.push({
-      pathname: "/",
-      query: { symbol: symbol.toLowerCase() },
-    });
+  const handleRowClick = (item: any) => {
+    setCurrentWorkSpace(item);
   };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const allSymbols = JSON.parse(
-        window.localStorage.getItem("symbolList") || "[]"
+      const workSpace = JSON.parse(
+        window.localStorage.getItem("workspace") || "[]"
       );
-      if (allSymbols.length > 0) {
-        setSymbols(allSymbols.slice(0, 10));
+      if (workSpace.length > 0) {
+        setCurrentWorkSpace(workSpace[0]);
+        setWorkSpace(workSpace);
       }
     }
   }, []);
-
+  const ShowUi:any = useCallback((workSpace:any) => {
+  return  workSpace?.map((item: any, index: any) => (
+      <Tab
+        onClick={() => {
+          handleRowClick(item);
+        }}
+        key={index}
+        label={
+          <div
+            style={{
+              display: "flex",
+              minWidth: 160,
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <SymbolWrapper symbol={item.name} symbolText />
+            <CloseIcon
+              sx={{
+                fontSize: 14,
+                color: theme.palette.grey[800],
+                marginLeft: "8px",
+              }}
+            />
+          </div>
+        }
+      />
+    ));
+  }, [workSpace]);
   return (
     <Box
       sx={{
@@ -45,7 +72,6 @@ function TopWindowsTabs() {
       <Tabs
         value={value}
         onChange={handleChange}
-     
         textColor="inherit"
         sx={{
           color: theme.palette.text.primary,
@@ -67,34 +93,12 @@ function TopWindowsTabs() {
           },
         }}
       >
-        {symbols.map((item: any, index) => (
-  
-            <Tab
-              onClick={() => {handleRowClick(item.symbol)}}
-              key={index}
-              label={
-                <div
-                  style={{
-                    display: "flex",
-                    minWidth: 160,
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <SymbolWrapper symbol={item.symbol} symbolText />
-                  <CloseIcon
-                    sx={{
-                      fontSize: 14,
-                      color: theme.palette.grey[800],
-                      marginLeft: "8px",
-                    }}
-                  />
-                </div>
-              }
-            />
-          
-        ))}
+        {ShowUi(workSpace)}
       </Tabs>
+      <TextView onClick={() => setOpen(true)}>+</TextView>
+      {open && (
+        <WorkSpaceForm setWorkSpace={setWorkSpace} workSpace={workSpace} open={open} setOpen={setOpen} />
+      )}
     </Box>
   );
 }

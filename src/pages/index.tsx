@@ -1,15 +1,13 @@
 import Head from "next/head";
 import { Box } from "@mui/material";
 import { TradingViewChart } from "@/components/TradingViewChart/TradingViewChart";
-import SymbolsTableData from "@/components/SymbolsTableData/SymbolsTableData";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import { Layouts } from "@/assets/Theme/layoutConfig";
-import TopWindowsTabs from "@/components/TopWindowTabs/TopWindowsTabs";
-import OrderBook from "@/components/OrderBook/OrderBook";
-import WorkSpaceForm from "@/components/WorkSpaceForm";
 
+import OrderBook from "@/components/OrderBook/OrderBook";
+import SymbolsTableData from "@/components/SymbolsTableData/SymbolsTableData";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 export default function Home({
   symbol,
@@ -18,20 +16,7 @@ export default function Home({
   theme: string;
   symbol: string;
 }) {
-  const showComponent = (item: any) => {
-    switch (item) {
-      case "orderForm":
-        return <SymbolsTableData />;
-      case "chart":
-        return <TradingViewChart symbol={symbol} ID={0} themeMode={theme} />;
 
-      case "orderBook":
-        return <SymbolsTableData />;
-
-      default:
-        break;
-    }
-  };
   return (
     <>
       <Head>
@@ -42,7 +27,7 @@ export default function Home({
           defer
         ></script>
       </Head>
-      <TopWindowsTabs/>
+
 
       <ResponsiveGridLayout
         className="layout"
@@ -74,9 +59,17 @@ export default function Home({
 
           <OrderBook symbol={symbol} />
         </Box>
+        <Box
+          key={"watchlist"}
+          bgcolor={"background.primary"}
+          className={`grid-item`}
+        >
+
+          <SymbolsTableData  />
+        </Box>
+
 
       </ResponsiveGridLayout>
-      <WorkSpaceForm/>
     </>
 
   );

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { Layouts } from "@/assets/Theme/layoutConfig";
 import CustomModal from "./CustomModals/CustomModal";
-import CustomButton from "./Atoms/CustomButton/CustomButton";
+
 import Dropdown from "./Dropdown/DropDown";
 import CustomCheckBox from "./Atoms/CheckBox/CustomCheckBox";
 
@@ -18,17 +18,24 @@ const style = {
   p: 4,
 };
 
-type Props = {};
+type Props = {
+    open:boolean,setOpen:any,workSpace:any[],setWorkSpace:any
+};
 
-const WorkSpaceForm = (props: Props) => {
-  const [open, setOpen] = useState(false);
+const WorkSpaceForm = ({workSpace,setWorkSpace,open,setOpen}: Props) => {
+const [allSymbols,setAllSymbols]=useState<any>([])
   const [checkedValues, setCheckedValues] = useState<any>([]);
   const [dropdownValue, setDropdownValue] = useState("btcusdt");
-  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+useEffect(() => {
+  if(typeof window !=="undefined"){
+  const allSymbols = JSON.parse((window as any).localStorage.getItem("symbolList") ||"[]");
+  setAllSymbols(allSymbols.map((item:any)=> item.symbol))
 
+}
+}, []);
   const handleChange = (event: { target: { name: any; checked: any } }) => {
-    debugger;
+
     const value = event.target.name;
     setCheckedValues((prev: any[]) =>
       event.target.checked
@@ -40,10 +47,13 @@ const WorkSpaceForm = (props: Props) => {
   const handleSubmit = () => {
     localStorage.setItem(
       "workspace",
-      JSON.stringify([
+      JSON.stringify([...workSpace,
         { name: dropdownValue, component: checkedValues, layout: Layouts },
       ])
     );
+    setWorkSpace([...workSpace,
+      { name: dropdownValue, component: checkedValues, layout: Layouts },
+    ])
     handleClose();
   };
 
@@ -55,7 +65,6 @@ const WorkSpaceForm = (props: Props) => {
 
   return (
     <>
-      <CustomButton onClick={handleOpen}>Open Modal</CustomButton>
       <CustomModal
         isClose
         close={() => setOpen(false)}
@@ -66,24 +75,37 @@ const WorkSpaceForm = (props: Props) => {
         title="Draw your work space "
       >
         <Box sx={{ mt: 3 }}>
+          <Box>
           <CustomCheckBox
-            name="Chart"
+            name="chart"
             label={"Chart"}
             disabled={false}
             checked={checkedValues.option1}
             onchange={handleChange}
           />
+          </Box>
+          <Box>
           <CustomCheckBox
-            name={"OrderBook"}
+            name={"orderBook"}
             label={"Order Book"}
             disabled={false}
             checked={checkedValues.option3}
             onchange={handleChange}
           />
+          </Box>
+          <Box>
+            <CustomCheckBox
+            name={"watchlist"}
+            label={"Watch List"}
+            disabled={false}
+            checked={checkedValues.option3}
+            onchange={handleChange}
+          />
+          </Box>
           <Dropdown
             value={dropdownValue}
             onChange={handleDropdownChange}
-            options={["btcusdt", "ethusdt"]}
+            options={allSymbols}
             placeholder="Select Coins"
             varient={null}
             label={"Select Coins"}

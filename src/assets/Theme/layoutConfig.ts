@@ -1,9 +1,9 @@
 export const Layouts = {
   lg: [
     {
-      w: 113,
+      w: 86,
       h: 60,
-      x: 0,
+      x:27,
       y: 5,
       minH: 30,
       i: "chart",
@@ -17,6 +17,15 @@ export const Layouts = {
       minH: 20,
       minW: 20,
       i: "orderBook"
+    },
+    {
+      w: 27,
+      h: 60,
+      x: 0,
+      y: 0,
+      minH: 20,
+      minW: 20,
+      i: "watchlist"
     }
   ],
   md: [

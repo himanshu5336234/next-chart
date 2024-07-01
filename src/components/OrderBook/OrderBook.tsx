@@ -1,5 +1,5 @@
 import React, {
-  createRef,
+  
   useCallback,
   useEffect,
   useRef,
@@ -12,14 +12,15 @@ import OrderBookTable from "./OrderBookTable";
 import TextView from "../Atoms/TextView/TextView";
 import axios from "axios";
 
-const OrderBook = ({ symbol }: { symbol: string }) => {
+const OrderBook = ({ symbol="btcusdt" }: { symbol: string }) => {
+  console.log(symbol);
   const [asksOrBids, setAsksOrBids] = useState("ALL");
   const [height, setHeight] = useState<any>(300);
   const ref = useRef<any>();
   const [orderBook, setOrderBook] = useState([]);
   const fetchOrderBook = async () => {
     try {
-      const response = await axios.get(`/api/orderbook?symbol=${symbol}`);
+      const response = await axios.get(`/api/orderbook?symbol=${symbol.toLowerCase()}`);
       setOrderBook(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);

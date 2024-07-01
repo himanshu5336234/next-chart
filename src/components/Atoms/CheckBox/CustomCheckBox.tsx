@@ -9,7 +9,7 @@ const CustomCheckBox = ({ varient = "primary", label, disabled, id, checked, onc
         <FormControlLabel
           sx={{
             "& .MuiFormControlLabel-label": {
-              fontSize: "12px",
+              fontSize: "14px",
               color: "text.regular"
             }
           }}
@@ -17,7 +17,7 @@ const CustomCheckBox = ({ varient = "primary", label, disabled, id, checked, onc
             <Checkbox
               name={name}
               sx={{
-                "&.MuiSvgIcon-root": { fontSize: 16 },
+                "&.MuiSvgIcon-root": { fontSize: 14,    color: "text.regular" },
                 "&.Mui-checked": {
                   color: "text.main"
                 }
