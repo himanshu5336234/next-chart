@@ -1,6 +1,6 @@
-
+"use client";
 import TopWindowsTabs from "@/components/TopWindowTabs/TopWindowsTabs";
-import React, { useCallback,  useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Layouts } from "@/assets/Theme/layoutConfig";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import Head from "next/head";
@@ -8,7 +8,7 @@ import { Box } from "@mui/system";
 import { TradingViewChart } from "@/components/TradingViewChart/TradingViewChart";
 import OrderBook from "@/components/OrderBook/OrderBook";
 import SymbolsTableData from "@/components/SymbolsTableData/SymbolsTableData";
-
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -65,7 +65,7 @@ function Workspace() {
         isDraggable={true}
         isResizable={true}
         layouts={currentWorkSpace?.layout}
-        onLayoutChange={(_layout, newlayout) => handleLayoutChange(newlayout)}
+        onLayoutChange={(_layout, newLayout) => handleLayoutChange(newLayout)}
         rowHeight={10}
         draggableHandle=".grid-item__title"
         margin={[1, 2.1]}
@@ -78,6 +78,31 @@ function Workspace() {
             bgcolor={"background.primary"}
             className={`grid-item`}
           >
+            <Box
+              sx={{
+                position: "absolute",
+                display: "flex",
+                zIndex: 1000,
+                height: "12px",
+                right: 0,
+                left: 9,
+              }}
+            >
+              <Box
+                sx={{ width: "98%", height: 20 }}
+                className="grid-item__title "
+              />
+              <CancelIcon
+                sx={{
+                  color: "grey.500",
+                  position: "absolute",
+                  right: 0,
+                  fontSize: "12px",
+                  cursor: "pointer",
+                }}
+              />
+            </Box>
+
             <Box position={"relative"} className="grid-item__graph">
               {showComponent(currentWorkSpace, item)}
             </Box>
