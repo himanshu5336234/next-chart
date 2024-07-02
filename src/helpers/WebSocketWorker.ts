@@ -91,6 +91,7 @@ function sendMessage(message) {
 function handleAppStateChange(nextAppState) {
   if (nextAppState === 'inactive') {
     isAppInBackground = true;
+    messageQueue=[];
   } else if (nextAppState === 'active') {
     isAppInBackground = false;
     processMessageQueue();

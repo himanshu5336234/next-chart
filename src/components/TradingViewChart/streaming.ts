@@ -7,6 +7,7 @@ const chartWS = () => {
   let webSocketService: any;
 
   const initializeWebSocket = (paramStr: string, onRealtimeCallback: any,subscribeUID:any) => {
+  
     const obj = {
       method: "SUBSCRIBE",
       params: [paramStr ,`${subscribeUID.split("_#_")[0].toLowerCase()}@depth20`],
@@ -15,7 +16,7 @@ const chartWS = () => {
     if (!connectingLive) {
       const binanceWsBaseUrl = BASE_URL()?.binanceWsBase;
       webSocketService = WebSocketClient.getInstance(binanceWsBaseUrl);
-
+      webSocketService.sendMessage(JSON.stringify(obj));
       webSocketService.addListener("open", () => {
         connectingLive = true;
         webSocketService.sendMessage(JSON.stringify(obj));
